@@ -1,1 +1,2 @@
-./qualiteacher/node_modules
+#Ignorando modulos node
+node_modules/
