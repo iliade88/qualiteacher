@@ -1,0 +1,104 @@
+body {
+  /*font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;*/
+  font-family: BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+}
+
+/**
+* General
+**/
+
+.divider-black
+{
+	height: 20px;
+	background-color: black;
+}
+
+h2
+{
+	padding-top: 20px;
+	padding-bottom: 10px;
+	margin: 0px;
+}
+
+.row-no-margin
+{
+	margin: 0px;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 120px;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  min-height: 120px;
+  background-color: #f5f5f5;
+  padding-bottom: 10px;
+}
+
+/**
+* NAVBAR
+**/
+
+.navbar .container-fluid{
+	background-color: #A3AB8E;
+}
+
+.navbar *{
+	color: black!important;
+	font-weight: 600;
+}
+
+.active a{
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	font-weight: bold;
+}
+
+.navbar-brand{
+	padding-top: 0px;
+	margin-bottom: 5px;
+}
+
+.navbar-nav li
+{
+	padding-top: 2.5px;
+}
+
+/**
+* index
+**/
+
+.buscador {
+	background-color: #fff;
+	font-size: 2.5em;
+	margin-top: ;
+	margin: 0px;
+	padding: 0px;
+	padding-top: 5em;
+	padding-bottom: 0px;
+}
+
+#campo-buscar {
+	margin-top: 2em;
+	box-sizing: border-box;
+    border: none;
+    border-bottom: 2px solid black;
+    margin-bottom: 3em;
+}
+
+.top-five-uni-esp
+{
+	
+}

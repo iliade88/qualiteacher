@@ -1,0 +1,56 @@
+<%include header%>
+<!--Contenido-->
+<section id="buscador" class="buscador section offset-header">
+	<div class="container text-center">
+		<label for="campo-buscar">Encuentra tu universidad, carrera o profesor</label>
+		<div class="form-group row">
+			<input type="text" id="campo-buscar" class="form-control col-9" aria-describedby="icon-search"/>
+		</div>
+	</div>
+	<div class="divider-black"></div>
+</section>
+<section id="top-five-uni-esp" class="top-five-uni-esp section container-fluid">
+	<h2>Las 5 universidades mejor valoradas</h2>
+	<canvas id="ranking-universidades" width="600px" height="400px"></canvas>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js' crossorigin="anonymous"></script>
+	<script>
+		function getLabels(uni)
+		{
+			return uni.nombre;
+		}
+		var datos = [
+						{"nombre": "UA", "satisfaccion" : 456},
+						{"nombre": "UMH", "satisfaccion" : 479},
+						{"nombre": "UCM", "satisfaccion" : 324},
+						{"nombre": "UCAM", "satisfaccion" : 569}
+					]
+
+		datos.sort(function(a, b){ return b.satisfaccion - a.satisfaccion});
+
+		var abreviaturas = [];
+		var satisfaccion = [];
+		for (uni in datos)
+		{
+			abreviaturas.push(datos[uni].nombre);
+			satisfaccion.push(datos[uni].satisfaccion);
+		}
+
+		var bardata = {
+			labels: abreviaturas,
+			datasets: [
+				{
+					label: "Satisfaccion",
+					backgroundColor : ["#5AA645", "#5AA645", "#5AA645", "#5AA645"],
+					borderColor: ["#000", "#000", "#000", "#000"],
+					data : satisfaccion
+				}
+			]
+		}
+		var rankunis = document.getElementById('ranking-universidades').getContext('2d');
+		new Chart(rankunis, {
+			type: 'horizontalBar',
+			data: bardata
+		});
+	</script>
+</section>
+<% include footer %>
