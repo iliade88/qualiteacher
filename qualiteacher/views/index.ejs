@@ -59,4 +59,53 @@
 		});
 	</script>
 </section>
+<section id="top-five-profesores-esp" class="top-five-profesores-esp section container-fluid">
+	<h2>Los 5 profesores más valorados</h2>
+	<canvas id="ranking-profesores" class="col-xs-12 col-sm-12 col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8"></canvas>
+	<script>
+		//Creamos los datos
+		var datos = [
+						{"nombre": "Manuel Quintero - CI - UA", "satisfaccion" : 456},
+						{"nombre": "Carolina Cerezuela - ASD - UMH", "satisfaccion" : 479},
+						{"nombre": "Héctor Barrachina - LGD - UCM", "satisfaccion" : 324},
+						{"nombre": "Rosa Pastor - TFG - UCAM", "satisfaccion" : 569}
+					]
+		//Ordenamos el vector para que salgan en orden
+		datos.sort(function(a, b){ return b.satisfaccion - a.satisfaccion});
+
+		var abreviaturas = [];
+		var satisfaccion = [];
+		//Creamos los 2 vectores, el de datos y el de etiquetas
+		for (uni in datos)
+		{
+			abreviaturas.push(datos[uni].nombre);
+			satisfaccion.push(datos[uni].satisfaccion);
+		}
+
+		var bardata = {
+			labels: abreviaturas,
+			datasets: [
+				{
+					label: "Satisfaccion",
+					backgroundColor : ["#999900", "#c0c0c0", "#996633", "#fff"],
+					borderColor: ["#000", "#000", "#000", "#000"],
+					borderWidth: 2,
+					data : satisfaccion
+				}
+			]
+		}
+		var rankunis = document.getElementById('ranking-profesores').getContext('2d');
+		var chart = new Chart(rankunis, {
+			type: 'horizontalBar',
+			data: bardata,
+			options: {
+				responsive: true,
+				maintainAspectRatio: true,
+				legend: {
+					display: false
+				}
+			}
+		});
+	</script>
+</section>
 <% include footer %>
