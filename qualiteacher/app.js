@@ -14,6 +14,7 @@ require('./models/Profesores');
 var index = require('./routes/index');
 var usuarios = require('./routes/usuarios');
 var universidades = require('./routes/universidades');
+var profesores = require('./routes/profesores');
 
 var app = express();
 
@@ -32,6 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/usuarios', usuarios);
 app.use('/universidades', universidades);
+app.use('/profesores', profesores);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

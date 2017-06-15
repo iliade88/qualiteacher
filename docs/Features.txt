@@ -1,0 +1,15 @@
+-Rankings de universidad por nota global
+-Rankings de universidades por carerra
+
+-Ranking de profesores por universidad
+-Ranking de profesores por carrera
+-Ranking de profesores por asignatura (en una universidad)
+
+-Calificacion de profesores
+	- Buscar un profesor por nombre
+	- Buscar un grado en una universidad
+	- Buscar una asignatura de un grado en una universidad
+	- Si no existe, botón de crear información del profesor
+
+	*Datos para valorar un profesor*
+	Ver encuesta calidad.jpeg

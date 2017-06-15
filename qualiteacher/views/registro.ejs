@@ -1,0 +1,103 @@
+<%include header%>
+<section ng-controller="registroController" class="section container-fluid">
+	<form name="formRegistro" ng-submit="formRegistro.$valid && submitForm(formData)" novalidate 
+		class="form-horizontal text-center col-md-offset-2 col-md-10">
+		<legend>Registro</legend>
+		<div class="form-group">
+			<label for="nickname" class="col-xs-12 col-sm-10 col-md-2 col-lg-2 control-label">Nombre de usuario</label>
+			<div class="col-xs-12 col-sm-12 col-md-10 col-lg-6">
+				<input
+					type="text"
+					id="nickname"
+					name="nickname"
+					class="form-control"
+					placeholder="Introduce tu nombre de usuario..."
+					ng-model="formData.nickname"
+					ng-minlength="3"
+					required/>
+			</div>
+			<div class="help-block" ng-messages="formRegistro.nickname.$error" ng-if="formRegistro.nickname.$dirty">
+				<p ng-message="required">El nombre de usuario es obligatorio.</p>
+				<p ng-message="minlength">La contraseña es demasiado corta.</p>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="email" class="col-xs-12 col-sm-12 col-md-2 col-lg-2 control-label">Email universitario</label> 
+			<div class="col-xs-12 col-sm-12 col-md-10 col-lg-6">
+				<input
+					type="email"
+					id="email"
+					name="email"
+					class="form-control"
+					placeholder="Ej. chf10@alu.ua.es"
+					ng-model="formData.email"
+					ng-pattern="validarEmailUniversidad"
+					required/>
+			</div>
+			<div class="help-block" ng-messages="formRegistro.email.$error" ng-if="formRegistro.email.$dirty">
+				<p ng-message="required">El email es obligatorio.</p>
+				<p ng-message="email">Por favor introduce un email válido.</p>
+				<p ng-message="pattern">El dominio no concuerda con la universidad seleccionada.</p>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="contrasenya" class="col-xs-12 col-sm-12 col-md-2 col-lg-2 control-label">Contraseña</label> 
+			<div class="col-xs-12 col-sm-12 col-md-10 col-lg-6">
+				<input 
+					type="password"
+					id="contrasenya"
+					name="contrasenya"
+					class="form-control"
+					placeholder="Mínimo 6 caracteres"
+					ng-minlength="6"
+					ng-model="formData.contrasenya"
+					validar-contrasenya="{{formData.recontrasenya}}"
+					required />
+			</div>
+			<div class="help-block" ng-messages="formRegistro.contrasenya.$error" ng-if="formRegistro.contrasenya.$dirty">
+				<p ng-message="required">La contraseña es obligatoria.</p>
+				<p ng-message="minlength">La contraseña es demasiado corta.</p>
+				<p ng-message="validarContrasenya">Las contraseñas no coinciden.</p>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-xs-12 col-sm-12 col-md-10 col-lg-6 col-md-offset-2 col-lg-offset-2">
+				<input 
+					type="password"
+					id="recontrasenya"
+					name="recontrasenya"
+					class="form-control"
+					placeholder="Repite la contraseña..."
+					ng-model="formData.recontrasenya"
+					validar-contrasenya="{{formData.contrasenya}}"
+					required />
+			</div>
+			<div class="help-block" ng-messages="formRegistro.recontrasenya.$error" ng-if="formRegistro.recontrasenya.$dirty">
+				<p ng-message="required">Repetir la contraseña es obligatorio.</p>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="universidad" class="col-xs-12 col-sm-12 col-md-2 col-lg-2 control-label">Universidad</label> 
+			<div class="col-xs-12 col-sm-12 col-md-10 col-lg-6">
+				<select
+					id="universidad"
+					name="universidad"
+					ng-model="formData.universidad"
+					ng-options="universidad.nombre group by universidad.comunidad for universidad in universidades track by universidad._id"
+					class="form-control">
+				</select>
+			</div>
+		</div>
+		<div class="form-group text-center col-md-10 col-lg-6">
+				<button
+					type="submit"
+					class="btn btn-success"
+					ng-disabled="!formRegistro.$valid">Crear cuenta</button>
+				<button class="btn btn-danger">Cancelar</button>
+		</div>
+	</form>
+	<div class="text-center">
+		<a href="#">¿Eres profesor? ¡Regístrate aquí!</a>
+	</div>
+</section>
+<% include footer %>

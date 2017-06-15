@@ -1,0 +1,110 @@
+-Rankings de universidad por nota global
+-Rankings de universidades por carerra
+
+-Ranking de profesores por universidad
+-Ranking de profesores por carrera
+-Ranking de profesores por asignatura (en una universidad)
+
+-Calificacion de profesores
+	- Buscar un profesor por nombre
+	- Buscar un grado en una universidad
+	- Buscar una asignatura de un grado en una universidad
+	- Si no existe, botón de crear información del profesor
+
+	*Datos para valorar un profesor*
+	Ver encuesta calidad.jpeg
+
+
+
+Calificación -> Tiene 10 preguntas, valoradas del 0 al 10 + sin opinión
+
+Modo de sacar nota del profesor (provisional)
+	- Sumar resultado de todas las respuestas. Sin opinión contará como un 5
+	- Esta suma divivirla entre 10 (número de preguntas)
+
+Comentario
+	profesor,
+	alumno,
+	texto,
+	fecha
+
+Alumno
+	nick
+	email
+	universidad
+	contrasenya
+
+Voto
+	puntuacion
+	asignatura
+
+Profesor
+	nombre,
+	nick -> NULL PARA PROFESORES NO REGISTRADOS
+	email,
+	contrasenya, -> NULL PARA PROFESORES NO REGISTRADOS
+	votos -> id's
+
+Asignatura
+	nombre
+	codigo
+	descripción
+	profesores -> vector de id's
+
+Ramas de conocimiento
+	nombre -> por propósitos de listado, no esencial, quizá un enum
+
+Carreras
+	nombre
+	codigo
+	rama_de_conocimiento -> id
+	asignaturas -> vector de id's
+
+Universidad
+	nombre
+	comunidad
+	dominio_email_alumnos -> para la comprobación del registro
+	dominio_email_profesores -> para la comprobación del registro
+	profesres_que_trabajan_en_universidad -> id's
+	alumnos_que_asisten_a_universidad -> id's
+	carreras_que_se_imparten -> id's
+
+CursoLectivo
+	curso -> string 16/17
+	universidades -> id's
+	asignaturas -> id's
+	profesores -> id's
+	alumnos -> id's
+
+
+
+************************************************************************************************************************
+************************************************************************************************************************
+************************************************************************************************************************
+************************************************************************************************************************
+************************************************************************************************************************
+************************************************************************************************************************
+************************************************************************************************************************
+
+MODELOS PARA CRON
+UniversidadesCron
+	nombre
+	comunidad
+	nota_profesores -> suma de notas carrerasCron / num_carreras
+	num_votos -> suma num_votos carreras
+	carrerasCron -> vector de id's
+
+CarreraCron
+	nombre
+	codigo
+	nota_profesores -> suma de notas asignaturaCron / num_asignaturas
+	num_votos -> suma votos asignaturaCron
+	asignaturasCron -> vector de id's
+
+AsignaturaCron
+	nombre
+	codigo
+	descripción
+	nota_profesores -> suma de notas profesorCron / num_profesores
+	num_votos -> suma de votos profesorCron
+	profesores -> vector de id's
