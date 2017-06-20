@@ -23,7 +23,7 @@ exports.anyadirUsuario = function(req, res, next) {
 
 		if (err) console.log(err);
 		//Si el nick no existe en la db
-		if (usuarios == null)
+		if (usuarios === null)
 		{
 			var usuario = new Usuarios({
 				nick : req.body.nickname,
@@ -43,7 +43,6 @@ exports.anyadirUsuario = function(req, res, next) {
 				
 				res.status(200);
 			})
-
 		}
 		else
 		{

@@ -121,3 +121,11 @@ body {
 {
 	text-align: center;
 }
+
+/*
+ * Gráficas
+ */
+.chart-container
+{
+	position: relative;
+}

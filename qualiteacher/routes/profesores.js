@@ -2,24 +2,18 @@ var mongoose = require('mongoose');
 var express = require('express');
 var router = express.Router();
 
-var Profesores = mongoose.model('Profesores');
+var ProfesoresController = require('../controllers/ProfesoresController.js');
 
 /* GET - lista profesores */
-router.get('/', function(req, res, next) {
-    Profesores.find(function(err, profesores){
+router.get('/', ProfesoresController.findAll);
 
-        if (err) {return next(err)}
+/* GET - Vista detalle profesor */
+router.get('/:profesor', ProfesoresController.detalleProfesor);
 
-        res.json(profesores)
-    })
-});
+/* GET - Vista calificar profesor */
+router.get('/:profesor/calificar', ProfesoresController.vistaCalificar);
 
-/* GET - calificar un profesor */
-router.get('/:id/calificar', function(req, res, next) {
-    var prof = new Profesores({
-            nombre: 'Domingo Gallardo'
-    });
-    res.render('calificar', {title: 'Qualiteacher | Calificar', profesor: prof})
-});
+/* POST - Calificar un profesor */
+router.post('/:profesor/:asignatura/calificar', ProfesoresController.calificarProfesor);
 
 module.exports = router;

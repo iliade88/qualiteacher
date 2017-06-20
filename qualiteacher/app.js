@@ -10,6 +10,10 @@ mongoose.connect('mongodb://localhost/qualiteacher');
 require('./models/Universidades');
 require('./models/Usuarios');
 require('./models/Profesores');
+require('./models/Asignaturas');
+require('./models/Carreras');
+require('./models/Comentarios');
+require('./models/Votos');
 
 var index = require('./routes/index');
 var usuarios = require('./routes/usuarios');

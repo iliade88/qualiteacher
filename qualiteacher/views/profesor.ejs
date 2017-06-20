@@ -1,0 +1,50 @@
+<%include header%>
+<script>
+	var profesor = <%- JSON.stringify(profesor) %>
+</script>
+<div class="container" ng-controller="detalleProfesorController">
+    <section  class="container" ng-init="init()">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="datos-profesor thumbnail">
+                    <div class="caption">
+                        <h3>{{profesor.nombre}}</h3>
+                    </div>
+                    <img src="/images/users/domingo.png" alt="Foto de perfil de Domingo" class="img-responsive img-rounded">
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="thumbnail">
+                    <div class="caption">
+                        <h3>Calificación global - {{profesor.nota_final}}</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="resultado-global"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="estadisticas-por-asignatura" class="container">
+        <h3>Asignaturas que imparte</h3>
+        <div class="row">
+            <div class="col-md-4 col-lg-4">
+                <div class="asignaturas-impartidas list-group">
+                    <a class="list-group-item" ng-repeat="asignatura in profesor.asignaturas track by $index" ng-click="refrescaGrafica($index)">{{asignatura.codigo}} - {{asignatura.nombre}}</a>
+                    <!--<a href="#estadisticas-por-asignatura" class="list-group-item" ng-click="showScope($event)">Ver scope</a>-->
+                </div>
+            </div>
+            <div class="col-md-8 col-lg-8">
+                <div class="thumbnail">
+                    <div class="caption">
+                        <h3>Calificación {{asignatura_seleccionada.codigo}} - {{asignatura_seleccionada.nota_final_voto}}</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="resultado-asignatura"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<% include footer %>
