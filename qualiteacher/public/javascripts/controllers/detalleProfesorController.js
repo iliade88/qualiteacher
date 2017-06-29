@@ -22,14 +22,6 @@ function creaLeyenda()
 	"</table>"
 }
 
-function limpiaNotas(notas_de_asignatura)
-{
-	if (notas_de_asignatura === null || notas_de_asignatura === undefined)
-		return false;
-	else
-		return true;
-}
-
 function getColorRadarSegunNota(nota)
 {
 	var r, g, b;
@@ -53,6 +45,7 @@ function hayVotosDeAsignatura(id_asignatura, votos)
 
 		i--
 	}
+
 	return encontrado;
 }
 
@@ -87,23 +80,16 @@ function notaAsignaturaFinal(id_asignatura, votos_asignatura)
 
 function notaAsignaturaPorPregunta(id_asignatura, votos_asignatura)
 {
-	console.log("notaAsignaturaPorPregunta(id_asignatura, votos)")
-
 	var notas_por_pregunta = [0,0,0,0,0,0,0,0,0,0];
 
-	console.log("notas_por_pregunta")
-	console.log(notas_por_pregunta)
-	console.log("votos_asignatura")
-	console.log(votos_asignatura)
 	for (var i = 0; i < votos_asignatura.length; i++)
 	{
 		for (var j = 0; j < 10; j ++)
 		{
 			notas_por_pregunta[j] += votos_asignatura[i][j]
-			console.log("i="+i+", notas="+notas_por_pregunta+", votos="+votos_asignatura[i])
 		}
 	}
-	
+
 	for (var i = 0; i < 10; i ++)
 		notas_por_pregunta[i] /= votos_asignatura.length
 
@@ -127,12 +113,12 @@ function notaProfesorFinal(asignaturas, votos)
 		}
 	}
 
-	return nota / num_votos
+	return nota / asignaturas.length
 }
 
 function notaProfesorPorPregunta(asignaturas, votos)
 {
-	var notas_por_pregunta = [0,0,0,0,0,0,0,0,0,0,0];
+	var notas_por_pregunta = [0,0,0,0,0,0,0,0,0,0];
 	var num_votos = 0;
 
 	for (var i = 0; i < asignaturas.length; i++)
@@ -150,7 +136,7 @@ function notaProfesorPorPregunta(asignaturas, votos)
 	}
 
 	for (var i = 0; i < 10; i++)
-		notas_por_pregunta[i] /= num_votos
+		notas_por_pregunta[i] = (notas_por_pregunta[i] / num_votos).toFixed(2);
 
 	return notas_por_pregunta
 }
@@ -166,7 +152,7 @@ function calculaNotasProfesor(asignaturas, votos) {
 	}
 }
 
-QualiteacherApp.controller('detalleProfesorController', function($scope, $http) {
+QualiteacherApp.controller('detalleProfesorController', function($scope) {
 
 	$scope.profesor = {};
 	$scope.profesor.nota_final;
@@ -204,7 +190,15 @@ QualiteacherApp.controller('detalleProfesorController', function($scope, $http) 
 			},
 			options: {
 				responsive: true,
-				legendCallback: creaLeyenda()
+				legendCallback: creaLeyenda(),
+				scale: {
+					ticks: {
+							beginAtZero: true,
+							steps: 10,
+							stepValue: 1,
+							max: 10 //max value for the chart is 60
+						}
+				}
 			}
 		});
 
@@ -230,11 +224,6 @@ QualiteacherApp.controller('detalleProfesorController', function($scope, $http) 
 			$scope.asignatura_seleccionada.nota_final_voto = notaAsignaturaFinal($scope.profesor.asignaturas[indice]._id, votos_asignatura);
 			$scope.asignatura_seleccionada.notas_por_pregunta = notaAsignaturaPorPregunta($scope.profesor.asignaturas[indice]._id, votos_asignatura);
 
-			console.log("refrescaGrafica")
-			console.log(votos_asignatura)
-			console.log($scope.asignatura_seleccionada.nota_final_voto)
-			console.log($scope.asignatura_seleccionada.notas_por_pregunta)
-
 			var labels = getLabels();
 			var color_grafica_nota_asignatura = getColorRadarSegunNota($scope.asignatura_seleccionada.nota_final_voto)
 
@@ -258,5 +247,4 @@ QualiteacherApp.controller('detalleProfesorController', function($scope, $http) 
 			});
 		}
 	}
-
 });

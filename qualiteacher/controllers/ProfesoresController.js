@@ -15,6 +15,28 @@ exports.findAll = function(req, res) {
 	});
 };
 
+/**
+ * Busca profesores por nombre
+ */
+exports.findByName = function (req, res) {
+
+	var nombre = decodeURI(req.params.nombre);
+	var query = {'nombre': new RegExp(nombre, "i")};
+
+	Profesores.find(query)
+	.exec(function (err, profesores) {
+		if (err) console.log(err);
+
+		if (profesores === null)
+			res.status(400).send({"error": "No existen profesores con ese nombre"})
+		else
+			res.send(profesores);
+	});
+}
+
+/**
+ * Busca los datos del profesor pasado por id y renderiza la vista de profesor con dichos datos
+ */
 exports.detalleProfesor = function(req, res) {
 	Profesores.findOne({'_id': req.params.profesor})
 	.populate('asignaturas')

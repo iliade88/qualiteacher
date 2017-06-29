@@ -1,4 +1,4 @@
-var QualiteacherApp = angular.module("Qualiteacher", ['ngMessages']);
+var QualiteacherApp = angular.module("Qualiteacher");
 
 QualiteacherApp.controller('registroController', function($scope, $http, $location) {
 

@@ -1,20 +1,18 @@
-var mongoose = require('mongoose');
 var express = require('express');
 var router = express.Router();
 
+var QualiteacherController = require('../controllers/QualiteacherController.js');
+
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Qualiteacher' });
-});
+router.get('/', QualiteacherController.home);
+
+/* GET - Resultados Buscador */
+router.get('/buscar/:cadena', QualiteacherController.buscar);
 
 /* GET - Página registro. */
-router.get('/registro', function(req, res, next) {
-	res.render('registro', {title : 'Qualiteacher | Registro'});
-});
+router.get('/registro', QualiteacherController.registro);
 
 /* GET - Página registro Correcto. */
-router.get('/registro-completado', function(req, res, next) {
-	res.render('registroCompletado', {title : 'Qualiteacher | Registro completado'});
-});
+router.get('/registro-completado', QualiteacherController.registroFinalizado);
 
 module.exports = router;
