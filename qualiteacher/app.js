@@ -18,6 +18,7 @@ require('./models/Votos');
 var index = require('./routes/index');
 var usuarios = require('./routes/usuarios');
 var universidades = require('./routes/universidades');
+var asignaturas = require('./routes/asignaturas');
 var profesores = require('./routes/profesores');
 
 var app = express();
@@ -38,6 +39,7 @@ app.use('/', index);
 app.use('/usuarios', usuarios);
 app.use('/universidades', universidades);
 app.use('/profesores', profesores);
+app.use('/asignaturas', asignaturas);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -54,7 +56,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('modular/error');
 });
 
 module.exports = app;

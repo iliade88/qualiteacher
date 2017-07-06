@@ -7,7 +7,8 @@ var UniversidadesSchema = new Schema({
 	dominio_email_alumnos: String,
 	dominio_email_profesores: String,
 	alumnos: [{ type: Schema.Types.ObjectId, ref: 'alumnos'}],
-	profesores: [{ type: Schema.Types.ObjectId, ref: 'profesores'}]
+	profesores: [{ type: Schema.Types.ObjectId, ref: 'profesores'}],
+	carreras: [{ type: Schema.Types.ObjectId, ref: 'carreras'}]
 });
 
 mongoose.model('Universidades', UniversidadesSchema);

@@ -5,7 +5,8 @@ var AsignaturasSchema = new Schema({
     nombre: String,
     codigo: String,
     descripcion: String,
-    carrera: { type: Schema.Types.ObjectId, ref: 'Universidad' },
+	universidad: { type: Schema.Types.ObjectId, ref: 'Universidades' },
+    carrera: { type: Schema.Types.ObjectId, ref: 'Carreras' },
     profesores: [{ type: Schema.Types.ObjectId, ref: 'Profesores' }]
 });
 

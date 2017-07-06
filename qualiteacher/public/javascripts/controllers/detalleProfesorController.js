@@ -64,7 +64,7 @@ function obtenVotosAsignatura(id_asignatura, votos)
 	return votos_de_asignatura;
 }
 
-function notaAsignaturaFinal(id_asignatura, votos_asignatura)
+function notaAsignaturaFinal(votos_asignatura)
 {
 	var nota = 0;
 	for (var i = 0; i < votos_asignatura.length; i++)
@@ -78,7 +78,7 @@ function notaAsignaturaFinal(id_asignatura, votos_asignatura)
 	return nota / (10 * votos_asignatura.length)
 }
 
-function notaAsignaturaPorPregunta(id_asignatura, votos_asignatura)
+function notaAsignaturaPorPregunta(votos_asignatura)
 {
 	var notas_por_pregunta = [0,0,0,0,0,0,0,0,0,0];
 
@@ -104,8 +104,10 @@ function notaProfesorFinal(asignaturas, votos)
 	for (var i = 0; i < asignaturas.length; i++)
 	{
 		var votos_asignatura = obtenVotosAsignatura(asignaturas[i]._id, votos);
+
 		if (votos_asignatura.length > 0)
 		{
+
 			var nota_asignatura = notaAsignaturaFinal(asignaturas[i]._id, votos_asignatura)
 
 			nota += nota_asignatura
@@ -152,6 +154,10 @@ function calculaNotasProfesor(asignaturas, votos) {
 	}
 }
 
+/*******************************************************************************
+ * Controlador
+ *******************************************************************************/
+
 QualiteacherApp.controller('detalleProfesorController', function($scope) {
 
 	$scope.profesor = {};
@@ -160,7 +166,7 @@ QualiteacherApp.controller('detalleProfesorController', function($scope) {
 	$scope.profesor.notas_por_pregunta;
 	$scope.profesor.asignaturas = [];
 	$scope.asignatura_seleccionada = {};
-
+	/*TODO - Cambiar ng-init para obtener al profesor por parámetro en lugar de con window.profesor */
 	$scope.init = function () {
 
 		$scope.profesor = window.profesor;
@@ -198,6 +204,12 @@ QualiteacherApp.controller('detalleProfesorController', function($scope) {
 							stepValue: 1,
 							max: 10 //max value for the chart is 60
 						}
+				},
+				scale: {
+					ticks: {
+						beginAtZero: true,
+						max: 10
+					}
 				}
 			}
 		});
@@ -205,7 +217,7 @@ QualiteacherApp.controller('detalleProfesorController', function($scope) {
 		$scope.refrescaGrafica(0);
 	}
 
-	$scope.refrescaGrafica = function (indice) {
+	$scope.refrescaGrafica = function (e, indice) {
 		var canvas_nota_asignatura = document.getElementById('resultado-asignatura');
 		var contexto_canvas = canvas_nota_asignatura.getContext('2d');
 
@@ -242,9 +254,18 @@ QualiteacherApp.controller('detalleProfesorController', function($scope) {
 					responsive: true,
 					legend: {
 						display: false
+					},
+					scale: {
+						ticks: {
+							beginAtZero: true,
+							max: 10
+						}
 					}
 				}
 			});
 		}
+
+		$(".list-group .list-group-item").removeClass("active");
+		$(e.target).addClass("active");
 	}
 });

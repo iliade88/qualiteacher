@@ -1,4 +1,4 @@
-<%include header%>
+<%include modular/header%>
 <script>
 	var profesor = <%- JSON.stringify(profesor) %>
 </script>
@@ -30,7 +30,7 @@
         <div class="row">
             <div class="col-md-4 col-lg-4">
                 <div class="asignaturas-impartidas list-group">
-                    <a class="list-group-item" ng-repeat="asignatura in profesor.asignaturas track by $index" ng-click="refrescaGrafica($index)">{{asignatura.codigo}} - {{asignatura.nombre}}</a>
+                    <a class="list-group-item" ng-repeat="asignatura in profesor.asignaturas track by $index" ng-click="refrescaGrafica($event, $index)">{{asignatura.codigo}} - {{asignatura.nombre}}</a>
                     <!--<a href="#estadisticas-por-asignatura" class="list-group-item" ng-click="showScope($event)">Ver scope</a>-->
                 </div>
             </div>
@@ -47,4 +47,4 @@
         </div>
     </section>
 </div>
-<% include footer %>
+<% include modular/footer %>
