@@ -5,7 +5,7 @@ var CarrerasSchema = new Schema({
 	nombre: String,
 	codigo: String,
 	asignaturas: [{ type: Schema.Types.ObjectId, ref: 'Asignaturas' }],
-	universidad: { type: Schema.Types.ObjectId, ref: 'Universidad' }
+	universidad: { type: Schema.Types.ObjectId, ref: 'Universidades' }
 });
 
 mongoose.model('Carreras', CarrerasSchema);

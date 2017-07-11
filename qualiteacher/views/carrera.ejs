@@ -1,14 +1,14 @@
 <%include modular/header%>
 
-<div class="container-fluid" ng-controller="detalleAsignaturaController" ng-init="init('<%= JSON.stringify(asignatura) %>')">
+<div class="container-fluid" ng-controller="detalleCarreraController" ng-init="init('<%= JSON.stringify(carrera) %>')">
     <section class="section container-fluid text-center">
-        <h2>{{asignatura.codigo}} - {{asignatura.nombre}}</h2>
-        <h4><a href="/carreras/{{asignatura.carrera._id}}">{{asignatura.carrera.nombre}}</a> - <a href="/universidades/{{asignatura.universidad._id}}">{{asignatura.universidad.nombre}}</a></h4>
+        <h2>{{carrera.codigo}} - {{carrera.nombre}}</h2>
+        <h4><a href="/universidades/{{carrera.universidad._id}}">{{carrera.universidad.nombre}}</a></h4>
         <div class="row">
             <div class="col-md-offset-2 col-lg-offset-2 col-md-3 col-lg-3">
                 <div class="asignaturas-impartidas list-group">
                     <a class="list-group-item active" ng-click="refrescaGrafica($event, -1)">Resultado total</a>
-                    <a class="list-group-item" ng-repeat="profesor in asignatura.profesores track by $index" ng-click="refrescaGrafica($event, $index)">{{profesor.nombre}}</a>
+                    <a class="list-group-item" ng-repeat="asignatura in carrera.asignaturas track by $index" ng-click="refrescaGrafica($event, $index)">{{asignatura.codigo}} - {{asignatura.nombre}}</a>
                 </div>
             </div>
             <div class="col-md-4 col-lg-4">
@@ -19,6 +19,7 @@
                     <div class="chart-container">
                         <canvas id="resultados-asignatura"></canvas>
                     </div>
+                    <a href="/asignaturas/{{asignatura_seleccionada._id}}" ng-hide="!asignatura_seleccionada.con_resultados">Ver en detalle</a>
                 </div>
             </div>
         </div>

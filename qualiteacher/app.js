@@ -18,6 +18,7 @@ require('./models/Votos');
 var index = require('./routes/index');
 var usuarios = require('./routes/usuarios');
 var universidades = require('./routes/universidades');
+var carreras = require('./routes/carreras');
 var asignaturas = require('./routes/asignaturas');
 var profesores = require('./routes/profesores');
 
@@ -38,6 +39,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/usuarios', usuarios);
 app.use('/universidades', universidades);
+app.use('/carreras', carreras);
 app.use('/profesores', profesores);
 app.use('/asignaturas', asignaturas);
 
