@@ -1,9 +1,7 @@
 <%include modular/header%>
-<script>
-	var profesor = <%- JSON.stringify(profesor) %>
-</script>
-<div class="container" ng-controller="detalleProfesorController">
-    <section  class="container" ng-init="init()">
+
+<div class="container" ng-controller="detalleProfesorController" ng-init="init('<%= JSON.stringify(profesor) %>')">
+    <section class="container">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                 <div class="datos-profesor thumbnail">

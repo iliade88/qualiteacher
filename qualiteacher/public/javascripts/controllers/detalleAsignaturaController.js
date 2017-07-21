@@ -13,6 +13,33 @@ function obtenNotasAsignaturaSegunProfesor(asignatura, profesor)
 	}
 }
 
+function obtenNotaFinalAsignatura(asignatura)
+{
+	var notas_profesores = [];
+	for (var i in asignatura.profesores)
+	{
+		var profesor = asignatura.profesores[i];
+
+		var votos_asignatura = obtenVotosAsignatura(asignatura._id, profesor.votos);
+		var notas_profesor = notaAsignaturaFinal(votos_asignatura);
+
+		notas_profesores.push(notas_profesor);
+	}
+
+	var resultados_filtrados = notas_profesores.filter(function (item) { return !isNaN(item) });
+
+	var nota_final_asignatura = 0;
+	for (var i = 0; i < resultados_filtrados.length; i++)
+	{
+		nota_final_asignatura += resultados_filtrados[i];
+	}
+
+	if (resultados_filtrados.length > 0)
+		return nota_final_asignatura / resultados_filtrados.length;
+	else
+		return -1;
+}
+
 function obtenNotasAsignatura(asignatura)
 {
 	var resultados = [];

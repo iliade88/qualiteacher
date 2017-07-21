@@ -1,5 +1,27 @@
 var QualiteacherApp = angular.module("Qualiteacher");
 
+function obtenNotaFinalCarrera(asignaturas)
+{
+	var nota_carrera = 0;
+	var asignaturas_con_nota = 0;
+	for (var i in asignaturas)
+	{
+		var nota_asignatura = 0;
+
+		nota_asignatura = obtenNotaFinalAsignatura(asignaturas[i]);
+
+		if (nota_asignatura !== -1) {
+			nota_carrera += nota_asignatura;
+			asignaturas_con_nota++;
+		}
+	}
+
+	if (asignaturas_con_nota > 0)
+		return nota_carrera / asignaturas_con_nota;
+	else
+		return -1;
+}
+
 function obtenNotasCarrera(asignaturas)
 {
 	var notas_carrera = {

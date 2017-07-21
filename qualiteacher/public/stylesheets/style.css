@@ -129,3 +129,14 @@ body {
 {
 	position: relative;
 }
+
+/*
+ * Detalle carrera
+ */
+.carrera-header
+{
+    color: #ffffff;
+    min-height: 250px;
+    background-repeat: no-repeat;
+    background-size: cover;
+}

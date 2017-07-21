@@ -108,10 +108,9 @@ function notaProfesorFinal(asignaturas, votos)
 		if (votos_asignatura.length > 0)
 		{
 
-			var nota_asignatura = notaAsignaturaFinal(asignaturas[i]._id, votos_asignatura)
-
-			nota += nota_asignatura
-			num_votos += votos_asignatura.length
+			var nota_asignatura = notaAsignaturaFinal(votos_asignatura);
+			nota += nota_asignatura;
+			num_votos += votos_asignatura.length;
 		}
 	}
 
@@ -143,7 +142,7 @@ function notaProfesorPorPregunta(asignaturas, votos)
 	return notas_por_pregunta
 }
 
-function calculaNotasProfesor(asignaturas, votos) {
+function ObtenNotasProfesor(asignaturas, votos) {
 
 	var nota_final = notaProfesorFinal(asignaturas, votos);
 	var notas_por_pregunta = notaProfesorPorPregunta(asignaturas, votos)
@@ -161,24 +160,18 @@ function calculaNotasProfesor(asignaturas, votos) {
 QualiteacherApp.controller('detalleProfesorController', function($scope) {
 
 	$scope.profesor = {};
-	$scope.profesor.nota_final;
-	$scope.profesor.notas_por_asignatura;
-	$scope.profesor.notas_por_pregunta;
 	$scope.profesor.asignaturas = [];
 	$scope.asignatura_seleccionada = {};
-	/*TODO - Cambiar ng-init para obtener al profesor por parámetro en lugar de con window.profesor */
-	$scope.init = function () {
 
-		$scope.profesor = window.profesor;
-		$scope.profesor.asignaturas = window.profesor.asignaturas;
-		$scope.profesor.votos = window.profesor.votos;
+	$scope.init = function (profesor) {
+
+		$scope.profesor = JSON.parse(profesor);
 		$scope.nota_asignatura_seleccionada = 0;
 
-		var notas = calculaNotasProfesor($scope.profesor.asignaturas, $scope.profesor.votos);
+		var notas = ObtenNotasProfesor($scope.profesor.asignaturas, $scope.profesor.votos);
 
 		$scope.profesor.nota_final = notas.nota_final;
 		$scope.profesor.notas_por_pregunta = notas.notas_por_pregunta;
-
 
 		var canvas_nota_global = document.getElementById('resultado-global').getContext('2d');
 		var labels = getLabels();
@@ -220,7 +213,8 @@ QualiteacherApp.controller('detalleProfesorController', function($scope) {
 	$scope.refrescaGrafica = function (e, indice) {
 		var canvas_nota_asignatura = document.getElementById('resultado-asignatura');
 		var contexto_canvas = canvas_nota_asignatura.getContext('2d');
-
+		console.log($scope.profesor)
+		console.log(indice)
 		if (!hayVotosDeAsignatura($scope.profesor.asignaturas[indice]._id, $scope.profesor.votos)) {
 			contexto_canvas.clearRect(0, 0, canvas_nota_asignatura.width, canvas_nota_asignatura.height);
 			contexto_canvas.font = "30px Helvetica";
@@ -233,7 +227,7 @@ QualiteacherApp.controller('detalleProfesorController', function($scope) {
 			$scope.asignatura_seleccionada.nombre = $scope.profesor.asignaturas[indice].nombre;
 			$scope.asignatura_seleccionada.codigo = $scope.profesor.asignaturas[indice].codigo;
 			var votos_asignatura = obtenVotosAsignatura($scope.profesor.asignaturas[indice]._id, $scope.profesor.votos);
-			$scope.asignatura_seleccionada.nota_final_voto = notaAsignaturaFinal($scope.profesor.asignaturas[indice]._id, votos_asignatura);
+			$scope.asignatura_seleccionada.nota_final_voto = notaAsignaturaFinal(votos_asignatura);
 			$scope.asignatura_seleccionada.notas_por_pregunta = notaAsignaturaPorPregunta($scope.profesor.asignaturas[indice]._id, votos_asignatura);
 
 			var labels = getLabels();

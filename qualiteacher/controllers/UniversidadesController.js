@@ -34,4 +34,39 @@ exports.anyadirAlumno = function(req, nuevo_alumno, next) {
 		console.log("\r\nGuardado")
 
 	})
-}
+};
+
+/**
+ * Recuperar datos de la universidad y mostrar vista detalle
+ */
+exports.detalleUniversidad = function (req, res) {
+	Universidades.findOne({'_id': req.params.universidad})
+		.populate({
+			path: 'carreras',
+				populate: {path: 'asignaturas',
+					populate: {path : 'profesores',
+						populate: { path: 'votos'}
+					}
+				}
+		})
+		.populate({
+			path: 'profesores',
+				populate: {path : 'votos'}})
+		.populate({
+			path: 'profesores',
+			populate: {path : 'asignaturas'}})
+		.exec(function(err, universidad){
+
+			if (err) console.log(err);
+
+			if (universidad === null)
+			{
+				res.status(400).send({"error": "Esa universidad no existe"})
+			}
+			else
+			{
+				console.log(universidad)
+				res.render('universidad', {title: ('Qualiteacher | '+universidad.nombre), universidad: universidad})
+			}
+		});
+};

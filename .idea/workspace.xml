@@ -2,15 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b78e491b-1d9f-4c61-b128-6a6b111bba3c" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/qualiteacher/controllers/CarrerasController.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/qualiteacher/public/javascripts/controllers/detalleCarreraController.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/qualiteacher/routes/carreras.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/qualiteacher/views/carrera.ejs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/qualiteacher/public/javascripts/controllers/detalleUniversidadController.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/qualiteacher/views/universidad.ejs" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/qualiteacher/app.js" afterPath="$PROJECT_DIR$/qualiteacher/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/qualiteacher/models/Carreras.js" afterPath="$PROJECT_DIR$/qualiteacher/models/Carreras.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/qualiteacher/views/asignatura.ejs" afterPath="$PROJECT_DIR$/qualiteacher/views/asignatura.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/qualiteacher/controllers/CarrerasController.js" afterPath="$PROJECT_DIR$/qualiteacher/controllers/CarrerasController.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/qualiteacher/controllers/UniversidadesController.js" afterPath="$PROJECT_DIR$/qualiteacher/controllers/UniversidadesController.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/qualiteacher/models/Universidades.js" afterPath="$PROJECT_DIR$/qualiteacher/models/Universidades.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/qualiteacher/public/javascripts/controllers/detalleAsignaturaController.js" afterPath="$PROJECT_DIR$/qualiteacher/public/javascripts/controllers/detalleAsignaturaController.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/qualiteacher/public/javascripts/controllers/detalleCarreraController.js" afterPath="$PROJECT_DIR$/qualiteacher/public/javascripts/controllers/detalleCarreraController.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/qualiteacher/public/javascripts/controllers/detalleProfesorController.js" afterPath="$PROJECT_DIR$/qualiteacher/public/javascripts/controllers/detalleProfesorController.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/qualiteacher/public/stylesheets/style.css" afterPath="$PROJECT_DIR$/qualiteacher/public/stylesheets/style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/qualiteacher/routes/universidades.js" afterPath="$PROJECT_DIR$/qualiteacher/routes/universidades.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/qualiteacher/views/carrera.ejs" afterPath="$PROJECT_DIR$/qualiteacher/views/carrera.ejs" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/qualiteacher/views/modular/footer.ejs" afterPath="$PROJECT_DIR$/qualiteacher/views/modular/footer.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/qualiteacher/views/profesor.ejs" afterPath="$PROJECT_DIR$/qualiteacher/views/profesor.ejs" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -22,28 +27,19 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
     <favorites_list name="qualiteacher" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="carrera.ejs" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/qualiteacher/views/carrera.ejs">
+      <file leaf-file-name="universidad.ejs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/qualiteacher/views/universidad.ejs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="21" column="85" lean-forward="false" selection-start-line="21" selection-start-column="85" selection-end-line="21" selection-end-column="85" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="footer.ejs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/qualiteacher/views/modular/footer.ejs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="685">
-              <caret line="52" column="107" lean-forward="false" selection-start-line="52" selection-start-column="107" selection-end-line="52" selection-end-column="107" />
-              <folding />
+            <state relative-caret-position="34">
+              <caret line="2" column="127" lean-forward="true" selection-start-line="2" selection-start-column="74" selection-end-line="2" selection-end-column="127" />
+              <folding>
+                <marker date="1500630144261" expanded="true" signature="226:287" ph="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -51,28 +47,68 @@
       <file leaf-file-name="detalleCarreraController.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/qualiteacher/public/javascripts/controllers/detalleCarreraController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="291">
-              <caret line="59" column="69" lean-forward="false" selection-start-line="59" selection-start-column="69" selection-end-line="59" selection-end-column="69" />
+            <state relative-caret-position="187">
+              <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CarrerasController.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/qualiteacher/controllers/CarrerasController.js">
+      <file leaf-file-name="Asignaturas.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/qualiteacher/models/Asignaturas.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1071">
-              <caret line="63" column="47" lean-forward="false" selection-start-line="63" selection-start-column="47" selection-end-line="63" selection-end-column="47" />
+            <state relative-caret-position="153">
+              <caret line="9" column="14" lean-forward="false" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="14" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="carreras.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/qualiteacher/routes/carreras.js">
+      <file leaf-file-name="detalleUniversidadController.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/qualiteacher/public/javascripts/controllers/detalleUniversidadController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="15" lean-forward="false" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="15" />
+            <state relative-caret-position="203">
+              <caret line="60" column="8" lean-forward="false" selection-start-line="60" selection-start-column="8" selection-end-line="60" selection-end-column="53" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="detalleProfesorController.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/qualiteacher/public/javascripts/controllers/detalleProfesorController.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="130">
+              <caret line="216" column="26" lean-forward="false" selection-start-line="216" selection-start-column="26" selection-end-line="216" selection-end-column="26" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="profesor.ejs" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/qualiteacher/views/profesor.ejs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="510">
+              <caret line="30" column="144" lean-forward="false" selection-start-line="30" selection-start-column="144" selection-end-line="30" selection-end-column="144" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="asignatura.ejs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/qualiteacher/views/asignatura.ejs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="9" column="112" lean-forward="true" selection-start-line="9" selection-start-column="112" selection-end-line="9" selection-end-column="112" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="detalleAsignaturaController.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/qualiteacher/public/javascripts/controllers/detalleAsignaturaController.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="184">
+              <caret line="50" column="55" lean-forward="false" selection-start-line="50" selection-start-column="36" selection-end-line="50" selection-end-column="55" />
               <folding />
             </state>
           </provider>
@@ -111,11 +147,14 @@
       <find>get</find>
       <find>data.</find>
       <find>formateaResultadosParaTypeahead</find>
-      <find>calculaNotasProfesor</find>
-      <find>notaAsignaturaFinal</find>
       <find>console.log</find>
       <find>nota_final_grafica</find>
       <find>grafica.nota_final</find>
+      <find>calculaNotasProfesor</find>
+      <find>obtenerTopNUniversidades</find>
+      <find>console.</find>
+      <find>notaAsignaturaFinal</find>
+      <find>init(</find>
     </findStrings>
     <replaceStrings>
       <replace>name=&quot;</replace>
@@ -138,10 +177,8 @@
         <option value="$PROJECT_DIR$/qualiteacher/models/Comentarios.js" />
         <option value="$PROJECT_DIR$/qualiteacher/controllers/UsuariosController.js" />
         <option value="$PROJECT_DIR$/qualiteacher/models/Votos.js" />
-        <option value="$PROJECT_DIR$/qualiteacher/controllers/UniversidadesController.js" />
         <option value="$PROJECT_DIR$/qualiteacher/services/ProfesoresService.js" />
         <option value="$PROJECT_DIR$/qualiteacher/controllers/Asignaturas.js" />
-        <option value="$PROJECT_DIR$/qualiteacher/public/stylesheets/style.css" />
         <option value="$PROJECT_DIR$/qualiteacher/public/javascripts/controllers/registroController.js" />
         <option value="$PROJECT_DIR$/qualiteacher/public/javascripts/controllers/calificarController.js" />
         <option value="$PROJECT_DIR$/qualiteacher/controllers/qualiteacherController.js" />
@@ -150,34 +187,45 @@
         <option value="$PROJECT_DIR$/qualiteacher/controllers/QualiteacherController.js" />
         <option value="$PROJECT_DIR$/qualiteacher/views/footer.ejs" />
         <option value="$PROJECT_DIR$/qualiteacher/public/javascripts/controllers/inicioController.js" />
-        <option value="$PROJECT_DIR$/qualiteacher/routes/universidades.js" />
         <option value="$PROJECT_DIR$/qualiteacher/routes/usuarios.js" />
         <option value="$PROJECT_DIR$/qualiteacher/views/index.ejs" />
         <option value="$PROJECT_DIR$/qualiteacher/views/calificar.ejs" />
         <option value="$PROJECT_DIR$/qualiteacher/views/registro.ejs" />
         <option value="$PROJECT_DIR$/qualiteacher/views/registroCompletado.ejs" />
-        <option value="$PROJECT_DIR$/qualiteacher/models/Universidades.js" />
         <option value="$PROJECT_DIR$/qualiteacher/models/Profesores.js" />
         <option value="$PROJECT_DIR$/qualiteacher/routes/asignaturas.js" />
         <option value="$PROJECT_DIR$/qualiteacher/routes/profesores.js" />
         <option value="$PROJECT_DIR$/qualiteacher/models/Asignaturas.js" />
         <option value="$PROJECT_DIR$/qualiteacher/controllers/AsignaturasController.js" />
-        <option value="$PROJECT_DIR$/qualiteacher/views/profesor.ejs" />
-        <option value="$PROJECT_DIR$/qualiteacher/public/javascripts/controllers/detalleAsignaturaController.js" />
-        <option value="$PROJECT_DIR$/qualiteacher/public/javascripts/controllers/detalleProfesorController.js" />
         <option value="$PROJECT_DIR$/qualiteacher/views/asignatura.ejs" />
         <option value="$PROJECT_DIR$/qualiteacher/app.js" />
         <option value="$PROJECT_DIR$/qualiteacher/models/Carreras.js" />
-        <option value="$PROJECT_DIR$/qualiteacher/views/modular/footer.ejs" />
         <option value="$PROJECT_DIR$/qualiteacher/routes/carreras.js" />
-        <option value="$PROJECT_DIR$/qualiteacher/controllers/CarrerasController.js" />
-        <option value="$PROJECT_DIR$/qualiteacher/public/javascripts/controllers/detalleCarreraController.js" />
         <option value="$PROJECT_DIR$/qualiteacher/views/carrera.ejs" />
+        <option value="$PROJECT_DIR$/qualiteacher/views/modular/footer.ejs" />
+        <option value="$PROJECT_DIR$/qualiteacher/routes/universidades.js" />
+        <option value="$PROJECT_DIR$/qualiteacher/controllers/CarrerasController.js" />
+        <option value="$PROJECT_DIR$/qualiteacher/models/Universidades.js" />
+        <option value="$PROJECT_DIR$/qualiteacher/public/stylesheets/style.css" />
+        <option value="$PROJECT_DIR$/qualiteacher/views/universidad.ejs" />
+        <option value="$PROJECT_DIR$/qualiteacher/controllers/UniversidadesController.js" />
+        <option value="$PROJECT_DIR$/qualiteacher/public/javascripts/controllers/detalleAsignaturaController.js" />
+        <option value="$PROJECT_DIR$/qualiteacher/public/javascripts/controllers/detalleCarreraController.js" />
+        <option value="$PROJECT_DIR$/qualiteacher/public/javascripts/controllers/detalleUniversidadController.js" />
+        <option value="$PROJECT_DIR$/qualiteacher/views/profesor.ejs" />
+        <option value="$PROJECT_DIR$/qualiteacher/public/javascripts/controllers/detalleProfesorController.js" />
       </list>
     </option>
   </component>
   <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
   <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsFlowSettings">
+    <service-enabled>false</service-enabled>
+    <exe-path />
+    <annotation-enable>false</annotation-enable>
+    <other-services-enabled>false</other-services-enabled>
+    <auto-save>true</auto-save>
+  </component>
   <component name="JsGulpfileManager">
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
@@ -185,11 +233,10 @@
   <component name="NodeModulesDirectoryManager">
     <handled-path value="$PROJECT_DIR$/qualiteacher/node_modules" />
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="1358" />
-    <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="2319" />
+    <option name="width" value="974" />
+    <option name="height" value="1047" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -225,242 +272,83 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="qualiteacher" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="qualiteacher" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="qualiteacher" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="qualiteacher" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="qualiteacher" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="qualiteacher" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="qualiteacher" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="qualiteacher" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="qualiteacher" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="qualiteacher" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="qualiteacher" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modular" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="qualiteacher" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="qualiteacher" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="qualiteacher" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="routes" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="qualiteacher" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="qualiteacher" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="qualiteacher" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="qualiteacher" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="qualiteacher" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="qualiteacher" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="stylesheets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="qualiteacher" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="qualiteacher" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="qualiteacher" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="javascripts" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controllers" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="qualiteacher" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="qualiteacher" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="qualiteacher" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="images" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="qualiteacher" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="qualiteacher" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="qualiteacher" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="images" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="users" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="qualiteacher" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="qualiteacher" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="qualiteacher" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="models" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="qualiteacher" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="qualiteacher" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="qualiteacher" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controllers" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
+          <expand>
+            <path>
+              <item name="qualiteacher" type="b2602c69:ProjectViewProjectNode" />
+              <item name="qualiteacher" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="qualiteacher" type="b2602c69:ProjectViewProjectNode" />
+              <item name="qualiteacher" type="462c0819:PsiDirectoryNode" />
+              <item name="qualiteacher" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="qualiteacher" type="b2602c69:ProjectViewProjectNode" />
+              <item name="qualiteacher" type="462c0819:PsiDirectoryNode" />
+              <item name="qualiteacher" type="462c0819:PsiDirectoryNode" />
+              <item name="controllers" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="qualiteacher" type="b2602c69:ProjectViewProjectNode" />
+              <item name="qualiteacher" type="462c0819:PsiDirectoryNode" />
+              <item name="qualiteacher" type="462c0819:PsiDirectoryNode" />
+              <item name="models" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="qualiteacher" type="b2602c69:ProjectViewProjectNode" />
+              <item name="qualiteacher" type="462c0819:PsiDirectoryNode" />
+              <item name="qualiteacher" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="qualiteacher" type="b2602c69:ProjectViewProjectNode" />
+              <item name="qualiteacher" type="462c0819:PsiDirectoryNode" />
+              <item name="qualiteacher" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="images" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="qualiteacher" type="b2602c69:ProjectViewProjectNode" />
+              <item name="qualiteacher" type="462c0819:PsiDirectoryNode" />
+              <item name="qualiteacher" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="images" type="462c0819:PsiDirectoryNode" />
+              <item name="universities" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="qualiteacher" type="b2602c69:ProjectViewProjectNode" />
+              <item name="qualiteacher" type="462c0819:PsiDirectoryNode" />
+              <item name="qualiteacher" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="javascripts" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="qualiteacher" type="b2602c69:ProjectViewProjectNode" />
+              <item name="qualiteacher" type="462c0819:PsiDirectoryNode" />
+              <item name="qualiteacher" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="javascripts" type="462c0819:PsiDirectoryNode" />
+              <item name="controllers" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="qualiteacher" type="b2602c69:ProjectViewProjectNode" />
+              <item name="qualiteacher" type="462c0819:PsiDirectoryNode" />
+              <item name="qualiteacher" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="stylesheets" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="qualiteacher" type="b2602c69:ProjectViewProjectNode" />
+              <item name="qualiteacher" type="462c0819:PsiDirectoryNode" />
+              <item name="qualiteacher" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
         </subPane>
       </pane>
     </panes>
@@ -491,6 +379,14 @@
     </option>
   </component>
   <component name="RunManager">
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <envs />
+    </configuration>
     <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
       <method />
     </configuration>
@@ -526,15 +422,6 @@
       <option name="cucumberJsArguments" value="" />
       <option name="executablePath" />
       <option name="filePath" />
-      <method />
-    </configuration>
-    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
-      <node-interpreter>project</node-interpreter>
-      <node-options />
-      <gulpfile />
-      <tasks />
-      <arguments />
-      <envs />
       <method />
     </configuration>
     <configuration default="true" type="js.build_tools.npm" factoryName="npm">
@@ -584,7 +471,9 @@
       <workItem from="1499159104072" duration="3999000" />
       <workItem from="1499177708054" duration="7890000" />
       <workItem from="1499327500020" duration="7759000" />
-      <workItem from="1499758504274" duration="7471000" />
+      <workItem from="1499758504274" duration="7533000" />
+      <workItem from="1500624538245" duration="215000" />
+      <workItem from="1500625079155" duration="11733000" />
     </task>
     <task id="LOCAL-00001" summary="Creada interfaz de calificaciones. Añadidos modelos para la db.">
       <created>1497537570916</created>
@@ -597,7 +486,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="107886000" />
+    <option name="totallyTimeSpent" value="119896000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -612,9 +501,10 @@
     <frame x="1358" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25500527" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1975764" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3288889" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -626,12 +516,11 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24946696" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934782" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="processedProjectFiles" value="true" />
+    <option name="version" value="1" />
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -645,20 +534,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/qualiteacher/routes/profesores.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/qualiteacher/models/Profesores.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="23" lean-forward="true" selection-start-line="4" selection-start-column="4" selection-end-line="8" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/qualiteacher/views/calificar.ejs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2312">
@@ -731,13 +606,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/qualiteacher/services/ProfesoresService.js" />
     <entry file="file://$PROJECT_DIR$/qualiteacher/controllers/Asignaturas.js" />
-    <entry file="file://$PROJECT_DIR$/qualiteacher/public/stylesheets/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2091">
-          <caret line="123" column="0" lean-forward="false" selection-start-line="123" selection-start-column="0" selection-end-line="123" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="uml://JavaScript-modules-diagram//index.ejs">
       <provider selected="true" editor-type-id="UmlEditorProvider">
         <state>
@@ -767,7 +635,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="51" lean-forward="false" selection-start-line="0" selection-start-column="51" selection-end-line="0" selection-end-column="51" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -775,14 +642,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="731">
           <caret line="43" column="15" lean-forward="true" selection-start-line="28" selection-start-column="8" selection-end-line="43" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/qualiteacher/controllers/UniversidadesController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="53" />
         </state>
       </provider>
     </entry>
@@ -804,14 +663,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1462">
           <caret line="86" column="33" lean-forward="true" selection-start-line="86" selection-start-column="33" selection-end-line="86" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/qualiteacher/routes/universidades.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -843,13 +694,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/qualiteacher/views/index.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="748">
-          <caret line="44" column="4" lean-forward="true" selection-start-line="38" selection-start-column="4" selection-end-line="44" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/qualiteacher/models/Comentarios.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -871,20 +715,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/qualiteacher/models/Profesores.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="70" lean-forward="true" selection-start-line="11" selection-start-column="70" selection-end-line="11" selection-end-column="70" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/qualiteacher/controllers/ProfesoresController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="56" column="7" lean-forward="true" selection-start-line="40" selection-start-column="4" selection-end-line="56" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/qualiteacher/routes/asignaturas.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -892,66 +722,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/qualiteacher/views/profesor.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="26" column="14" lean-forward="true" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/qualiteacher/routes/profesores.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/qualiteacher/views/asignatura.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="23" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="27" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/qualiteacher/routes/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/qualiteacher/controllers/AsignaturasController.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
           <caret line="18" column="21" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="41" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/qualiteacher/public/javascripts/controllers/detalleProfesorController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="212" column="17" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="270" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/qualiteacher/models/Universidades.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="29" lean-forward="false" selection-start-line="13" selection-start-column="16" selection-end-line="13" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/qualiteacher/models/Carreras.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="67" lean-forward="false" selection-start-line="7" selection-start-column="67" selection-end-line="7" selection-end-column="67" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -959,14 +733,21 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
           <caret line="20" column="31" lean-forward="false" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/qualiteacher/views/carrera.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="18" lean-forward="false" selection-start-line="9" selection-start-column="18" selection-end-line="9" selection-end-column="18" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/qualiteacher/models/Asignaturas.js">
+    <entry file="file://$PROJECT_DIR$/qualiteacher/routes/profesores.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="67" lean-forward="false" selection-start-line="7" selection-start-column="67" selection-end-line="7" selection-end-column="67" />
+        <state relative-caret-position="136">
+          <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="9" selection-end-column="63" />
           <folding />
         </state>
       </provider>
@@ -979,42 +760,156 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/qualiteacher/controllers/CarrerasController.js">
+    <entry file="file://$PROJECT_DIR$/qualiteacher/routes/universidades.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1071">
-          <caret line="63" column="47" lean-forward="false" selection-start-line="63" selection-start-column="47" selection-end-line="63" selection-end-column="47" />
+        <state relative-caret-position="153">
+          <caret line="9" column="41" lean-forward="true" selection-start-line="9" selection-start-column="41" selection-end-line="9" selection-end-column="41" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/qualiteacher/public/javascripts/controllers/detalleAsignaturaController.js">
+    <entry file="file://$PROJECT_DIR$/qualiteacher/models/Carreras.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1583">
-          <caret line="152" column="52" lean-forward="true" selection-start-line="147" selection-start-column="16" selection-end-line="152" selection-end-column="52" />
+        <state relative-caret-position="170">
+          <caret line="10" column="24" lean-forward="false" selection-start-line="10" selection-start-column="16" selection-end-line="10" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/qualiteacher/controllers/CarrerasController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="254">
+          <caret line="25" column="45" lean-forward="true" selection-start-line="25" selection-start-column="45" selection-end-line="25" selection-end-column="45" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/qualiteacher/views/modular/footer.ejs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="685">
-          <caret line="52" column="107" lean-forward="false" selection-start-line="52" selection-start-column="107" selection-end-line="52" selection-end-column="107" />
+        <state relative-caret-position="662">
+          <caret line="52" column="97" lean-forward="false" selection-start-line="52" selection-start-column="97" selection-end-line="52" selection-end-column="97" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/qualiteacher/public/stylesheets/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="730">
+          <caret line="140" column="26" lean-forward="false" selection-start-line="140" selection-start-column="26" selection-end-line="140" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/qualiteacher/routes/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/qualiteacher/views/index.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="560">
+          <caret line="40" column="8" lean-forward="false" selection-start-line="40" selection-start-column="8" selection-end-line="42" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/qualiteacher/models/Asignaturas.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="14" lean-forward="false" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/qualiteacher/controllers/ProfesoresController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="39" column="19" lean-forward="true" selection-start-line="39" selection-start-column="19" selection-end-line="39" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/qualiteacher/models/Universidades.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="55" lean-forward="false" selection-start-line="10" selection-start-column="55" selection-end-line="10" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/qualiteacher/models/Profesores.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="70" lean-forward="true" selection-start-line="11" selection-start-column="70" selection-end-line="11" selection-end-column="70" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/qualiteacher/controllers/UniversidadesController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="543">
+          <caret line="56" column="42" lean-forward="false" selection-start-line="56" selection-start-column="42" selection-end-line="56" selection-end-column="42" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/qualiteacher/public/javascripts/controllers/detalleCarreraController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="291">
-          <caret line="59" column="69" lean-forward="false" selection-start-line="59" selection-start-column="69" selection-end-line="59" selection-end-column="69" />
+        <state relative-caret-position="187">
+          <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/qualiteacher/views/carrera.ejs">
+    <entry file="file://$PROJECT_DIR$/qualiteacher/public/javascripts/controllers/detalleAsignaturaController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" column="85" lean-forward="false" selection-start-line="21" selection-start-column="85" selection-end-line="21" selection-end-column="85" />
+        <state relative-caret-position="184">
+          <caret line="50" column="55" lean-forward="false" selection-start-line="50" selection-start-column="36" selection-end-line="50" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/qualiteacher/views/universidad.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="127" lean-forward="true" selection-start-line="2" selection-start-column="74" selection-end-line="2" selection-end-column="127" />
+          <folding>
+            <marker date="1500630144261" expanded="true" signature="226:287" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/qualiteacher/public/javascripts/controllers/detalleUniversidadController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="203">
+          <caret line="60" column="8" lean-forward="false" selection-start-line="60" selection-start-column="8" selection-end-line="60" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/qualiteacher/public/javascripts/controllers/detalleProfesorController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="216" column="26" lean-forward="false" selection-start-line="216" selection-start-column="26" selection-end-line="216" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/qualiteacher/views/asignatura.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="112" lean-forward="true" selection-start-line="9" selection-start-column="112" selection-end-line="9" selection-end-column="112" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/qualiteacher/views/profesor.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="30" column="144" lean-forward="false" selection-start-line="30" selection-start-column="144" selection-end-line="30" selection-end-column="144" />
           <folding />
         </state>
       </provider>

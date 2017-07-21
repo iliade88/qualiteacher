@@ -15,7 +15,7 @@ exports.findAll = function(req, res) {
 };
 
 /**
- * Devuelve una carrera por id
+ * Recupera los datos de la carrera por id y los muestra en la vista de detalle
  */
 exports.detalleCarrera = function (req, res) {
 	Carreras.findOne({'_id': req.params.carrera})
