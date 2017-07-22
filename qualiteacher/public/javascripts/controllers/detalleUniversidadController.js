@@ -59,8 +59,10 @@ QualiteacherApp.controller('detalleUniversidadController', function ($scope)
 	$scope.init = function (universidad)
 	{
 		$scope.universidad = JSON.parse(universidad);
-		console.log($scope.universidad);
+	}
 
+	$(document).ready(function ()
+	{
 		obtenerNotasUniversidad($scope.universidad.carreras, $scope.universidad.profesores);
 		var top_carreras = obtenerTopNUniversidades($scope.universidad.carreras, 5);
 		console.log(top_carreras)
@@ -116,7 +118,7 @@ QualiteacherApp.controller('detalleUniversidadController', function ($scope)
 							ticks: {
 								beginAtZero: true,
 								max: 10
-						}}
+							}}
 					],
 					yAxes: [{
 						stacked: true
@@ -124,5 +126,5 @@ QualiteacherApp.controller('detalleUniversidadController', function ($scope)
 				}
 			}
 		});
-	}
+	})
 });

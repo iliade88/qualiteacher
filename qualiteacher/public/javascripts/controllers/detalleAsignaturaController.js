@@ -91,6 +91,7 @@ function obtenNotasAsignatura(asignatura)
 QualiteacherApp.controller('detalleAsignaturaController', function ($scope)
 {
 	$scope.asignatura = {}
+	$scope.profesor_seleccionado = {};
 	$scope.datos_grafica = {};
 
 	$scope.init = function (asignatura)
@@ -99,6 +100,8 @@ QualiteacherApp.controller('detalleAsignaturaController', function ($scope)
 		var notas = obtenNotasAsignatura($scope.asignatura);
 		$scope.asignatura.notas = notas;
 		$scope.datos_grafica.nota_final = notas.nota_final;
+		$scope.profesor_seleccionado = $scope.asignatura.profesores[0];
+		$scope.profesor_seleccionado.con_resultados = false;
 
 		var canvas_nota_asignatura = document.getElementById('resultados-asignatura');
 		var contexto_canvas = canvas_nota_asignatura.getContext('2d');
@@ -170,14 +173,16 @@ QualiteacherApp.controller('detalleAsignaturaController', function ($scope)
 			});
 
 			$scope.datos_grafica.nota_final = $scope.asignatura.notas.nota_final;
+			$scope.profesor_seleccionado.con_resultados = false;
 		}
 		else if (!hayVotosDeAsignatura($scope.asignatura._id, $scope.asignatura.profesores[indice].votos)) {
-				contexto_canvas.clearRect(0, 0, canvas_nota_asignatura.width, canvas_nota_asignatura.height);
-				contexto_canvas.font = "30px Helvetica";
-				contexto_canvas.fillStyle = "grey";
-				contexto_canvas.textAlign = "center";
-				contexto_canvas.fillText("No hay datos suficientes de esta asignatura", canvas_nota_asignatura.width/2, canvas_nota_asignatura.height/4);
-				$scope.datos_grafica.nota_final = 0;
+			contexto_canvas.clearRect(0, 0, canvas_nota_asignatura.width, canvas_nota_asignatura.height);
+			contexto_canvas.font = "30px Helvetica";
+			contexto_canvas.fillStyle = "grey";
+			contexto_canvas.textAlign = "center";
+			contexto_canvas.fillText("No hay datos suficientes de esta asignatura", canvas_nota_asignatura.width/2, canvas_nota_asignatura.height/4);
+			$scope.datos_grafica.nota_final = 0;
+			$scope.profesor_seleccionado.con_resultados = false;
 		}
 		else {
 			var notas_asignatura_profesor = obtenNotasAsignaturaSegunProfesor($scope.asignatura, $scope.asignatura.profesores[indice]);
@@ -189,7 +194,7 @@ QualiteacherApp.controller('detalleAsignaturaController', function ($scope)
 				data: {
 					labels: labels,
 					datasets: [{
-						label: "Calificación total ",
+						label: "Nota de pregunta",
 						data: notas_asignatura_profesor.nota_por_pregunta,
 						fill: true,
 						backgroundColor: color_grafica_nota_asignatura
@@ -210,6 +215,8 @@ QualiteacherApp.controller('detalleAsignaturaController', function ($scope)
 			});
 
 			$scope.datos_grafica.nota_final = notas_asignatura_profesor.nota_final;
+			$scope.profesor_seleccionado = $scope.asignatura.profesores[indice];
+			$scope.profesor_seleccionado.con_resultados = true;
 		}
 
 		$(".list-group .list-group-item").removeClass("active");

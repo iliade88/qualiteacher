@@ -100,6 +100,7 @@ function notaProfesorFinal(asignaturas, votos)
 {
 	var nota = 0;
 	var num_votos = 0;
+	var asignaturas_sin_votos = 0;
 
 	for (var i = 0; i < asignaturas.length; i++)
 	{
@@ -112,9 +113,11 @@ function notaProfesorFinal(asignaturas, votos)
 			nota += nota_asignatura;
 			num_votos += votos_asignatura.length;
 		}
+		else
+			asignaturas_sin_votos++;
 	}
 
-	return nota / asignaturas.length
+	return nota / (asignaturas.length - asignaturas_sin_votos);
 }
 
 function notaProfesorPorPregunta(asignaturas, votos)
@@ -127,7 +130,7 @@ function notaProfesorPorPregunta(asignaturas, votos)
 		var votos_asignatura = obtenVotosAsignatura(asignaturas[i]._id, votos);
 
 		if (votos_asignatura.length > 0) {
-			var nota_asignatura_por_pregunta = notaAsignaturaPorPregunta(asignaturas[i]._id, votos_asignatura)
+			var nota_asignatura_por_pregunta = notaAsignaturaPorPregunta(votos_asignatura)
 
 			for (var j = 0; j < 10; j++)
 				notas_por_pregunta[j] += nota_asignatura_por_pregunta[j]
@@ -206,15 +209,16 @@ QualiteacherApp.controller('detalleProfesorController', function($scope) {
 				}
 			}
 		});
+	};
 
-		$scope.refrescaGrafica(0);
-	}
+	$(document).ready(function () {
+		$(".list-group-item").first().trigger("click");
+	});
 
 	$scope.refrescaGrafica = function (e, indice) {
 		var canvas_nota_asignatura = document.getElementById('resultado-asignatura');
 		var contexto_canvas = canvas_nota_asignatura.getContext('2d');
-		console.log($scope.profesor)
-		console.log(indice)
+
 		if (!hayVotosDeAsignatura($scope.profesor.asignaturas[indice]._id, $scope.profesor.votos)) {
 			contexto_canvas.clearRect(0, 0, canvas_nota_asignatura.width, canvas_nota_asignatura.height);
 			contexto_canvas.font = "30px Helvetica";
@@ -228,7 +232,7 @@ QualiteacherApp.controller('detalleProfesorController', function($scope) {
 			$scope.asignatura_seleccionada.codigo = $scope.profesor.asignaturas[indice].codigo;
 			var votos_asignatura = obtenVotosAsignatura($scope.profesor.asignaturas[indice]._id, $scope.profesor.votos);
 			$scope.asignatura_seleccionada.nota_final_voto = notaAsignaturaFinal(votos_asignatura);
-			$scope.asignatura_seleccionada.notas_por_pregunta = notaAsignaturaPorPregunta($scope.profesor.asignaturas[indice]._id, votos_asignatura);
+			$scope.asignatura_seleccionada.notas_por_pregunta = notaAsignaturaPorPregunta(votos_asignatura);
 
 			var labels = getLabels();
 			var color_grafica_nota_asignatura = getColorRadarSegunNota($scope.asignatura_seleccionada.nota_final_voto)
