@@ -33,122 +33,96 @@ function getColorRadarSegunNota(nota)
 	return "rgba("+r+", "+g+", "+b+", 0.4)";
 }
 
-function hayVotosDeAsignatura(id_asignatura, votos)
+function hayVotosDeAsignatura(recuento_notas_por_pregunta)
 {
-	var encontrado = false;
-	var i = votos.length - 1;
-
-	while(!encontrado && i >=0)
+	for (var i = 0; i < recuento_notas_por_pregunta.length; i++)
 	{
-		if (votos[i].asignatura === id_asignatura)
-			encontrado = true;
-
-		i--
-	}
-
-	return encontrado;
-}
-
-function obtenVotosAsignatura(id_asignatura, votos)
-{
-	var votos_de_asignatura = [];
-	for (var i = 0; i < votos.length ; i++)
-	{
-		//Si el voto es de la asignatura que estamos revisando...
-		if (votos[i].asignatura === id_asignatura)
+		for (var j = 0; j < recuento_notas_por_pregunta[i].length; j++)
 		{
-			votos_de_asignatura.push(votos[i].cuestionario);
+			if (recuento_notas_por_pregunta[i][j] !== 0) return true;
 		}
 	}
-
-	return votos_de_asignatura;
+	return false;
 }
 
-function notaAsignaturaFinal(votos_asignatura)
+function notaAsignaturaFinal(notas_por_pregunta)
 {
 	var nota = 0;
-	for (var i = 0; i < votos_asignatura.length; i++)
+	for (var i = 0; i < notas_por_pregunta.length; i++)
 	{
-		for (var j = 0; j < 10; j ++)
-		{
-			nota = nota + votos_asignatura[i][j]
-		}
-
+		nota += notas_por_pregunta[i]
 	}
-	return nota / (10 * votos_asignatura.length)
+	return nota / 10
 }
 
-function notaAsignaturaPorPregunta(votos_asignatura)
+function notaAsignaturaPorPregunta(recuento_notas_por_pregunta)
 {
 	var notas_por_pregunta = [0,0,0,0,0,0,0,0,0,0];
+	var num_votos_por_pregunta = [0,0,0,0,0,0,0,0,0,0];
 
-	for (var i = 0; i < votos_asignatura.length; i++)
+	for (var i = 0; i < recuento_notas_por_pregunta.length; i++)
 	{
-		for (var j = 0; j < 10; j ++)
+		for (var j = 0; j < recuento_notas_por_pregunta[i].length; j ++)
 		{
-			notas_por_pregunta[j] += votos_asignatura[i][j]
+			num_votos_por_pregunta[i] += recuento_notas_por_pregunta[i][j];
+			notas_por_pregunta[i] += recuento_notas_por_pregunta[i][j] * j
 		}
 	}
 
 	for (var i = 0; i < 10; i ++)
-		notas_por_pregunta[i] /= votos_asignatura.length
+		notas_por_pregunta[i] /= num_votos_por_pregunta[i]
 
 	return notas_por_pregunta
 }
 
-function notaProfesorFinal(asignaturas, votos)
+function notaProfesorFinal(asignaturas)
 {
 	var nota = 0;
-	var num_votos = 0;
 	var asignaturas_sin_votos = 0;
 
 	for (var i = 0; i < asignaturas.length; i++)
 	{
-		var votos_asignatura = obtenVotosAsignatura(asignaturas[i]._id, votos);
-
-		if (votos_asignatura.length > 0)
+		if (hayVotosDeAsignatura(asignaturas[i].recuento_notas_por_pregunta))
 		{
+			var nota_asignatura_por_pregunta = notaAsignaturaPorPregunta(asignaturas[i].recuento_notas_por_pregunta);
+			var nota_asignatura = notaAsignaturaFinal(nota_asignatura_por_pregunta);
 
-			var nota_asignatura = notaAsignaturaFinal(votos_asignatura);
-			nota += nota_asignatura;
-			num_votos += votos_asignatura.length;
+			nota += nota_asignatura
 		}
 		else
-			asignaturas_sin_votos++;
+			asignaturas_sin_votos += 1;
 	}
 
 	return nota / (asignaturas.length - asignaturas_sin_votos);
 }
 
-function notaProfesorPorPregunta(asignaturas, votos)
+function notaProfesorPorPregunta(asignaturas)
 {
 	var notas_por_pregunta = [0,0,0,0,0,0,0,0,0,0];
-	var num_votos = 0;
+	var asignaturas_sin_votos = 0;
 
 	for (var i = 0; i < asignaturas.length; i++)
 	{
-		var votos_asignatura = obtenVotosAsignatura(asignaturas[i]._id, votos);
-
-		if (votos_asignatura.length > 0) {
-			var nota_asignatura_por_pregunta = notaAsignaturaPorPregunta(votos_asignatura)
+		if (hayVotosDeAsignatura(asignaturas[i].recuento_notas_por_pregunta)) {
+			var nota_asignatura_por_pregunta = notaAsignaturaPorPregunta(asignaturas[i].recuento_notas_por_pregunta);
 
 			for (var j = 0; j < 10; j++)
 				notas_por_pregunta[j] += nota_asignatura_por_pregunta[j]
-
-			num_votos += votos_asignatura.length
 		}
+		else
+			asignaturas_sin_votos += 1;
 	}
 
 	for (var i = 0; i < 10; i++)
-		notas_por_pregunta[i] = (notas_por_pregunta[i] / num_votos).toFixed(2);
+		notas_por_pregunta[i] = (notas_por_pregunta[i] / (asignaturas.length - asignaturas_sin_votos)).toFixed(2);
 
 	return notas_por_pregunta
 }
 
-function ObtenNotasProfesor(asignaturas, votos) {
+function ObtenNotasProfesor(asignaturas) {
 
-	var nota_final = notaProfesorFinal(asignaturas, votos);
-	var notas_por_pregunta = notaProfesorPorPregunta(asignaturas, votos)
+	var nota_final = notaProfesorFinal(asignaturas);
+	var notas_por_pregunta = notaProfesorPorPregunta(asignaturas)
 
 	return {
 		nota_final: nota_final,
@@ -171,7 +145,7 @@ QualiteacherApp.controller('detalleProfesorController', function($scope) {
 		$scope.profesor = JSON.parse(profesor);
 		$scope.nota_asignatura_seleccionada = 0;
 
-		var notas = ObtenNotasProfesor($scope.profesor.asignaturas, $scope.profesor.votos);
+		var notas = ObtenNotasProfesor($scope.profesor.asignaturas);
 
 		$scope.profesor.nota_final = notas.nota_final;
 		$scope.profesor.notas_por_pregunta = notas.notas_por_pregunta;
@@ -219,7 +193,7 @@ QualiteacherApp.controller('detalleProfesorController', function($scope) {
 		var canvas_nota_asignatura = document.getElementById('resultado-asignatura');
 		var contexto_canvas = canvas_nota_asignatura.getContext('2d');
 
-		if (!hayVotosDeAsignatura($scope.profesor.asignaturas[indice]._id, $scope.profesor.votos)) {
+		if (!hayVotosDeAsignatura($scope.profesor.asignaturas[indice].recuento_notas_por_pregunta)) {
 			contexto_canvas.clearRect(0, 0, canvas_nota_asignatura.width, canvas_nota_asignatura.height);
 			contexto_canvas.font = "30px Helvetica";
 			contexto_canvas.fillStyle = "grey";
@@ -230,9 +204,8 @@ QualiteacherApp.controller('detalleProfesorController', function($scope) {
 
 			$scope.asignatura_seleccionada.nombre = $scope.profesor.asignaturas[indice].nombre;
 			$scope.asignatura_seleccionada.codigo = $scope.profesor.asignaturas[indice].codigo;
-			var votos_asignatura = obtenVotosAsignatura($scope.profesor.asignaturas[indice]._id, $scope.profesor.votos);
-			$scope.asignatura_seleccionada.nota_final_voto = notaAsignaturaFinal(votos_asignatura);
-			$scope.asignatura_seleccionada.notas_por_pregunta = notaAsignaturaPorPregunta(votos_asignatura);
+			$scope.asignatura_seleccionada.notas_por_pregunta = notaAsignaturaPorPregunta($scope.profesor.asignaturas[indice].recuento_notas_por_pregunta);
+			$scope.asignatura_seleccionada.nota_final_voto = notaAsignaturaFinal($scope.asignatura_seleccionada.notas_por_pregunta);
 
 			var labels = getLabels();
 			var color_grafica_nota_asignatura = getColorRadarSegunNota($scope.asignatura_seleccionada.nota_final_voto)

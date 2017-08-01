@@ -1,0 +1,19 @@
+{
+  "name": "qualiteacher-db-generator",
+  "version": "1.0.0",
+  "description": "Herramienta por linea de comandos para generar datos de prueba en la db del proyecto Qualiteacher",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Cristobal Jesus Gonzalez",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^2.0.1",
+    "faker": "^4.1.0",
+    "mongoose": "^4.9.2"
+  },
+  "bin": {
+    "genera-db-qualiteacher": "./index.js"
+  }
+}

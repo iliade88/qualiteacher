@@ -34,12 +34,57 @@ exports.findByName = function (req, res) {
 	});
 }
 
+function generaMatrizRecuentoNotasPorPregunta()
+{
+	var recuento_notas_por_pregunta = [10];
+	//Inicializamos el array a 0
+	for (var i = 0; i < 10; i++)
+	{
+		recuento_notas_por_pregunta[i] = new Array(11);
+
+		for (var j = 0; j <= 10; j ++)
+		{
+			recuento_notas_por_pregunta[i][j] = 0;
+		}
+	}
+
+	return recuento_notas_por_pregunta;
+}
+
+function buscaAsignatura(array, id_asignatura)
+{
+	for (var i = 0; i < array.length; i++)
+	{
+		if (""+array[i]._id === ""+id_asignatura) return i;
+	}
+	return -1;
+}
+
+function printRecuento(asignaturas)
+{
+	for (var i = 0; i < asignaturas.length; i++)
+	{
+		console.log("Voto de la asignatura "+asignaturas[i]._id)
+
+		for (var j = 0; j < asignaturas[i].recuento_notas_por_pregunta.length; j++)
+		{
+			console.log("Pregunta "+ (j+1));
+			for (var k = 0; k < asignaturas[i].recuento_notas_por_pregunta[j].length; k++)
+			{
+				console.log("Nota " + k + " " + asignaturas[i].recuento_notas_por_pregunta[j][k] + "veces")
+			}
+		}
+	}
+}
+
 /**
  * Busca los datos del profesor pasado por id y renderiza la vista de profesor con dichos datos
  */
 exports.detalleProfesor = function(req, res) {
 	Profesores.findOne({'_id': req.params.profesor})
-	.populate('asignaturas')
+	.populate({
+		path: 'asignaturas',
+		select: 'nombre codigo'})
 	.populate('votos')
 	.exec(function(err, profesor){
 
@@ -51,8 +96,34 @@ exports.detalleProfesor = function(req, res) {
 		}
 		else
 		{
-			console.log(JSON.stringify(profesor));
-			res.render('profesor', {title: 'Qualiteacher | Calificar', profesor: profesor})
+			var asignaturas = [];
+			for (var i = 0; i < profesor.asignaturas.length; i++)
+			{
+				asignaturas.push({
+					_id : profesor.asignaturas[i]._id,
+					nombre: profesor.asignaturas[i].nombre,
+					codigo: profesor.asignaturas[i].codigo,
+					recuento_notas_por_pregunta: generaMatrizRecuentoNotasPorPregunta()
+				});
+			}
+
+			for (var i = 0; i < profesor.votos.length; i++)
+			{
+				var indice_asignatura = buscaAsignatura(asignaturas, profesor.votos[i].asignatura);
+				for (var j = 0; j < 10; j++)
+				{
+					var nota_pregunta = profesor.votos[i].cuestionario[j];
+					asignaturas[indice_asignatura].recuento_notas_por_pregunta[j][nota_pregunta]++;
+				}
+			}
+
+			var profesor_para_vista = {
+				nombre: profesor.nombre,
+				universidad: profesor.universidad,
+				asignaturas : asignaturas
+			};
+			console.log(JSON.stringify(profesor_para_vista));
+			res.render('profesor', {title: 'Qualiteacher | Calificar', profesor: profesor_para_vista})
 		}
 	});
 };
