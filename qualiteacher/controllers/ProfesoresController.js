@@ -77,6 +77,60 @@ function printRecuento(asignaturas)
 	}
 }
 
+exports.generaAsignaturasProfesorConNota = function(profesor)
+{
+	var asignaturas = [];
+	for (var i = 0; i < profesor.asignaturas.length; i++)
+	{
+		asignaturas.push({
+			_id : profesor.asignaturas[i]._id,
+			nombre: profesor.asignaturas[i].nombre,
+			codigo: profesor.asignaturas[i].codigo,
+			recuento_notas_por_pregunta: generaMatrizRecuentoNotasPorPregunta()
+		});
+	}
+
+	for (var i = 0; i < profesor.votos.length; i++)
+	{
+		var indice_asignatura = buscaAsignatura(asignaturas, profesor.votos[i].asignatura);
+		for (var j = 0; j < 10; j++)
+		{
+			var nota_pregunta = profesor.votos[i].cuestionario[j];
+			asignaturas[indice_asignatura].recuento_notas_por_pregunta[j][nota_pregunta]++;
+		}
+	}
+
+	return asignaturas;
+};
+
+/*
+ * Prepara el profesor y los votos para ser enviados al cliente con la nota de una asignatura concreta
+ * @Param1: Profesor con los votos expandidos
+ * @Param2: id de la asignatura de la que queremos la nota
+ */
+exports.generaProfesorConNotaAsignatura = function(profesor, asignatura)
+{
+	var profesor_con_nota = {
+		_id : profesor._id,
+		nombre : profesor.nombre,
+		recuento_notas_por_pregunta: generaMatrizRecuentoNotasPorPregunta()
+	};
+
+	for (var i = 0; i < profesor.votos.length; i++)
+	{
+		if ("" + profesor.votos[i].asignatura === "" + asignatura)
+		{
+			for (var j = 0; j < 10; j++)
+			{
+				var nota_pregunta = profesor.votos[i].cuestionario[j];
+				profesor_con_nota.recuento_notas_por_pregunta[j][nota_pregunta]++;
+			}
+		}
+	}
+
+	return profesor_con_nota;
+};
+
 /**
  * Busca los datos del profesor pasado por id y renderiza la vista de profesor con dichos datos
  */
@@ -96,31 +150,11 @@ exports.detalleProfesor = function(req, res) {
 		}
 		else
 		{
-			var asignaturas = [];
-			for (var i = 0; i < profesor.asignaturas.length; i++)
-			{
-				asignaturas.push({
-					_id : profesor.asignaturas[i]._id,
-					nombre: profesor.asignaturas[i].nombre,
-					codigo: profesor.asignaturas[i].codigo,
-					recuento_notas_por_pregunta: generaMatrizRecuentoNotasPorPregunta()
-				});
-			}
-
-			for (var i = 0; i < profesor.votos.length; i++)
-			{
-				var indice_asignatura = buscaAsignatura(asignaturas, profesor.votos[i].asignatura);
-				for (var j = 0; j < 10; j++)
-				{
-					var nota_pregunta = profesor.votos[i].cuestionario[j];
-					asignaturas[indice_asignatura].recuento_notas_por_pregunta[j][nota_pregunta]++;
-				}
-			}
-
+			var asignaturas_con_nota = generaAsignaturasProfesorConNota(profesor);
 			var profesor_para_vista = {
 				nombre: profesor.nombre,
 				universidad: profesor.universidad,
-				asignaturas : asignaturas
+				asignaturas : asignaturas_con_nota
 			};
 			console.log(JSON.stringify(profesor_para_vista));
 			res.render('profesor', {title: 'Qualiteacher | Calificar', profesor: profesor_para_vista})

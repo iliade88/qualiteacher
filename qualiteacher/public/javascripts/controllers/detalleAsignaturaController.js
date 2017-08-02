@@ -1,5 +1,7 @@
 var QualiteacherApp = angular.module("Qualiteacher");
 
+/*TODO - Arreglar para calcular las notas de los profesores con el nuevo sistema*/
+
 function obtenNotasAsignaturaSegunProfesor(asignatura, profesor)
 {
 	var votos_asignatura = obtenVotosAsignatura(asignatura._id, profesor.votos);

@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var cronCalculaNotas = require('./cron-jobs/cronCalculaNotas')
 
 mongoose.connect('mongodb://localhost/qualiteacher');
 require('./models/Universidades');
@@ -23,7 +24,7 @@ var asignaturas = require('./routes/asignaturas');
 var profesores = require('./routes/profesores');
 
 var app = express();
-
+cronCalculaNotas.lanzaScheduler();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -42,6 +43,8 @@ app.use('/universidades', universidades);
 app.use('/carreras', carreras);
 app.use('/profesores', profesores);
 app.use('/asignaturas', asignaturas);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
