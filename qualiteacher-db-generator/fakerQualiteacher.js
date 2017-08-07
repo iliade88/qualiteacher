@@ -1,11 +1,13 @@
 var faker = require("faker")
 var chalk = require("chalk");
 var mongoose = require('mongoose');
+
+faker.locale = "es";
+
 var Universidades = mongoose.model('Universidades');
 var Carreras = mongoose.model('Carreras');
 var Asignaturas = mongoose.model('Asignaturas');
 var Profesores = mongoose.model('Profesores');
-var Votos = mongoose.model('Votos');
 
 function getRandomInt(min, max) {
 	  return Math.floor(Math.random() * (max - min)) + min;
@@ -255,198 +257,306 @@ function generaNombreGrado()
 	return grados[getRandomInt(0, grados.length)]
 }
 
-function generaProfesor()
+function generaMatrizRecuentoNotasPorPregunta()
+{
+	var recuento_notas_por_pregunta = [10];
+	//Inicializamos el array a 0
+	for (var i = 0; i < 10; i++)
+	{
+		recuento_notas_por_pregunta[i] = new Array(11);
+
+		for (var j = 0; j <= 10; j ++)
+		{
+			recuento_notas_por_pregunta[i][j] = 0;
+		}
+	}
+
+	return recuento_notas_por_pregunta;
+}
+
+function generaProfesor(universidad)
 {
 	var randomName = faker.name.firstName() + " " + faker.name.lastName() + " " + faker.name.lastName();
-		return {
-		nombre: randomName,
-		universidad: 0,
-		asignaturas: new Array(),
-		votos: new Array()
-	}
-}
-
-function setUniversidadProfesor(profesor, universidad)
-{
-	profesor.universidad = universidad;
-	profesor.save(function (err) { if (err) console.log(chalk.bold.red(err)); })
-}
-
-function appendAsignaturaAProfesor(profesor, asignatura)
-{
-	profesor.asignaturas.push(asignatura)
-	profesor.save(function (err) { if (err) console.log(chalk.bold.red(err)); })
-}
-
-function appendVotoAProfesor(profesor, voto)
-{
-	profesor.votos.push(voto)
-	profesor.save(function (err) { if (err) console.log(chalk.bold.red(err)); })
-}
-
-function generaAsignatura()
-{
-	var nombre = faker.company.bs()
-	var codigo = "C"+faker.random.number(1000);
 
 	return {
-		nombre: nombre,
-		codigo: codigo,
-		universidad: 0,
-		carrera: 0,
-		profesores: new Array(),
+		_id: mongoose.Types.ObjectId(),
+		nombre: randomName,
+		nota: 0,
+		num_notas_pp: generaMatrizRecuentoNotasPorPregunta(),
+		num_votos: 0,
+		notas_asignaturas_prof: new Array(),
+		universidad: universidad
 	}
 }
 
-function setUniversidadAsignatura(asignatura, universidad)
+function generaAsignatura(universidad, carrera)
 {
-	asignatura.universidad = universidad;
-	asignatura.save(function (err) { if (err) console.log(chalk.bold.red(err)); })
+	return {
+		_id: mongoose.Types.ObjectId(),
+		nombre: faker.company.bs(),
+		codigo: "C"+faker.random.number(1000),
+		descripcion: faker.lorem.sentences(),
+		nota: 0,
+		num_notas_pp: generaMatrizRecuentoNotasPorPregunta(),
+		num_votos: 0,
+		universidad: universidad,
+		carrera: carrera,
+		profesores: []
+	}
 }
 
-function setCarreraAsignatura(asignatura, carrera)
-{
-	asignatura.carrera = carrera;
-	asignatura.save(function (err) { if (err) console.log(chalk.bold.red(err)); })
-}
-
-function appendProfesorAsignatura(asignatura, profesor)
-{
-	asignatura.profesores.push(profesor)
-	asignatura.save(function (err) { if (err) console.log(chalk.bold.red(err)); })
-}
-
-function generaCarrera()
+function generaCarrera(universidad)
 {
 	var nombre = generaNombreGrado();
 	var codigo = "C"+faker.random.number(1000);
 
 	return {
+		_id: mongoose.Types.ObjectId(),
 		nombre: nombre,
 		codigo: codigo,
+		nota: 0,
+		num_notas_pp: generaMatrizRecuentoNotasPorPregunta(),
+		num_votos: 0,
 		asignaturas: new Array(),
-		universidad: 0
+		universidad: universidad
 	}
 }
 
-function appendAsignaturasCarrera(asignatura, carrera)
+function sumaVotoANumNotasPP(num_notas_pp, num_votos, calificacion)
 {
-	carrera.asignaturas.push(asignatura);
-	carrera.save(function (err) { if (err) console.log(chalk.bold.red(err)); })
-}
-
-function setUniversidadCarrera(carrera, universidad)
-{
-	carrera.universidad = universidad;
-	carrera.save(function (err) { if (err) console.log(chalk.bold.red(err)); })
-}
-
-function appendProfesorAUniversidad(profesor, universidad)
-{
-	universidad.profesores.push(profesor)
-	universidad.save(function (err) { if (err) console.log(chalk.bold.red(err)); })
-}
-
-function appendCarreraAUniversidad(carrera, universidad)
-{
-	universidad.carreras.push(carrera)
-	universidad.save(function (err) { if (err) console.log(chalk.bold.red(err)); })
-}
-
-function generaVoto(profesor, asignatura)
-{
-	var cuestionario = new Array();
-
-	for (var i = 0; i < 10; i++)
+	for (var i = 0; i < calificacion.length; i++)
 	{
-		cuestionario.push(getRandomInt(0, 10));
+		var nota_pregunta = calificacion[i];
+		num_notas_pp[i][nota_pregunta]++;
 	}
 
-	return {
-		cuestionario: cuestionario,
-		profesor: profesor,
-		asignatura: asignatura
-	}
+	return num_votos + 1;
 }
 
-function generaVotos(profesor, asignatura)
+function recalculaNota(num_notas_pp, num_votos)
 {
-	var numvotos = getRandomInt(1, 5);
+	var nota = 0;
 
-	for (var i = 0; i < numvotos; i++)
+	for (var i = 0; i < num_notas_pp.length; i++)
 	{
-		var voto = new Votos(generaVoto(profesor._id, asignatura._id));
-
-		voto.save(function (err, votoGuardado) {
-			if (err) console.log(chalk.bold.red(err));
-			console.log("Generando votos para el profesor : "+chalk.bold.yellow(profesor.nombre) + " de la asignatura: "+chalk.bold.magenta(asignatura.nombre))
-			appendVotoAProfesor(profesor, votoGuardado._id)	
-		})
-	}
-}
-
-function generaDatosAsignatura(asignatura, carrera, universidad)
-{
-	var num_profesores_asignatura = getRandomInt(2, 6);
-
-	for (var k = 0; k < num_profesores_asignatura; k++)
-	{
-		var profesor = new Profesores(generaProfesor());
-
-		setUniversidadProfesor(profesor, universidad._id)
-		appendAsignaturaAProfesor(profesor, asignatura._id)
-
-		profesor.save(function(err, profesorGuardado)
+		var suma_pregunta = 0;
+		for (var j = 0; j < num_notas_pp[i].length; j++)
 		{
-			if (err) console.log(chalk.bold.red(err))
+			suma_pregunta += (num_notas_pp[i][j] * j) / num_votos;
+		}
 
-			console.log("Generando datos para el profesor : "+chalk.bold.yellow(profesorGuardado.nombre) + " de la asignatura: "+chalk.bold.magenta(asignatura.nombre) + "de la carrera: "+chalk.bold.green(carrera.nombre) + " de la universidad "+chalk.bold.cyan(universidad.nombre))
-			generaVotos(profesorGuardado, asignatura);
-
-			appendProfesorAsignatura(asignatura, profesorGuardado._id);
-		})
+		nota += (suma_pregunta / 10);
 	}
+
+	return nota;
+};
+
+
+function buscaAsignatura(array, id_asignatura)
+{
+	for (var i = 0; i < array.length; i++)
+	{
+		if (""+array[i].asignatura === ""+id_asignatura) return i;
+	}
+	return -1;
 }
 
-function generaDatosCarrera(carrera, universidad)
+function generaVotoProfesor(profesor, asignatura)
+{
+	var num_votos_asignatura = getRandomInt(1, 4);
+
+	for (var i = 0; i < num_votos_asignatura; i++)
+	{
+		var calificacion = new Array(10);
+
+		for (var j = 0; j < 10; j++)
+		{
+			calificacion[j] = getRandomInt(0, 10);
+		}
+
+		var indice_asignatura = buscaAsignatura(profesor.notas_asignaturas_prof, asignatura._id);
+		if (indice_asignatura === -1)
+		{
+			var voto = {
+				asignatura : asignatura._id,
+				nota_asignatura: 0,
+				num_notas_pp: generaMatrizRecuentoNotasPorPregunta(),
+				num_votos: 0
+			};
+
+			voto.num_votos = sumaVotoANumNotasPP(voto.num_notas_pp, voto.num_votos, calificacion);
+			voto.nota_asignatura = recalculaNota(voto.num_notas_pp, voto.num_votos);
+			profesor.notas_asignaturas_prof.push(voto)
+		}
+		else
+		{
+			profesor.notas_asignaturas_prof[indice_asignatura].num_votos = sumaVotoANumNotasPP(profesor.notas_asignaturas_prof[indice_asignatura].num_notas_pp, profesor.notas_asignaturas_prof[indice_asignatura].num_votos, calificacion);
+			profesor.notas_asignaturas_prof[indice_asignatura].nota_asignatura = recalculaNota(profesor.notas_asignaturas_prof[indice_asignatura].num_notas_pp, profesor.notas_asignaturas_prof[indice_asignatura].num_votos);
+		}
+		recalculaNotas(profesor, calificacion)
+	}
+
+	recalculaNotas(asignatura, calificacion);
+}
+
+function recalculaNotas(obj, calificacion)
+{
+	obj.num_votos = sumaVotoANumNotasPP(obj.num_notas_pp, obj.num_votos, calificacion);
+	obj.nota = recalculaNota(obj.num_notas_pp, obj.num_votos);
+}
+
+function addNumNotasPP(num_notas_pp, num_votos, num_notas_pp_add, num_votos_add)
+{
+	for (var i = 0; i < num_notas_pp.length; i++)
+	{
+		for (var j = 0; j < num_notas_pp[i].length; j++)
+		{
+			num_notas_pp[i][j] += num_notas_pp_add[i][j];
+		}
+	}
+	return num_votos + num_votos_add
+}
+
+function recalculaNota(num_notas_pp, num_votos)
+{
+	var nota = 0;
+
+	for (var i = 0; i < num_notas_pp.length; i++)
+	{
+		var suma_pregunta = 0;
+		for (var j = 0; j < num_notas_pp[i].length; j++)
+		{
+			suma_pregunta += (num_notas_pp[i][j] * j) / num_votos;
+		}
+
+		nota += (suma_pregunta / 10);
+	}
+
+	return nota;
+};
+
+function recalculaNotasCarrera(carrera, asignaturas_carrera)
+{
+	for (var i = 0; i < asignaturas_carrera.length; i++)
+		carrera.num_votos = addNumNotasPP(carrera.num_notas_pp, carrera.num_votos, asignaturas_carrera[i].num_notas_pp, asignaturas_carrera[i].num_votos)
+
+	carrera.nota = recalculaNota(carrera.num_notas_pp, carrera.num_votos);
+}
+
+function buscarProfesorAsignatura(asignatura, id_profesor)
+{
+	for (var i = 0; i < asignatura.profesores.length; i++)
+	{
+		if (asignatura.profesores[i]._id == id_profesor)
+			return i;
+	}
+	return -1
+}
+
+function generaDatosCarrera(carrera, universidad, datos_asignaturas, datos_profesores)
 {
 	var num_asignaturas_carrera = getRandomInt(3, 6);
-	var asignaturas = [];
-	var profesores = [];
+	var num_profesores_carrera = getRandomInt(10, 15);
+	var asignaturas_carrera = [];
+	var profesores_carrera = [];
+
+	//Generamos los n profesores
+	for (var i = 0; i < num_profesores_carrera; i++)
+	{
+		var profesor = generaProfesor(universidad._id);
+
+		universidad.profesores.push(profesor._id);
+		profesores_carrera.push(profesor);
+	}
 
 	for (var i = 0; i < num_asignaturas_carrera; i++)
 	{
-		var asignatura = new Asignaturas(generaAsignatura());
-		setCarreraAsignatura(asignatura, carrera._id)
-		setUniversidadAsignatura(asignatura, universidad._id)
+		var asignatura = generaAsignatura(carrera._id, universidad._id);
 
-		asignatura.save(function(err, asignaturaGuardada)
-		{
-			console.log("Generando datos para la asignatura: "+chalk.bold.magenta(asignaturaGuardada.nombre) + "de la carrera: "+chalk.bold.green(carrera.nombre) + " de la universidad "+chalk.bold.cyan(universidad.nombre))
-			generaDatosAsignatura(asignaturaGuardada, carrera, universidad)	
-		})
-		
-		appendAsignaturasCarrera(asignatura._id, carrera)
-		asignaturas.push(asignatura)
+		carrera.asignaturas.push(asignatura._id);
+		asignaturas_carrera.push(asignatura);
 	}
+
+	for (var i = 0; i < num_asignaturas_carrera; i++)
+	{
+		var num_profesores_asignatura = getRandomInt(1, 4);
+
+		for (var j = 0; j < num_profesores_asignatura; j++)
+		{
+			var ind_profesor = getRandomInt(0, (num_profesores_carrera - 1));
+
+			if (buscarProfesorAsignatura(asignaturas_carrera[i], profesores_carrera[ind_profesor]) === -1)
+			{
+				generaVotoProfesor(profesores_carrera[ind_profesor], asignaturas_carrera[i]);
+				asignaturas_carrera[i].profesores.push(profesores_carrera[ind_profesor]._id);
+			}
+			else
+				j--;
+		}
+	}
+
+	asignaturas_carrera.forEach(function (asignatura) {
+		datos_asignaturas.push(asignatura)
+	});
+
+	profesores_carrera.forEach(function (profesor) {
+		datos_profesores.push(profesor);
+	});
+
+	recalculaNotasCarrera(carrera, asignaturas_carrera);
 }
 
-exports.generaDatosUniversidad = function(universidad)
+function calculaNotaUniversidad(universidad, carreras)
 {
-	var num_carreras = getRandomInt(4, 8);
-	
-	for (var i = 0; i < num_carreras; i++)
+	var nota = 0;
+
+	for (var i = 0; i < carreras.length; i++)
 	{
-		var carrera = new Carreras(generaCarrera());
-		setUniversidadCarrera(carrera, universidad._id)
+		nota += carreras[i].nota;
+		universidad.num_votos += carreras[i].num_votos
+	}
 
-		carrera.save(function(err, carreraGuardada)
+	universidad.nota = nota / carreras.length;
+}
+
+exports.generaDatosUniversidades = function(universidades)
+{
+	var datos_universidades = [];
+	var datos_carreras = [];
+	var datos_asignaturas = [];
+	var datos_profesores = [];
+
+	console.log("GeneraDatosUniversidades para "+chalk.inverse.yellow(universidades.length)+" universidades");
+	for (var i = 0; i < universidades.length; i++) {
+
+		var universidad = universidades[i];
+		var datos_carreras_universidad = [];
+
+		universidad.nota = 0;
+		universidad.num_votos = 0;
+
+		var num_carreras = getRandomInt(4, 8);
+		console.log(chalk.bold.green("UNIVERSIDADES:" + i + " - " + universidad.nombre));
+
+		for (var j = 0; j < num_carreras; j++)
 		{
-			if (err) console.log(chalk.bold.red(err));
+			var carrera = generaCarrera(universidad._id);
+			universidad.carreras.push(carrera._id);
 
-			console.log("Generando datos para la carrera: "+chalk.bold.green(carreraGuardada.nombre) + " de la universidad "+chalk.bold.cyan(universidad.nombre))
-			generaDatosCarrera(carreraGuardada, universidad);
-			appendCarreraAUniversidad(carreraGuardada._id, universidad);
-		})		
+			console.log("Generando datos para la carrera: "+chalk.bold.green(carrera.nombre) + " de la universidad "+chalk.bold.cyan(universidad.nombre))
+			generaDatosCarrera(carrera, universidad, datos_asignaturas, datos_profesores);
+			datos_carreras.push(carrera);
+			datos_carreras_universidad.push(carrera);
+		}
+
+		calculaNotaUniversidad(universidad, datos_carreras_universidad);
+		datos_universidades.push(universidad);
+	}
+
+	return {
+		datos_universidades : datos_universidades,
+		datos_carreras : datos_carreras,
+		datos_asignaturas : datos_asignaturas,
+		datos_profesores : datos_profesores
 	}
 }

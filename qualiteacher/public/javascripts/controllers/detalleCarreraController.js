@@ -112,7 +112,7 @@ QualiteacherApp.controller('detalleCarreraController', function ($scope)
 				}
 			}
 		});
-	}
+	};
 
 	$scope.refrescaGrafica = function (e, indice) {
 

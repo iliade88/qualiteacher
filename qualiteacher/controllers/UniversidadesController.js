@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');  
 var Universidades  = mongoose.model('Universidades');
+var CarrerasController = require('../controllers/CarrerasController')
 
 /**
 * Devolver todas las universidades
@@ -69,4 +70,19 @@ exports.detalleUniversidad = function (req, res) {
 				res.render('universidad', {title: ('Qualiteacher | '+universidad.nombre), universidad: universidad})
 			}
 		});
+};
+
+exports.calculaNotas = function()
+{
+	var cursor = Universidades
+		.find()
+		.cursor();
+
+	cursor.eachAsync(function(universidad) {
+		CarrerasController.actualizaNotasCarreras(universidad)
+	})
+		.then(function()
+	{
+		console.log("Fin de la actualización de notas");
+	});
 };

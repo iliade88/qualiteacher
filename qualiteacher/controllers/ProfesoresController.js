@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
 var Profesores = mongoose.model('Profesores');
-var Votos = mongoose.model('Votos');
+
+var AsignaturasController = require('./AsignaturasController');
+var UtilsController = require('./UtilsController');
 
 /**
  * Devolver todos los profesores
@@ -32,33 +34,32 @@ exports.findByName = function (req, res) {
 		else
 			res.send(profesores);
 	});
-}
+};
 
-function generaMatrizRecuentoNotasPorPregunta()
+exports.findById = function (id_profesor) {
+
+	Profesores
+		.findOne()
+		.where('_id')
+		.equal(id_profesor)
+		.exec(function (err, profesor) {
+
+			if (err) console.log(err);
+
+			return profesor;
+		});
+};
+
+exports.findByIds = function(arry_ids)
 {
-	var recuento_notas_por_pregunta = [10];
-	//Inicializamos el array a 0
-	for (var i = 0; i < 10; i++)
-	{
-		recuento_notas_por_pregunta[i] = new Array(11);
-
-		for (var j = 0; j <= 10; j ++)
+	Profesores.find()
+		.where('_id')
+		.in(array_ids)
+		.exec(function (err, profesores)
 		{
-			recuento_notas_por_pregunta[i][j] = 0;
-		}
-	}
-
-	return recuento_notas_por_pregunta;
-}
-
-function buscaAsignatura(array, id_asignatura)
-{
-	for (var i = 0; i < array.length; i++)
-	{
-		if (""+array[i]._id === ""+id_asignatura) return i;
-	}
-	return -1;
-}
+			return profesores;
+		})
+};
 
 function printRecuento(asignaturas)
 {
@@ -86,7 +87,7 @@ exports.generaAsignaturasProfesorConNota = function(profesor)
 			_id : profesor.asignaturas[i]._id,
 			nombre: profesor.asignaturas[i].nombre,
 			codigo: profesor.asignaturas[i].codigo,
-			recuento_notas_por_pregunta: generaMatrizRecuentoNotasPorPregunta()
+			recuento_notas_por_pregunta: UtilsController.generaMatrizRecuentoNotasPorPregunta()
 		});
 	}
 
@@ -113,7 +114,7 @@ exports.generaProfesorConNotaAsignatura = function(profesor, asignatura)
 	var profesor_con_nota = {
 		_id : profesor._id,
 		nombre : profesor.nombre,
-		recuento_notas_por_pregunta: generaMatrizRecuentoNotasPorPregunta()
+		recuento_notas_por_pregunta: UtilsController.generaMatrizRecuentoNotasPorPregunta()
 	};
 
 	for (var i = 0; i < profesor.votos.length; i++)
@@ -139,7 +140,6 @@ exports.detalleProfesor = function(req, res) {
 	.populate({
 		path: 'asignaturas',
 		select: 'nombre codigo'})
-	.populate('votos')
 	.exec(function(err, profesor){
 
 		if (err) console.log(err);
@@ -186,6 +186,40 @@ exports.vistaCalificar = function (req, res) {
 };
 
 /**
+ * Función que devuelve las notas actualizadas tras votar a un profesor
+ * @param profesor: instancia profesor de mongoose a actualizar
+ * @param asignatura: el id de la asignatura que se ha votado
+ * @param calificacion: Array de 10 elementos con las respuestas al cuestionario
+ */
+exports.calculaNotas = function(profesor, id_asignatura, calificacion)
+{
+	sumaVotoANumNotasPP(profesor.num_notas_pp, profesor.num_votos, calificacion);
+	profesor.nota = recalculaNota(profesor.num_notas_pp, profesor.num_votos);
+
+	var indice_asignatura = buscaAsignatura(profesor.notas_asignaturas_prof, id_asignatura);
+
+	if (indice_asignatura === -1)
+	{
+		//Crear nueva "estructura" para almacenarla en el vector de notas del profesor
+		var nueva_asignatura_votada = {
+			asignatura: id_asignatura,
+			nota_asignatura: 0,
+			num_nota_pp: UtilsController.generaMatrizRecuentoNotasPorPregunta(),
+			num_votos: 0
+		}
+
+		sumaVotoANumNotasPP(nueva_asignatura_votada.num_notas_pp, nueva_asignatura_votada.num_votos, calificacion);
+		nueva_asignatura_votada.nota_asignatura = recalculaNota(nueva_asignatura_votada.num_notas_pp, nueva_asignatura_votada.num_votos);
+
+		profesor.notas_asignaturas_prof.push(nueva_asignatura_votada);
+	}
+	else
+	{
+		sumaVotoANumNotasPP(profesor.notas_asignaturas_prof[indice_asignatura].num_notas_pp, profesor.notas_asignaturas_prof[indice_asignatura].num_votos, calificacion);
+	}
+}
+
+/**
  * Recibidas las calificaciones del profesor, las añadimos a la db y al profesor votado en base a una asignatura
  **/
 exports.calificarProfesor = function (req, res, next) {
@@ -202,24 +236,43 @@ exports.calificarProfesor = function (req, res, next) {
 		else
 		{
 			var calificacion = [req.body.pr1, req.body.pr2, req.body.pr3, req.body.pr4, req.body.pr5, req.body.pr6, req.body.pr7, req.body.pr8, req.body.pr9, req.body.pr10]
-
 			console.log(calificacion);
-			var voto = new Votos({
-				cuestionario: calificacion,
-				profesor: req.params.profesor,
-				asignatura: req.params.asignatura});
-			console.log("Voto:" + JSON.stringify(voto));
-			voto.save(function (err, voto)
-			{
-				if(err) { console.log(err); return next(err);}
 
-				profesor.votos.push(voto._id);
-				profesor.save(function(err, prof){
+			var usuario = req.body.usuario;
+
+			calculaNotas(profesor, req.params.asignatura, calificacion);
+
+			Profesores
+				.save(function (err)
+				{
 					if(err) { console.log(err); return next(err);}
 
-					res.status(200).send("Voto correctamente registrado");
-				});
-			})
+					console.log("Profesor actualizado.")
+				})
+				.then(function () {
+					Usuarios.findOne({'_id': usuario}, function (err, usuario)
+					{
+						if(err) { console.log(err); return next(err);}
+
+						var voto = {
+							profesor: req.params.profesor,
+							asignatura: req.params.asignatura
+						};
+
+						usuario.votos.push(voto);
+
+						usuario.save(function (err)
+						{
+							if(err) { console.log(err); return next(err);}
+
+							console.log("Profesor actualizado.")
+						})
+					})
+				})
+				.then(function()
+				{
+					AsignaturasController.actualizarNotasAsignatura(req.params.asignatura, calificacion);
+				})
 		}
 	});
 };

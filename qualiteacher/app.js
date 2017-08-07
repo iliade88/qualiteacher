@@ -5,7 +5,6 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var cronCalculaNotas = require('./cron-jobs/cronCalculaNotas')
 
 mongoose.connect('mongodb://localhost/qualiteacher');
 require('./models/Universidades');
@@ -13,8 +12,10 @@ require('./models/Usuarios');
 require('./models/Profesores');
 require('./models/Asignaturas');
 require('./models/Carreras');
-require('./models/Comentarios');
-require('./models/Votos');
+
+//Lanzamos el proceso periódico para calcular las notas
+var cronCalculaNotas = require('./cron-jobs/cronCalculaNotas')
+cronCalculaNotas.lanzaScheduler();
 
 var index = require('./routes/index');
 var usuarios = require('./routes/usuarios');
@@ -24,7 +25,7 @@ var asignaturas = require('./routes/asignaturas');
 var profesores = require('./routes/profesores');
 
 var app = express();
-cronCalculaNotas.lanzaScheduler();
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');

@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Asignaturas = mongoose.model('Asignaturas');
 var ProfesoresController = require('./ProfesoresController.js')
+var UtilsController = require('./UtilsController.js')
 
 /**
  * Devolver todas las asignaturas
@@ -56,4 +57,31 @@ exports.detalleAsignatura = function (req, res) {
 				})
 			}
 		});
-}
+};
+
+exports.actualizarNotasAsignatura = function (id_asignatura, calificacion)
+{
+	Asignaturas.findOne()
+		.where('_id')
+		.equal(id_asignatura)
+		.exec(function (err, asignatura) {
+			if (asignatura.num_notas_pp === null || asignatura.num_notas_pp === undefined) {
+				asignatura.num_notas_pp = UtilsController.generaMatrizRecuentoNotasPorPregunta();
+				asignatura.num_votos = 0;
+			}
+
+			UtilsController.sumaVotoANumNotasPP(asignatura.num_notas_pp, asignatura.num_votos, calificacion);
+			asignatura.nota = UtilsController.recalculaNota(asignatura.num_notas_pp, asignatura.num_votos)
+
+			asignatura
+				.save(function (err, next) {
+					if (err) {
+						console.log(err);
+						return next(err);
+					}
+
+					console.log("Asignatura v actualizada")
+					console.log(asignatura)
+				});
+		});
+};
