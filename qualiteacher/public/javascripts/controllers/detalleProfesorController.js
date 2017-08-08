@@ -33,101 +33,22 @@ function getColorRadarSegunNota(nota)
 	return "rgba("+r+", "+g+", "+b+", 0.4)";
 }
 
-function hayVotosDeAsignatura(recuento_notas_por_pregunta)
-{
-	for (var i = 0; i < recuento_notas_por_pregunta.length; i++)
+function ObtenNotasDeNumNotasPP(num_notas_pp, num_votos) {
+
+	var notas_pp = [0,0,0,0,0,0,0,0,0,0]
+
+
+	for (var i = 0; i < num_notas_pp.length; i++)
 	{
-		for (var j = 0; j < recuento_notas_por_pregunta[i].length; j++)
+		var suma_pregunta = 0;
+		for (var j = 0; j < num_notas_pp[i].length; j++)
 		{
-			if (recuento_notas_por_pregunta[i][j] !== 0) return true;
+			suma_pregunta += (num_notas_pp[i][j] * j);
 		}
-	}
-	return false;
-}
-
-function notaAsignaturaFinal(notas_por_pregunta)
-{
-	var nota = 0;
-	for (var i = 0; i < notas_por_pregunta.length; i++)
-	{
-		nota += notas_por_pregunta[i]
-	}
-	return nota / 10
-}
-
-function notaAsignaturaPorPregunta(recuento_notas_por_pregunta)
-{
-	var notas_por_pregunta = [0,0,0,0,0,0,0,0,0,0];
-	var num_votos_por_pregunta = [0,0,0,0,0,0,0,0,0,0];
-
-	for (var i = 0; i < recuento_notas_por_pregunta.length; i++)
-	{
-		for (var j = 0; j < recuento_notas_por_pregunta[i].length; j ++)
-		{
-			num_votos_por_pregunta[i] += recuento_notas_por_pregunta[i][j];
-			notas_por_pregunta[i] += recuento_notas_por_pregunta[i][j] * j
-		}
+		notas_pp[i] = (suma_pregunta / num_votos);
 	}
 
-	for (var i = 0; i < 10; i ++)
-		notas_por_pregunta[i] /= num_votos_por_pregunta[i]
-
-	return notas_por_pregunta
-}
-
-function notaProfesorFinal(asignaturas)
-{
-	var nota = 0;
-	var asignaturas_sin_votos = 0;
-
-	for (var i = 0; i < asignaturas.length; i++)
-	{
-		if (hayVotosDeAsignatura(asignaturas[i].recuento_notas_por_pregunta))
-		{
-			var nota_asignatura_por_pregunta = notaAsignaturaPorPregunta(asignaturas[i].recuento_notas_por_pregunta);
-			var nota_asignatura = notaAsignaturaFinal(nota_asignatura_por_pregunta);
-
-			nota += nota_asignatura
-		}
-		else
-			asignaturas_sin_votos += 1;
-	}
-
-	return nota / (asignaturas.length - asignaturas_sin_votos);
-}
-
-function notaProfesorPorPregunta(asignaturas)
-{
-	var notas_por_pregunta = [0,0,0,0,0,0,0,0,0,0];
-	var asignaturas_sin_votos = 0;
-
-	for (var i = 0; i < asignaturas.length; i++)
-	{
-		if (hayVotosDeAsignatura(asignaturas[i].recuento_notas_por_pregunta)) {
-			var nota_asignatura_por_pregunta = notaAsignaturaPorPregunta(asignaturas[i].recuento_notas_por_pregunta);
-
-			for (var j = 0; j < 10; j++)
-				notas_por_pregunta[j] += nota_asignatura_por_pregunta[j]
-		}
-		else
-			asignaturas_sin_votos += 1;
-	}
-
-	for (var i = 0; i < 10; i++)
-		notas_por_pregunta[i] = (notas_por_pregunta[i] / (asignaturas.length - asignaturas_sin_votos)).toFixed(2);
-
-	return notas_por_pregunta
-}
-
-function ObtenNotasProfesor(asignaturas) {
-
-	var nota_final = notaProfesorFinal(asignaturas);
-	var notas_por_pregunta = notaProfesorPorPregunta(asignaturas)
-
-	return {
-		nota_final: nota_final,
-		notas_por_pregunta: notas_por_pregunta
-	}
+	return notas_pp
 }
 
 /*******************************************************************************
@@ -139,61 +60,77 @@ QualiteacherApp.controller('detalleProfesorController', function($scope) {
 	$scope.profesor = {};
 	$scope.profesor.asignaturas = [];
 	$scope.asignatura_seleccionada = {};
+	$scope.profesor_sin_votos = false;
+	$scope.grafica;
 
 	$scope.init = function (profesor) {
 
 		$scope.profesor = JSON.parse(profesor);
 		$scope.nota_asignatura_seleccionada = 0;
+		$scope.profesor_sin_votos = ($scope.profesor.num_votos === 0);
+	};
 
-		var notas = ObtenNotasProfesor($scope.profesor.asignaturas);
+	$(document).ready(function () {
+		$(".list-group-item").first().trigger("click");
 
-		$scope.profesor.nota_final = notas.nota_final;
-		$scope.profesor.notas_por_pregunta = notas.notas_por_pregunta;
-
-		var canvas_nota_global = document.getElementById('resultado-global').getContext('2d');
+		var canvas_nota_prof = document.getElementById('resultado-global');
+		var contexto_nota_prof = canvas_nota_prof.getContext('2d');
 		var labels = getLabels();
-		var color_grafica_nota_final = getColorRadarSegunNota($scope.profesor.nota_final)
-		new Chart(canvas_nota_global, {
-			type: 'radar',
-			data: {
-				labels: labels,
-				datasets: [{
-					label: "Calificación global",
-					data: $scope.profesor.notas_por_pregunta,
-					fill: true,
-					backgroundColor: color_grafica_nota_final
-				}]
-			},
-			options: {
-				responsive: true,
-				legendCallback: creaLeyenda(),
-				scale: {
-					ticks: {
+		var color_grafica_nota_final = getColorRadarSegunNota($scope.profesor.nota)
+
+		var notas_profesor_pp = ObtenNotasDeNumNotasPP($scope.profesor.num_notas_pp, $scope.profesor.num_votos)
+
+		if ($scope.profesor_sin_votos) {
+
+			contexto_nota_prof.clearRect(0, 0, canvas_nota_prof.width, canvas_nota_prof.height);
+			contexto_nota_prof.font = "5em Helvetica";
+			contexto_nota_prof.fillStyle='#a3ab8e';
+			contexto_nota_prof.textAlign = "center";
+			contexto_nota_prof.fillText("Sin datos", canvas_nota_prof.width / 2, canvas_nota_prof.height / 2);
+		}
+		else
+		{
+			new Chart(canvas_nota_prof, {
+				type: 'radar',
+				data: {
+					labels: labels,
+					datasets: [{
+						label: "Calificación global",
+						data: notas_profesor_pp,
+						fill: true,
+						backgroundColor: color_grafica_nota_final
+					}]
+				},
+				options: {
+					responsive: true,
+					legendCallback: creaLeyenda(),
+					scale: {
+						ticks: {
 							beginAtZero: true,
 							steps: 10,
 							stepValue: 1,
 							max: 10 //max value for the chart is 60
 						}
-				},
-				scale: {
-					ticks: {
-						beginAtZero: true,
-						max: 10
+					},
+					scale: {
+						ticks: {
+							beginAtZero: true,
+							max: 10
+						}
 					}
 				}
-			}
-		});
-	};
-
-	$(document).ready(function () {
-		$(".list-group-item").first().trigger("click");
+			});
+		}
 	});
 
 	$scope.refrescaGrafica = function (e, indice) {
 		var canvas_nota_asignatura = document.getElementById('resultado-asignatura');
 		var contexto_canvas = canvas_nota_asignatura.getContext('2d');
 
-		if (!hayVotosDeAsignatura($scope.profesor.asignaturas[indice].recuento_notas_por_pregunta)) {
+		if ($scope.grafica != null)
+			$scope.grafica.destroy();
+
+		if ($scope.profesor.notas_asignaturas_prof[indice].num_votos === 0) {
 			contexto_canvas.clearRect(0, 0, canvas_nota_asignatura.width, canvas_nota_asignatura.height);
 			contexto_canvas.font = "30px Helvetica";
 			contexto_canvas.fillStyle = "grey";
@@ -202,21 +139,23 @@ QualiteacherApp.controller('detalleProfesorController', function($scope) {
 		}
 		else {
 
-			$scope.asignatura_seleccionada.nombre = $scope.profesor.asignaturas[indice].nombre;
-			$scope.asignatura_seleccionada.codigo = $scope.profesor.asignaturas[indice].codigo;
-			$scope.asignatura_seleccionada.notas_por_pregunta = notaAsignaturaPorPregunta($scope.profesor.asignaturas[indice].recuento_notas_por_pregunta);
-			$scope.asignatura_seleccionada.nota_final_voto = notaAsignaturaFinal($scope.asignatura_seleccionada.notas_por_pregunta);
-
+			$scope.asignatura_seleccionada = {
+				_id: $scope.profesor.notas_asignaturas_prof[indice].asignatura._id,
+				codigo: $scope.profesor.notas_asignaturas_prof[indice].asignatura.codigo,
+				nota: $scope.profesor.notas_asignaturas_prof[indice].nota_asignatura,
+				num_votos: $scope.profesor.notas_asignaturas_prof[indice].num_votos
+			}
 			var labels = getLabels();
-			var color_grafica_nota_asignatura = getColorRadarSegunNota($scope.asignatura_seleccionada.nota_final_voto)
+			var color_grafica_nota_asignatura = getColorRadarSegunNota($scope.profesor.notas_asignaturas_prof[indice].nota_asignatura)
 
-			new Chart(contexto_canvas, {
+			var nota_asignatura_pp = ObtenNotasDeNumNotasPP($scope.profesor.notas_asignaturas_prof[indice].num_notas_pp, $scope.profesor.num_votos);
+			$scope.grafica = new Chart(contexto_canvas, {
 				type: 'radar',
 				data: {
 					labels: labels,
 					datasets: [{
-						label: "Calificación de " + $scope.asignatura_seleccionada.codigo,
-						data: $scope.asignatura_seleccionada.notas_por_pregunta,
+						label: "Calificación de " + $scope.profesor.notas_asignaturas_prof[indice].codigo,
+						data: nota_asignatura_pp,
 						fill: true,
 						backgroundColor: color_grafica_nota_asignatura
 					}]

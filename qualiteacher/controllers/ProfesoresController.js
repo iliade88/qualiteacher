@@ -138,7 +138,7 @@ exports.generaProfesorConNotaAsignatura = function(profesor, asignatura)
 exports.detalleProfesor = function(req, res) {
 	Profesores.findOne({'_id': req.params.profesor})
 	.populate({
-		path: 'asignaturas',
+		path: 'notas_asignaturas_prof.asignatura',
 		select: 'nombre codigo'})
 	.exec(function(err, profesor){
 
