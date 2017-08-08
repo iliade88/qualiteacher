@@ -42,20 +42,8 @@ exports.anyadirAlumno = function(req, nuevo_alumno, next) {
  */
 exports.detalleUniversidad = function (req, res) {
 	Universidades.findOne({'_id': req.params.universidad})
-		.populate({
-			path: 'carreras',
-				populate: {path: 'asignaturas',
-					populate: {path : 'profesores',
-						populate: { path: 'votos'}
-					}
-				}
-		})
-		.populate({
-			path: 'profesores',
-				populate: {path : 'votos'}})
-		.populate({
-			path: 'profesores',
-			populate: {path : 'asignaturas'}})
+		.populate('carreras')
+		.populate('profesores')
 		.exec(function(err, universidad){
 
 			if (err) console.log(err);
@@ -66,6 +54,10 @@ exports.detalleUniversidad = function (req, res) {
 			}
 			else
 			{
+				var top_five_carreras = [];
+				var top_five_profesores = [];
+
+
 				console.log(universidad)
 				res.render('universidad', {title: ('Qualiteacher | '+universidad.nombre), universidad: universidad})
 			}
