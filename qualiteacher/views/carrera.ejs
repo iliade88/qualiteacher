@@ -14,11 +14,12 @@
             <div class="col-md-4 col-lg-4">
                 <div class="thumbnail">
                     <div class="caption">
-                        <h3>Calificación - {{datos_grafica.nota_final | number: 2}}</h3>
+                        <h3>Calificación - {{datos_grafica.nota | number: 2}}</h3>
                     </div>
                     <div class="chart-container">
                         <canvas id="resultados-asignatura"></canvas>
                     </div>
+                    <p class="text-center">{{datos_grafica.txt_num_votos}}</p>
                     <a href="/asignaturas/{{asignatura_seleccionada._id}}" ng-hide="!asignatura_seleccionada.con_resultados">Ver en detalle</a>
                 </div>
             </div>
