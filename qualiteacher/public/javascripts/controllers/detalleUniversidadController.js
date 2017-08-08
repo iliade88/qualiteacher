@@ -1,18 +1,5 @@
 var QualiteacherApp = angular.module("Qualiteacher");
 
-function obtenerNotasUniversidad(carreras, profesores)
-{
-	for (var i in carreras)
-	{
-		carreras[i].nota = obtenNotaFinalCarrera(carreras[i].asignaturas);
-	}
-
-	for (var i in profesores)
-	{
-		profesores[i].nota =  notaProfesorFinal(profesores[i].asignaturas, profesores[i].votos);
-	}
-}
-
 function transformaADatasetParaGrafica(elementos)
 {
 	var nombres = [];
@@ -20,7 +7,6 @@ function transformaADatasetParaGrafica(elementos)
 
 	for (var i in elementos)
 	{
-		console.log(elementos[i].nombre + " - "+elementos[i].nota)
 		nombres.push(elementos[i].nombre);
 		valores.push(Math.round(elementos[i].nota * 100) / 100);
 	}
@@ -30,7 +16,14 @@ function transformaADatasetParaGrafica(elementos)
 		datasets: [
 			{
 				label: "Calificación",
-				data: valores
+				data: valores,
+				backgroundColor: [
+					'rgba(255, 215, 0, 0.8)',
+					'rgba(192, 192, 192, 0.8)',
+					'rgba(205, 127, 50, 0.8)',
+					'rgba(0, 0, 0, 0.8)',
+					'rgba(0, 0, 0, 0.8)'
+				]
 			}
 		]
 	};
@@ -38,13 +31,13 @@ function transformaADatasetParaGrafica(elementos)
 
 function obtenerTopNProfesores(profesores, n)
 {
-	var profesoresOrdenados = profesores.sort(function (a, b) { if (a.nota > b.nota){return a;} else {return b;} })
+	var profesoresOrdenados = profesores.sort(function (a, b) { return b.nota - a.nota})
 	return profesoresOrdenados.slice(0, n);
 }
 
 function obtenerTopNUniversidades(carreras, n)
 {
-	var carrerasOrdenadas = carreras.sort(function (a, b) { if (a.nota > b.nota){return a;} else {return b;} })
+	var carrerasOrdenadas = carreras.sort(function (a, b) { return b.nota - a.nota})
 	return carrerasOrdenadas.slice(0, n);
 }
 
@@ -54,7 +47,9 @@ function obtenerTopNUniversidades(carreras, n)
 
 QualiteacherApp.controller('detalleUniversidadController', function ($scope)
 {
-	$scope.universidad = {}
+	$scope.universidad = {};
+	$scope.top_carreras = {};
+	$scope.top_profesores = {};
 
 	$scope.init = function (universidad)
 	{
@@ -63,15 +58,10 @@ QualiteacherApp.controller('detalleUniversidadController', function ($scope)
 
 	$(document).ready(function ()
 	{
-		obtenerNotasUniversidad($scope.universidad.carreras, $scope.universidad.profesores);
-		var top_carreras = obtenerTopNUniversidades($scope.universidad.carreras, 5);
-		console.log(top_carreras)
-		var dataset_carreras = transformaADatasetParaGrafica(top_carreras);
-		console.log(dataset_carreras)
-		var top_profesores = obtenerTopNProfesores($scope.universidad.profesores, 5);
-		console.log(top_profesores)
-		var dataset_profesores = transformaADatasetParaGrafica(top_profesores);
-		console.log(dataset_profesores)
+		$scope.top_carreras = obtenerTopNUniversidades($scope.universidad.carreras, 5);
+		var dataset_carreras = transformaADatasetParaGrafica($scope.top_carreras);
+		$scope.top_profesores = obtenerTopNProfesores($scope.universidad.profesores, 5);
+		var dataset_profesores = transformaADatasetParaGrafica($scope.top_profesores);
 
 		//Chart Carreras - $("#ranking-carreras")
 		var canvas_carreras = document.getElementById('ranking-carreras');
@@ -96,7 +86,8 @@ QualiteacherApp.controller('detalleUniversidadController', function ($scope)
 					yAxes: [{
 						stacked: true
 					}]
-				}
+				},
+				onClick: function(event, active_elements) { window.location.replace('/carreras/'+$scope.top_carreras[active_elements[0]._index]._id);}
 			}
 		});
 
@@ -123,7 +114,8 @@ QualiteacherApp.controller('detalleUniversidadController', function ($scope)
 					yAxes: [{
 						stacked: true
 					}]
-				}
+				},
+				onClick: function(event, active_elements) { window.location.replace('/profesores/'+$scope.top_profesores[active_elements[0]._index]._id);}
 			}
 		});
 	})
