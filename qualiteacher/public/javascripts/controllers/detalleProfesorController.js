@@ -109,7 +109,7 @@ QualiteacherApp.controller('detalleProfesorController', function($scope) {
 							beginAtZero: true,
 							steps: 10,
 							stepValue: 1,
-							max: 10 //max value for the chart is 60
+							max: 10
 						}
 					},
 					scale: {

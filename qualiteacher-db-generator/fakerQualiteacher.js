@@ -393,10 +393,9 @@ function generaVotoProfesor(profesor, asignatura)
 			profesor.notas_asignaturas_prof[indice_asignatura].num_votos = sumaVotoANumNotasPP(profesor.notas_asignaturas_prof[indice_asignatura].num_notas_pp, profesor.notas_asignaturas_prof[indice_asignatura].num_votos, calificacion);
 			profesor.notas_asignaturas_prof[indice_asignatura].nota_asignatura = recalculaNota(profesor.notas_asignaturas_prof[indice_asignatura].num_notas_pp, profesor.notas_asignaturas_prof[indice_asignatura].num_votos);
 		}
-		recalculaNotas(profesor, calificacion)
+		recalculaNotas(profesor, calificacion);
+		recalculaNotas(asignatura, calificacion);
 	}
-
-	recalculaNotas(asignatura, calificacion);
 }
 
 function recalculaNotas(obj, calificacion)
@@ -471,7 +470,7 @@ function generaDatosCarrera(carrera, universidad, datos_asignaturas, datos_profe
 
 	for (var i = 0; i < num_asignaturas_carrera; i++)
 	{
-		var asignatura = generaAsignatura(carrera._id, universidad._id);
+		var asignatura = generaAsignatura(universidad._id, carrera._id);
 
 		carrera.asignaturas.push(asignatura._id);
 		asignaturas_carrera.push(asignatura);

@@ -104,34 +104,6 @@ exports.generaAsignaturasProfesorConNota = function(profesor)
 	return asignaturas;
 };
 
-/*
- * Prepara el profesor y los votos para ser enviados al cliente con la nota de una asignatura concreta
- * @Param1: Profesor con los votos expandidos
- * @Param2: id de la asignatura de la que queremos la nota
- */
-exports.generaProfesorConNotaAsignatura = function(profesor, asignatura)
-{
-	var profesor_con_nota = {
-		_id : profesor._id,
-		nombre : profesor.nombre,
-		recuento_notas_por_pregunta: UtilsController.generaMatrizRecuentoNotasPorPregunta()
-	};
-
-	for (var i = 0; i < profesor.votos.length; i++)
-	{
-		if ("" + profesor.votos[i].asignatura === "" + asignatura)
-		{
-			for (var j = 0; j < 10; j++)
-			{
-				var nota_pregunta = profesor.votos[i].cuestionario[j];
-				profesor_con_nota.recuento_notas_por_pregunta[j][nota_pregunta]++;
-			}
-		}
-	}
-
-	return profesor_con_nota;
-};
-
 /**
  * Busca los datos del profesor pasado por id y renderiza la vista de profesor con dichos datos
  */

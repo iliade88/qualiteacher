@@ -37,8 +37,7 @@ function convierteObjetosAJsonUnoPorLinea(objetos)
 	console.log(chalk.bold.red(objetos.length))
 	for (var i = 0; i < objetos.length; i++)
 	{
-		objetos[i]._id = ObjectId(objetos[i]._id);
-		json += JSON.stringify(objetos[i]);
+		json += JSON.stringify(objetos[i])
 
 		if (i < (objetos.length - 1))
 		{

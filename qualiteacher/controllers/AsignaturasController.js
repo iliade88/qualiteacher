@@ -35,26 +35,8 @@ exports.detalleAsignatura = function (req, res) {
 			}
 			else
 			{
-				Asignaturas.populate(asignatura, {path: 'profesores.votos', model: 'Votos'}, function (err, asignatura) {
-
-					var profesores_con_nota = [];
-
-					for (var i = 0; i < asignatura.profesores.length; i++)
-					{
-						profesores_con_nota.push(ProfesoresController.generaProfesorConNotaAsignatura(asignatura.profesores[i], asignatura._id));
-					}
-
-					var asignatura_para_vista = {
-						_id : asignatura._id,
-						nombre: asignatura.nombre,
-						codigo: asignatura.codigo,
-						universidad: asignatura.universidad,
-						carrera: asignatura.carrera,
-						profesores: profesores_con_nota
-					}
-					console.log(JSON.stringify(asignatura_para_vista));
-					res.render('asignatura', {title: ('Qualiteacher | '+asignatura.nombre), asignatura: asignatura_para_vista})
-				})
+				console.log(asignatura)
+				res.render('asignatura', {title: ('Qualiteacher | '+asignatura.nombre), asignatura: asignatura})
 			}
 		});
 };
