@@ -150,14 +150,7 @@ exports.detalleProfesor = function(req, res) {
 		}
 		else
 		{
-			var asignaturas_con_nota = generaAsignaturasProfesorConNota(profesor);
-			var profesor_para_vista = {
-				nombre: profesor.nombre,
-				universidad: profesor.universidad,
-				asignaturas : asignaturas_con_nota
-			};
-			console.log(JSON.stringify(profesor_para_vista));
-			res.render('profesor', {title: 'Qualiteacher | Calificar', profesor: profesor_para_vista})
+			res.render('profesor', {title: 'Qualiteacher | '+profesor.nombre, profesor: profesor});
 		}
 	});
 };

@@ -7,12 +7,8 @@ exports.lanzaScheduler = function()
 
 	/**
 	 * Cron cada día a las 23:00
-	 *
+	 */
 	var task = cron.schedule('0 0 23 * * *', function(){
-		UniversidadesController.calculaNotas();
-	});*/
-
-	var task = cron.schedule('0 * * * * *', function(){
 		UniversidadesController.calculaNotas();
 	});
 

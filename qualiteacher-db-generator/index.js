@@ -30,36 +30,53 @@ observer.on('change', function (change)
 	}
 });
 
+function convierteObjetosAJsonUnoPorLinea(objetos)
+{
+	var json = "";
+
+	console.log(chalk.bold.red(objetos.length))
+	for (var i = 0; i < objetos.length; i++)
+	{
+		objetos[i]._id = ObjectId(objetos[i]._id);
+		json += JSON.stringify(objetos[i]);
+
+		if (i < (objetos.length - 1))
+		{
+			json += "\r\n"
+		}
+	}
+	return json;
+}
+
 function generaDatos(universidades)
 {
 	var datos_generados;
 
 	datos_generados = fakerQualiteacher.generaDatosUniversidades(universidades);
 
-	var datos_universidades_json = JSON.stringify(datos_generados.datos_universidades);
-	var datos_carreras_json = JSON.stringify(datos_generados.datos_carreras);
-	var datos_asignaturas_json = JSON.stringify(datos_generados.datos_asignaturas);
-	var datos_profesores_json = JSON.stringify(datos_generados.datos_profesores);
+	var datos_universidades_json = convierteObjetosAJsonUnoPorLinea(datos_generados.datos_universidades);
+	var datos_carreras_json = convierteObjetosAJsonUnoPorLinea(datos_generados.datos_carreras);
+	var datos_asignaturas_json = convierteObjetosAJsonUnoPorLinea(datos_generados.datos_asignaturas);
+	var datos_profesores_json = convierteObjetosAJsonUnoPorLinea(datos_generados.datos_profesores);
 
 	try
 	{
 		fs.writeFileSync('./QualiteacherUniversidades.json', datos_universidades_json);
 
-		const mongoimport_universidades= spawn('mongoimport', ['--db', 'qualiteacher', '--collection', 'universidades', '--drop', '--file', './QualiteacherUniversidades.json', '--jsonArray']);
+		const mongoimport_universidades= spawn('mongoimport', ['--db', 'qualiteacher', '--collection', 'universidades', '--drop', '--type' , 'json', '--file', './QualiteacherUniversidades.json']);
 
 		mongoimport_universidades.stdout.on('data', (data) => {
 			console.log(chalk.bold.green('Resultado importacion universidades'));
-		console.log(chalk.bold.green(`stdout: ${data}`));
-	});
+		});
 
 		mongoimport_universidades.stderr.on('data', (data) => {
 			console.log(`stderr: ${data}`);
-	});
+		});
 
 		mongoimport_universidades.on('close', (code) => {
 			observer.set('fin_unis', true)
-		console.log(`Fin importacion universidades ${code}`);
-	});
+			console.log(`Fin importacion universidades ${code}`);
+		});
 	}
 	catch (err)
 	{
@@ -74,21 +91,21 @@ function generaDatos(universidades)
 	{
 		fs.writeFileSync('./QualiteacherCarreras.json', datos_carreras_json);
 
-		const mongoimport_carreras= spawn('mongoimport', ['--db', 'qualiteacher', '--collection', 'carreras', '--drop', '--file', './QualiteacherCarreras.json', '--jsonArray']);
+		const mongoimport_carreras= spawn('mongoimport', ['--db', 'qualiteacher', '--collection', 'carreras', '--drop', '--type' , 'json', '--file', './QualiteacherCarreras.json']);
 
 		mongoimport_carreras.stdout.on('data', (data) => {
 			console.log(chalk.bold.yellow('Resultado importacion carreras'));
-		console.log(chalk.bold.yellow(`stdout: ${data}`));
-	});
+			console.log(chalk.bold.yellow(`stdout: ${data}`));
+		});
 
 		mongoimport_carreras.stderr.on('data', (data) => {
 			console.log(`stderr: ${data}`);
-	});
+		});
 
 		mongoimport_carreras.on('close', (code) => {
 			observer.set('fin_carreras', true)
-		console.log(`Finalizada importación carreras ${code}`);
-	});
+			console.log(`Finalizada importación carreras ${code}`);
+		});
 
 	}
 	catch (err)
@@ -104,21 +121,21 @@ function generaDatos(universidades)
 	{
 		fs.writeFileSync('./QualiteacherAsignaturas.json', datos_asignaturas_json);
 
-		const mongoimport_asignaturas= spawn('mongoimport', ['--db', 'qualiteacher', '--collection', 'asignaturas', '--drop', '--file', './QualiteacherAsignaturas.json', '--jsonArray']);
+		const mongoimport_asignaturas= spawn('mongoimport', ['--db', 'qualiteacher', '--collection', 'asignaturas', '--drop', '--type' , 'json', '--file', './QualiteacherAsignaturas.json']);
 
 		mongoimport_asignaturas.stdout.on('data', (data) => {
 			console.log(chalk.bold.cyan('Resultado importacion asignaturas'));
-		console.log(chalk.bold.cyan(`stdout: ${data}`));
-	});
+			console.log(chalk.bold.cyan(`stdout: ${data}`));
+		});
 
-		mongoimport_asignaturas.stderr.on('data', (data) => {
+			mongoimport_asignaturas.stderr.on('data', (data) => {
 			console.log(`stderr: ${data}`);
-	});
+		});
 
 		mongoimport_asignaturas.on('close', (code) => {
 			observer.set('fin_asignaturas', true)
-		console.log(`Finalizada importacion asignaturas ${code}`);
-	});
+			console.log(`Finalizada importacion asignaturas ${code}`);
+		});
 
 	}
 	catch (err)
@@ -134,21 +151,21 @@ function generaDatos(universidades)
 	{
 		fs.writeFileSync('./QualiteacherProfesores.json', datos_profesores_json);
 
-		const mongoimport_profesores= spawn('mongoimport', ['--db', 'qualiteacher', '--collection', 'profesores', '--drop', '--file', './QualiteacherProfesores.json', '--jsonArray']);
+		const mongoimport_profesores= spawn('mongoimport', ['--db', 'qualiteacher', '--collection', 'profesores', '--drop', '--type' , 'json', '--file', './QualiteacherProfesores.json']);
 
 		mongoimport_profesores.stdout.on('data', (data) => {
 			console.log(chalk.bold.magenta('Resultado importacion asignaturas'));
-		console.log(chalk.bold.magenta(`stdout: ${data}`));
-	});
+			console.log(chalk.bold.magenta(`stdout: ${data}`));
+		});
 
 		mongoimport_profesores.stderr.on('data', (data) => {
 			console.log(`stderr: ${data}`);
-	});
+		});
 
 		mongoimport_profesores.on('close', (code) => {
 			observer.set('fin_profesores', true)
-		console.log(`Finalizada importacion profesores ${code}`);
-	});
+			console.log(`Finalizada importacion profesores ${code}`);
+		});
 
 	}
 	catch (err)

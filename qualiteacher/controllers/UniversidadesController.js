@@ -81,7 +81,7 @@ exports.calculaNotas = function()
 	cursor.eachAsync(function(universidad) {
 		CarrerasController.actualizaNotasCarreras(universidad)
 	})
-		.then(function()
+	.then(function()
 	{
 		console.log("Fin de la actualización de notas");
 	});
