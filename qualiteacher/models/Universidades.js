@@ -8,7 +8,7 @@ var UniversidadesSchema = new Schema({
 	nota: Number,
 	num_votos: Number,
 	dominio_email_alumnos: String,
-	alumnos: [{ type: String, ref: 'alumnos'}],
+	alumnos: [{ type: String, ref: 'Usuarios'}],
 	profesores: [{ type: String, ref: 'Profesores'}],
 	carreras: [{ type: String, ref: 'Carreras'}]
 });

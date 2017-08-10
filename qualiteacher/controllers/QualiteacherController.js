@@ -12,26 +12,46 @@ exports.home = function(req, res) {
 /* Busca la cadena introducida en el buscador de la página de inicio*/
 exports.buscar = function(req, res) {
 
-	var nombre = decodeURI(req.params.cadena);
+	var nombre = req.params.cadena;
 	var query = {'nombre': new RegExp(nombre, "i")};
 	console.log(query)
 
 	Universidades.find(query)
+	.select('_id nombre nota')
 	.limit(5)
 	.exec(function (err, universidades) {
 		if (err) console.log(err);
 
 		Carreras.find(query)
+			.select('_id nombre universidad nota')
+			.populate({
+				path: 'universidad',
+				select: '-_id nombre'
+			})
 			.limit(5)
 			.exec(function (err, carreras) {
 				if (err) console.log(err);
 
 				Asignaturas.find(query)
+					.select('_id nombre universidad carrera nota')
+					.populate({
+						path: 'carrera',
+						select: '-_id nombre'
+					})
+					.populate({
+						path: 'universidad',
+						select: '-_id nombre'
+					})
 					.limit(5)
 					.exec(function (err, asignaturas) {
 						if (err) console.log(err);
 
 						Profesores.find(query)
+							.select('_id nombre universidad nota')
+							.populate({
+								path: 'universidad',
+								select: '-_id nombre'
+							})
 							.limit(5)
 							.exec(function (err, profesores) {
 								if (err) console.log(err);

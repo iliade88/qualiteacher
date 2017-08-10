@@ -16,6 +16,24 @@ function formateaResultadosParaTypeahead(resultados)
 
 	return resultados_formateados;
 }
+
+function objetosResultadosParaTypeahead(resultados)
+{
+	var resultados_formateados = [];
+
+	resultados.universidades = resultados.universidades.map(function (item) { item['tipo'] = 'universidades'; return item } );
+	resultados.carreras = resultados.carreras.map(function (item) { item['tipo'] = 'carreras'; return item } );
+	resultados.asignaturas = resultados.asignaturas.map(function (item) { item['tipo'] = 'asignaturas'; return item } )
+	resultados.profesores = resultados.profesores.map(function (item) { item['tipo'] = 'profesores'; return item } )
+
+	resultados_formateados.push.apply(resultados_formateados, resultados.universidades);
+	resultados_formateados.push.apply(resultados_formateados, resultados.carreras)
+	resultados_formateados.push.apply(resultados_formateados, resultados.asignaturas)
+	resultados_formateados.push.apply(resultados_formateados, resultados.profesores)
+
+	return resultados_formateados;
+}
+
 QualiteacherApp.controller('inicioController', function($scope, $http) {
 
 	$scope.texto_buscar = "";
@@ -109,7 +127,41 @@ QualiteacherApp.controller('inicioController', function($scope, $http) {
 		});
 	}
 
-	$scope.resultados_busqueda = {};
+	$scope.resultados_busqueda = [];
+	$scope.resultado_seleccionado = {};
+
+	$(document).ready(function () {
+		$("#campo-buscador").typeahead({
+			source: function (query, process) {
+				$http
+					.get("/buscar/"+query)
+					.then(function(response)
+					{
+						$scope.resultados_busqueda = objetosResultadosParaTypeahead(response.data);
+
+						process($scope.resultados_busqueda)
+					},
+					function (error)
+					{
+						console.log(error)
+					});
+			},
+			updater: function (item) {
+				window.location.assign('/'+item.tipo+'/'+item._id);
+			},
+			matcher: function (item) {
+				if (item.nombre.toLowerCase().indexOf(this.query.trim().toLowerCase()) !== -1)
+					return true;
+			},
+			sorter: function (items) {
+				return items.sort(function(a,b) { return a.nombre.localeCompare(b.nombre) });
+			},
+			highlighter: function (item)
+			{
+				return '<p>'+item.nombre+' - '+item.nota+'</p>';
+			}
+		});
+	});
 
 	$scope.buscar = function(valor) {
 		console.log("Buscamos: "+valor);

@@ -29,18 +29,6 @@ function transformaADatasetParaGrafica(elementos)
 	};
 }
 
-function obtenerTopNProfesores(profesores, n)
-{
-	var profesoresOrdenados = profesores.sort(function (a, b) { return b.nota - a.nota})
-	return profesoresOrdenados.slice(0, n);
-}
-
-function obtenerTopNUniversidades(carreras, n)
-{
-	var carrerasOrdenadas = carreras.sort(function (a, b) { return b.nota - a.nota})
-	return carrerasOrdenadas.slice(0, n);
-}
-
 /*******************************************************************************
  * Controlador
  *******************************************************************************/
@@ -58,10 +46,8 @@ QualiteacherApp.controller('detalleUniversidadController', function ($scope)
 
 	$(document).ready(function ()
 	{
-		$scope.top_carreras = obtenerTopNUniversidades($scope.universidad.carreras, 5);
-		var dataset_carreras = transformaADatasetParaGrafica($scope.top_carreras);
-		$scope.top_profesores = obtenerTopNProfesores($scope.universidad.profesores, 5);
-		var dataset_profesores = transformaADatasetParaGrafica($scope.top_profesores);
+		var dataset_carreras = transformaADatasetParaGrafica($scope.universidad.carreras);
+		var dataset_profesores = transformaADatasetParaGrafica($scope.universidad.profesores);
 
 		//Chart Carreras - $("#ranking-carreras")
 		var canvas_carreras = document.getElementById('ranking-carreras');

@@ -14,7 +14,7 @@ var ProfesoresSchema = new Schema({
 		num_nota_pp: [[Number]],
 		num_votos: Number
 	}],
-	universidad: { type: String, ref: 'Universidad' }
+	universidad: { type: String, ref: 'Universidades' }
 });
 
 mongoose.model('Profesores', ProfesoresSchema);

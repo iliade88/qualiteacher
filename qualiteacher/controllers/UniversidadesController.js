@@ -15,6 +15,22 @@ exports.findAll = function(req, res) {
 };
 
 /**
+ * Buscar universidad por nombre
+ */
+exports.buscarUniversidad = function(req, res) {
+
+	var query = {'nombre': new RegExp(req.params.cadena, "i")};
+	Universidades.find(query)
+		.select('_id nombre')
+		.exec(function(err, universidad) {
+		if(err) res.send(500, err.message);
+
+		console.log('BuscarUniversidades')
+		res.status(200).jsonp(universidad);
+	});
+};
+
+/**
 * Recibido un alumno lo añadimos al vector de alumnos de la universidad
 **/
 exports.anyadirAlumno = function(req, nuevo_alumno, next) {
@@ -37,6 +53,12 @@ exports.anyadirAlumno = function(req, nuevo_alumno, next) {
 	})
 };
 
+function obtenerTopN(objs, n)
+{
+	var objsOrdenados = objs.sort(function (a, b) { return b.nota - a.nota})
+	return objsOrdenados.slice(0, n);
+}
+
 /**
  * Recuperar datos de la universidad y mostrar vista detalle
  */
@@ -54,9 +76,8 @@ exports.detalleUniversidad = function (req, res) {
 			}
 			else
 			{
-				var top_five_carreras = [];
-				var top_five_profesores = [];
-
+				universidad.carreras = obtenerTopN(universidad.carreras, 5);
+				universidad.profesores = obtenerTopN(universidad.profesores, 5);
 
 				console.log(universidad)
 				res.render('universidad', {title: ('Qualiteacher | '+universidad.nombre), universidad: universidad})

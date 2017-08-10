@@ -26,6 +26,7 @@ exports.findByName = function (req, res) {
 	var query = {'nombre': new RegExp(nombre, "i")};
 
 	Profesores.find(query)
+	.select('_id nombre')
 	.exec(function (err, profesores) {
 		if (err) console.log(err);
 

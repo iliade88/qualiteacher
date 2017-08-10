@@ -101,7 +101,6 @@ function generaNombreGrado()
 		"Economía",
 		"Economía Financiera",
 		"Economía Política",
-		"Economía por la Universidad",
 		"Economía y Finanzas",
 		"Educación Infantil",
 		"Educación Primaria",
@@ -113,8 +112,8 @@ function generaNombreGrado()
 		"Estadística Aplicada",
 		"Estadística Empresarial",
 		"Estadística y Empresa",
-		"Estudios Árabes e Islámicos",
-		"Estudios Árabes y Hebreos",
+		"Estudios Árabes e Islámicos",
+		"Estudios Árabes y Hebreos",
 		"Estudios Alemanes",
 		"Estudios Clásicos",
 		"Estudios de Asia Oriental ",
@@ -363,7 +362,7 @@ function buscaAsignatura(array, id_asignatura)
 
 function generaVotoProfesor(profesor, asignatura)
 {
-	var num_votos_asignatura = getRandomInt(1, 4);
+	var num_votos_asignatura = getRandomInt(0, 200);
 
 	for (var i = 0; i < num_votos_asignatura; i++)
 	{
@@ -454,8 +453,8 @@ function buscarProfesorAsignatura(asignatura, id_profesor)
 
 function generaDatosCarrera(carrera, universidad, datos_asignaturas, datos_profesores)
 {
-	var num_asignaturas_carrera = getRandomInt(3, 6);
-	var num_profesores_carrera = getRandomInt(10, 15);
+	var num_asignaturas_carrera = getRandomInt(40, 60);
+	var num_profesores_carrera = getRandomInt(80, 100);
 	var asignaturas_carrera = [];
 	var profesores_carrera = [];
 
@@ -478,7 +477,7 @@ function generaDatosCarrera(carrera, universidad, datos_asignaturas, datos_profe
 
 	for (var i = 0; i < num_asignaturas_carrera; i++)
 	{
-		var num_profesores_asignatura = getRandomInt(1, 4);
+		var num_profesores_asignatura = getRandomInt(1, 6);
 
 		for (var j = 0; j < num_profesores_asignatura; j++)
 		{
@@ -534,7 +533,7 @@ exports.generaDatosUniversidades = function(universidades)
 		universidad.nota = 0;
 		universidad.num_votos = 0;
 
-		var num_carreras = getRandomInt(4, 8);
+		var num_carreras = getRandomInt(10, 25);
 		console.log(chalk.bold.green("UNIVERSIDADES:" + i + " - " + universidad.nombre));
 
 		for (var j = 0; j < num_carreras; j++)
