@@ -17,30 +17,30 @@ exports.buscar = function(req, res) {
 	console.log(query)
 
 	Universidades.find(query)
-	.select('_id nombre nota')
+	.select('_id nombre')
 	.limit(5)
 	.exec(function (err, universidades) {
 		if (err) console.log(err);
 
 		Carreras.find(query)
-			.select('_id nombre universidad nota')
+			.select('_id nombre universidad')
 			.populate({
 				path: 'universidad',
-				select: '-_id nombre'
+				select: 'nombre'
 			})
 			.limit(5)
 			.exec(function (err, carreras) {
 				if (err) console.log(err);
 
 				Asignaturas.find(query)
-					.select('_id nombre universidad carrera nota')
+					.select('_id nombre universidad carrera')
 					.populate({
 						path: 'carrera',
-						select: '-_id nombre'
+						select: 'nombre'
 					})
 					.populate({
 						path: 'universidad',
-						select: '-_id nombre'
+						select: 'nombre'
 					})
 					.limit(5)
 					.exec(function (err, asignaturas) {
@@ -50,7 +50,7 @@ exports.buscar = function(req, res) {
 							.select('_id nombre universidad nota')
 							.populate({
 								path: 'universidad',
-								select: '-_id nombre'
+								select: 'nombre'
 							})
 							.limit(5)
 							.exec(function (err, profesores) {

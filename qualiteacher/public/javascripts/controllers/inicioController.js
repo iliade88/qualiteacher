@@ -21,10 +21,23 @@ function objetosResultadosParaTypeahead(resultados)
 {
 	var resultados_formateados = [];
 
-	resultados.universidades = resultados.universidades.map(function (item) { item['tipo'] = 'universidades'; return item } );
-	resultados.carreras = resultados.carreras.map(function (item) { item['tipo'] = 'carreras'; return item } );
-	resultados.asignaturas = resultados.asignaturas.map(function (item) { item['tipo'] = 'asignaturas'; return item } )
-	resultados.profesores = resultados.profesores.map(function (item) { item['tipo'] = 'profesores'; return item } )
+	resultados.universidades = resultados.universidades.map(function (item) {
+		item['ico'] = '/images/glyphicons/glyphicon-universidad.png';
+		item['tipo'] = 'Universidades';
+		return item
+	});
+	resultados.carreras = resultados.carreras.map(function (item) {
+		item['ico'] = '/images/glyphicons/glyphicon-carrera.png';
+		item['tipo'] = 'Carreras'; return item
+	});
+	resultados.asignaturas = resultados.asignaturas.map(function (item) {
+		item['ico'] = '/images/glyphicons/glyphicon-asignatura.png';
+		item['tipo'] = 'Asignaturas'; return item
+	});
+	resultados.profesores = resultados.profesores.map(function (item) {
+		item['ico'] = '/images/glyphicons/glyphicon-profesor.png';
+		item['tipo'] = 'Profesores'; return item
+	});
 
 	resultados_formateados.push.apply(resultados_formateados, resultados.universidades);
 	resultados_formateados.push.apply(resultados_formateados, resultados.carreras)
@@ -32,6 +45,26 @@ function objetosResultadosParaTypeahead(resultados)
 	resultados_formateados.push.apply(resultados_formateados, resultados.profesores)
 
 	return resultados_formateados;
+}
+
+function templateSegunTipo(item)
+{
+	var template = '<div>'
+		+'<img style="display: inline-block" src="'+item.ico+'" title="'+item.tipo+'"/> '
+		+'<p style="display: inline-block; padding-left: 5px;" >'+item.nombre;
+
+	if (item.tipo.localeCompare('Carreras') === 0 || item.tipo.localeCompare('Profesores') === 0)
+	{
+		template += ' - ' + item.universidad.nombre;
+	}
+	else if (item.tipo.localeCompare('Asignaturas') === 0)
+	{
+		template += ' - ' + item.carrera.nombre + ' - ' + item.universidad.nombre;
+	}
+
+	template += '</p></div>';
+
+	return template;
 }
 
 QualiteacherApp.controller('inicioController', function($scope, $http) {
@@ -147,19 +180,21 @@ QualiteacherApp.controller('inicioController', function($scope, $http) {
 					});
 			},
 			updater: function (item) {
-				window.location.assign('/'+item.tipo+'/'+item._id);
+				window.location.assign('/'+item.tipo.toLowerCase()+'/'+item._id);
 			},
 			matcher: function (item) {
 				if (item.nombre.toLowerCase().indexOf(this.query.trim().toLowerCase()) !== -1)
 					return true;
 			},
 			sorter: function (items) {
-				return items.sort(function(a,b) { return a.nombre.localeCompare(b.nombre) });
+				return items.sort(function(a,b) {
+					var tipo = a.tipo.localeCompare(b.tipo);
+					if (tipo === 0)
+						return a.nombre.localeCompare(b.nombre);
+					return tipo;
+				});
 			},
-			highlighter: function (item)
-			{
-				return '<p>'+item.nombre+' - '+item.nota+'</p>';
-			}
+			highlighter: function (item) { return templateSegunTipo(item) }
 		});
 	});
 
