@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var Tops = new Schema({
+var TopsSchema = new Schema({
 	universidades : [{
 		_id: { type: String, ref: 'Universidades'},
 		nombre: String,
@@ -27,7 +27,8 @@ var Tops = new Schema({
 		nombre_carrera: String,
 		nombre_asignatura: String,
 		nota: Number
-	}]
+	}],
+	fecha: { type: Date, default: Date.now }
 });
 
 mongoose.model('Tops', TopsSchema);

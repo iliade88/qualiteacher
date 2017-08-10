@@ -1,5 +1,3 @@
-
-
 exports.generaMatrizRecuentoNotasPorPregunta = function()
 {
 	var recuento_notas_por_pregunta = [10];
@@ -76,4 +74,4 @@ exports.addNumNotasPP = function(num_notas_pp, num_votos, num_notas_pp_add, num_
 		}
 	}
 	num_votos += num_votos_add
-}
+};

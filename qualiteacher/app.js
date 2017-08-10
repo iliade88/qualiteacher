@@ -12,6 +12,7 @@ require('./models/Usuarios');
 require('./models/Profesores');
 require('./models/Asignaturas');
 require('./models/Carreras');
+require('./models/Tops');
 
 //Lanzamos el proceso periódico para calcular las notas
 var cronCalculaNotas = require('./cron-jobs/cronCalculaNotas')
