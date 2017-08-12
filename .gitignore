@@ -2,3 +2,5 @@
 node_modules/
 #Ignorar archivos .json generados por el generador de datos de db
 qualiteacher-db-generator/Qualiteacher*.json
+.idea
+.idea/*
