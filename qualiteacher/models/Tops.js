@@ -24,8 +24,6 @@ var TopsSchema = new Schema({
 		_id: { type: String, ref: 'Profesores'},
 		nombre: String,
 		nombre_universidad: String,
-		nombre_carrera: String,
-		nombre_asignatura: String,
 		nota: Number
 	}],
 	fecha: { type: Date, default: Date.now }

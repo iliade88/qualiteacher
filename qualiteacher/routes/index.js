@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var QualiteacherController = require('../controllers/QualiteacherController.js');
+var UtilsController = require('../controllers/UtilsController.js');
 
 /* GET home page. */
 router.get('/', QualiteacherController.home);

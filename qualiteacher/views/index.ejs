@@ -1,29 +1,42 @@
-<%include modular/header%>
+<% include modular/header %>
 <!--Contenido-->
-<div class="container-fluid" ng-controller="inicioController" ng-init="init()">
-	<section id="buscador" class="buscador section offset-header">
-		<div class="container text-center">
-			<label for="campo-buscar">Encuentra tu universidad, carrera o profesor</label>
-			<div class="form-group row">
-				<input
-							id="campo-buscador"
-							data-provide="typeahead"
-							placeholder="Ej: Universidad de Murcia, Domingo Gallardo..."
-							class="typeahead form-control">
-		</div>
-		<div class="divider-black"></div>
-	</section>
-	<section id="top-five-uni-esp" class="top-five-uni-esp section container-fluid">
-		<h2>Las 5 universidades mejor valoradas</h2>
-		<div class="chart-container col-xs-12 col-sm-12 col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8">
-			<canvas id="ranking-universidades"></canvas>
-		</div>
-	</section>
-	<section id="top-five-profesores-esp" class="top-five-profesores-esp section container-fluid">
-		<h2>Los 5 profesores mejor valorados</h2>
-		<div class="chart-container col-xs-12 col-sm-12 col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8">
-			<canvas id="ranking-profesores" ></canvas>
-		</div>
-	</section>
+<div class="container-fluid" ng-controller="inicioController" ng-init="init('<%= JSON.stringify(top) %>')">
+    <section id="buscador" class="buscador section offset-header">
+        <div class="container text-center">
+            <label for="campo-buscar">Encuentra tu universidad, carrera, asignatura o profesor</label>
+            <div class="form-group row">
+                <input
+                        id="campo-buscador"
+                        data-provide="typeahead"
+                        placeholder="Ej: Universidad de Murcia, Domingo Gallardo..."
+                        class="typeahead form-control">
+            </div>
+        </div>
+        <div class="divider-black"></div>
+    </section>
+    <section id="top-five-uni" class="top-five-uni-esp section container-fluid">
+        <h2>Las 5 universidades mejor valoradas</h2>
+        <div class="chart-container col-xs-12 col-sm-12 col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8">
+            <canvas id="ranking-universidades"></canvas>
+        </div>
+    </section>
+    <section id="top-five-carreras" class="top-five-carreras-esp section container-fluid">
+        <h2>Las 5 carreras mejor valoradas</h2>
+        <div class="chart-container col-xs-12 col-sm-12 col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8">
+            <canvas id="ranking-carreras"></canvas>
+        </div>
+    </section>
+    <section id="top-five-asignaturas" class="top-five-asignaturas-esp section container-fluid">
+        <h2>Las 5 asignaturas mejor valoradas</h2>
+        <div class="chart-container col-xs-12 col-sm-12 col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8">
+            <canvas id="ranking-asignaturas"></canvas>
+        </div>
+    </section>
+    <section id="top-five-profesores" class="top-five-profesores-esp section container-fluid">
+        <h2>Los 5 profesores mejor valorados</h2>
+        <div class="chart-container col-xs-12 col-sm-12 col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8">
+            <canvas id="ranking-profesores"></canvas>
+        </div>
+    </section>
 </div>
 <% include modular/footer %>
