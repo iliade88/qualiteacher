@@ -11,7 +11,7 @@ var ProfesoresSchema = new Schema({
 	notas_asignaturas_prof: [{
 		asignatura : { type: String, ref: 'Asignaturas' },
 		nota_asignatura: Number,
-		num_nota_pp: [[Number]],
+		num_notas_pp: [[Number]],
 		num_votos: Number
 	}],
 	universidad: { type: String, ref: 'Universidades' }

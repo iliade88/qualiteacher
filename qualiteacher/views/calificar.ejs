@@ -1,12 +1,9 @@
 <%include modular/header%>
-<script>
-    var profesor = <%- JSON.stringify(profesor) %>
-</script>
 <section ng-controller="calificarController" class="section container-fluid">
-    <form name="formCalificar" ng-init="init()" ng-submit="submitForm(formData)">
+    <form name="formCalificar" ng-init="init('<%= JSON.stringify(profesor) %>')" ng-submit="submitForm(formData)" ng-cloak>
         <div class="form-group">
             <div class="container">
-                <h2>Encuesta de calidad de <%=profesor.nombre%></h2>
+                <h2>Encuesta de calidad de {{profesor.nombre}}</h2>
                 <hr>
                 <input type="hidden" name="profesor" ng-model="formData.profesor"/>
                 <label for="asignatura">Asignatura a calificar: </label>

@@ -1,14 +1,26 @@
 var QualiteacherApp = angular.module("Qualiteacher");
 
-QualiteacherApp.controller('calificarController', function($scope, $http) {
+QualiteacherApp.controller('calificarController', function($scope, $http, $localStorage) {
 
+	$scope.profesor = {}
 	$scope.formData = {};
 	$scope.asignaturas = []
+	$scope.universidadUsuario = undefined
 
-	$scope.init = function () {
-		$scope.formData.profesor = window.profesor._id;
-		$scope.formData.asignatura = window.profesor.asignaturas[0];
-		$scope.asignaturas = window.profesor.asignaturas;
+	$scope.init = function (profesor) {
+		$scope.profesor = JSON.parse(profesor);
+		$scope.formData.profesor = $scope.profesor._id;
+
+		for (var i = 0; i < $scope.profesor.notas_asignaturas_prof.length; i++)
+		{
+			$scope.asignaturas.push($scope.profesor.notas_asignaturas_prof[i].asignatura)
+		}
+		$scope.formData.asignatura = $scope.asignaturas[0];
+
+		$scope.universidadUsuario = $localStorage.usuarioQualiteacher || undefined;
+
+		console.log($scope.profesor)
+		console.log($scope.asignaturas)
 	};
 
 	$scope.transformaSinOpinion = function (nota) {
@@ -22,7 +34,7 @@ QualiteacherApp.controller('calificarController', function($scope, $http) {
 
 		console.log(JSON.stringify(datos));
 
-		var url = "/profesores/"+datos.profesor+"/"+datos.asignatura._id+"/calificar";
+		var url = "/profesores/" + datos.profesor + "/" + datos.asignatura._id + "/calificar";
 
 		/* Si se ha seleccionado "Sin opinión" cambiamos el valor -1 por un 5 para hacer neutral la respuesta. */
 		datos.pr1 = $scope.transformaSinOpinion(datos.pr1);
@@ -36,32 +48,46 @@ QualiteacherApp.controller('calificarController', function($scope, $http) {
 		datos.pr9 = $scope.transformaSinOpinion(datos.pr9);
 		datos.pr10 = $scope.transformaSinOpinion(datos.pr10);
 
-		$http
-			.post(url,
-				{
-					pr1: datos.pr1,
-					pr2: datos.pr2,
-					pr3: datos.pr3,
-					pr4: datos.pr4,
-					pr5: datos.pr5,
-					pr6: datos.pr6,
-					pr7: datos.pr7,
-					pr8: datos.pr8,
-					pr9: datos.pr9,
-					pr10: datos.pr10,
-					anonimo: datos.anonimo,
-					usuario: datos.usuario
-				})
-			.then(
-				function (response)
-				{
-					alert("Calificación registrada");
-					console.log(response)
-				},
-				function (response) {
-					alert("Ocurrió un error, inténtelo de nuevo más tarde");
-					console.log(response)
-				});
-	};
+		if ($scope.universidadUsuario === undefined) {
+			alert("Debes acceder con tu cuenta para poder votar.");
+		}
+		else if ($scope.profesor.universidad.localeCompare($scope.universidadUsuario.universidad) === 0) {
+			$http
+				.post(url,
+					{
+						pr1: datos.pr1,
+						pr2: datos.pr2,
+						pr3: datos.pr3,
+						pr4: datos.pr4,
+						pr5: datos.pr5,
+						pr6: datos.pr6,
+						pr7: datos.pr7,
+						pr8: datos.pr8,
+						pr9: datos.pr9,
+						pr10: datos.pr10,
+						anonimo: datos.anonimo,
+						usuario: $scope.universidadUsuario.nick
+					},
+					{
+						headers: {
+							'Authorization': 'Bearer '+$scope.universidadUsuario.token
+						}
+					})
+				.then(
+					function (response) {
+						alert("Calificación registrada");
+						console.log(response)
+					},
+					function (response) {
+						if (response.status !== 200) {
+							alert("Debes acceder con tu cuenta para poder votar.");
+						}
 
+						console.log(response)
+					});
+		}
+		else {
+			alert("No puedes votar a este profesor porque no pertenece a tu universidad.");
+		}
+	}
 });

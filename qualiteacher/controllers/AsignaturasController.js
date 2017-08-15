@@ -43,16 +43,14 @@ exports.detalleAsignatura = function (req, res) {
 
 exports.actualizarNotasAsignatura = function (id_asignatura, calificacion)
 {
-	Asignaturas.findOne()
-		.where('_id')
-		.equal(id_asignatura)
+	Asignaturas.findOne({'_id': id_asignatura})
 		.exec(function (err, asignatura) {
 			if (asignatura.num_notas_pp === null || asignatura.num_notas_pp === undefined) {
 				asignatura.num_notas_pp = UtilsController.generaMatrizRecuentoNotasPorPregunta();
 				asignatura.num_votos = 0;
 			}
 
-			UtilsController.sumaVotoANumNotasPP(asignatura.num_notas_pp, asignatura.num_votos, calificacion);
+			UtilsController.sumaVotoANumNotasPP(asignatura, calificacion);
 			asignatura.nota = UtilsController.recalculaNota(asignatura.num_notas_pp, asignatura.num_votos)
 
 			asignatura
@@ -62,8 +60,7 @@ exports.actualizarNotasAsignatura = function (id_asignatura, calificacion)
 						return next(err);
 					}
 
-					console.log("Asignatura v actualizada")
-					console.log(asignatura)
+					console.log("Asignatura actualizada")
 				});
 		});
 };

@@ -26,18 +26,17 @@ exports.buscaAsignatura = function(array, id_asignatura)
 
 /**
  * Cuenta las veces que se ha dado una calificación y aumenta el número de votos
- * @param num_notas_pp
- * @param num_votos
+ * @param obj
  * @param calificacion
  */
-exports.sumaVotoANumNotasPP = function(num_notas_pp, num_votos, calificacion)
+exports.sumaVotoANumNotasPP = function(obj, calificacion)
 {
 	for (var i = 0; i < calificacion.length; i++)
 	{
 		var nota_pregunta = calificacion[i];
-		num_notas_pp[i][nota_pregunta]++;
+		obj.num_notas_pp[i][nota_pregunta]++;
 	}
-	num_votos++;
+	return obj.num_votos++;
 }
 
 /**

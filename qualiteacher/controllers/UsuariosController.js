@@ -85,6 +85,7 @@ exports.login = function (req, res, next)
 						nick: usuario.nick,
 						email: usuario.email,
 						img: usuario.img,
+						universidad: usuario.universidad,
 						token: usuario.token
 					}
 					res.status(200).send({usuario: usuario_local_storage});
