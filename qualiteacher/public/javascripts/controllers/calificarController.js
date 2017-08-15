@@ -5,7 +5,6 @@ QualiteacherApp.controller('calificarController', function($scope, $http, $local
 	$scope.profesor = {}
 	$scope.formData = {};
 	$scope.asignaturas = []
-	$scope.universidadUsuario = undefined
 
 	$scope.init = function (profesor) {
 		$scope.profesor = JSON.parse(profesor);
@@ -16,8 +15,16 @@ QualiteacherApp.controller('calificarController', function($scope, $http, $local
 			$scope.asignaturas.push($scope.profesor.notas_asignaturas_prof[i].asignatura)
 		}
 		$scope.formData.asignatura = $scope.asignaturas[0];
-
-		$scope.universidadUsuario = $localStorage.usuarioQualiteacher || undefined;
+		$scope.formData.pr1 = -1
+		$scope.formData.pr2 = -1
+		$scope.formData.pr3 = -1
+		$scope.formData.pr4 = -1
+		$scope.formData.pr5 = -1
+		$scope.formData.pr6 = -1
+		$scope.formData.pr7 = -1
+		$scope.formData.pr8 = -1
+		$scope.formData.pr9 = -1
+		$scope.formData.pr10 = -1
 
 		console.log($scope.profesor)
 		console.log($scope.asignaturas)
@@ -48,10 +55,12 @@ QualiteacherApp.controller('calificarController', function($scope, $http, $local
 		datos.pr9 = $scope.transformaSinOpinion(datos.pr9);
 		datos.pr10 = $scope.transformaSinOpinion(datos.pr10);
 
-		if ($scope.universidadUsuario === undefined) {
+		var universidadUsuario = $localStorage.usuarioQualiteacher || undefined;
+
+		if (universidadUsuario === undefined) {
 			alert("Debes acceder con tu cuenta para poder votar.");
 		}
-		else if ($scope.profesor.universidad.localeCompare($scope.universidadUsuario.universidad) === 0) {
+		else if ($scope.profesor.universidad.localeCompare(universidadUsuario.universidad) === 0) {
 			$http
 				.post(url,
 					{
@@ -66,11 +75,11 @@ QualiteacherApp.controller('calificarController', function($scope, $http, $local
 						pr9: datos.pr9,
 						pr10: datos.pr10,
 						anonimo: datos.anonimo,
-						usuario: $scope.universidadUsuario.nick
+						usuario: universidadUsuario.nick
 					},
 					{
 						headers: {
-							'Authorization': 'Bearer '+$scope.universidadUsuario.token
+							'Authorization': 'Bearer '+universidadUsuario.token
 						}
 					})
 				.then(
@@ -79,9 +88,12 @@ QualiteacherApp.controller('calificarController', function($scope, $http, $local
 						console.log(response)
 					},
 					function (response) {
-						if (response.status !== 200) {
-							alert("Debes acceder con tu cuenta para poder votar.");
+
+						if(response.data.error)
+						{
+							alert(response.data.error);
 						}
+						else alert("Ocurrió un error, inténtalo de nuevo más tarde")
 
 						console.log(response)
 					});

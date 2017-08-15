@@ -32,7 +32,7 @@ exports.findByName = function (req, res) {
 		if (err) console.log(err);
 
 		if (profesores === null)
-			res.status(400).send({"error": "No existen profesores con ese nombre"})
+			res.status(400).send({error: "No existen profesores con ese nombre"})
 		else
 			res.send(profesores);
 	});
@@ -44,7 +44,7 @@ exports.findById = function (req,res) {
 		.findOne({'_id': req.params.id})
 		.exec(function (err, profesor) {
 
-			if (err) { console.log(err); res.status(400).send(); }
+			if (err) { console.log(err); res.status(400).send({error: err.message}); }
 
 			res.status(200).send(profesor);
 		});
@@ -140,11 +140,10 @@ exports.vistaCalificar = function (req, res) {
 
 		if (profesor === null)
 		{
-			res.status(400).send({"error": "Ese profesor no existe"})
+			res.status(400).send({error: "Ese profesor no existe"})
 		}
 		else
 		{
-			console.log(JSON.stringify(profesor));
 			res.render('calificar', {title: 'Qualiteacher | Calificar', profesor: profesor})
 		}
 	});
@@ -208,7 +207,7 @@ exports.calificarProfesor = function (req, res, next) {
 
 		if (profesor === null)
 		{
-			res.status(400).send({"error": "Ese profesor no existe"})
+			res.status(400).send({error: "Ese profesor no existe"})
 		}
 		else
 		{

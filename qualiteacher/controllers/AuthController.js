@@ -15,7 +15,7 @@ exports.ensureAuthenticated = function(req, res, next) {
 	if(!req.headers.authorization) {
 		return res
 			.status(403)
-			.send({message: "Tu petición no tiene cabecera de autorización"});
+			.send({error: "Tu petición no tiene cabecera de autorización"});
 	}
 
 	var auth_tokens = req.headers.authorization.split(" ");
@@ -24,7 +24,7 @@ exports.ensureAuthenticated = function(req, res, next) {
 	{
 		return res
 			.status(403)
-			.send({message: "Tu petición no tiene token"});
+			.send({error: "Tu petición no tiene token"});
 	}
 
 	try {
@@ -35,7 +35,7 @@ exports.ensureAuthenticated = function(req, res, next) {
 		if(payload.exp <= moment().unix()) {
 			return res
 				.status(401)
-				.send({message: "El token ha expirado"});
+				.send({error: "El token ha expirado"});
 		}
 
 		req.user = payload.sub;
@@ -44,7 +44,7 @@ exports.ensureAuthenticated = function(req, res, next) {
 	catch(err)
 	{
 		console.log(err);
-		return res.status(401).send({message: 'Ocurrió un error en el servidor, por favor, inténtalo de nuevo más tarde.'});
+		return res.status(401).send({error: 'Ocurrió un error en el servidor, por favor, inténtalo de nuevo más tarde.'});
 	}
 
 };

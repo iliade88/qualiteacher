@@ -52,7 +52,7 @@ exports.anyadirUsuario = function(req, res, next) {
 		}
 		else
 		{
-			res.status(400).send({"error": "Ya existe ese nick"});
+			res.status(400).send({error: "Ya existe ese nick"});
 		}
 	})
 };
@@ -68,8 +68,7 @@ exports.login = function (req, res, next)
 		//Si el nick no existe en la db
 		if (usuario === null)
 		{
-			console.log("401-1")
-			res.status(401).send({"error": "Credenciales no válidas"});
+			res.status(401).send({error: "Credenciales no válidas"});
 		}
 		else
 		{
@@ -92,8 +91,7 @@ exports.login = function (req, res, next)
 				});
 			}
 			else {
-				console.log("401")
-				res.status(401).send({"error": "Credenciales no válidas"});
+				res.status(401).send({error: "Credenciales no válidas"});
 			}
 		}
 	})

@@ -72,7 +72,7 @@ exports.detalleUniversidad = function (req, res) {
 
 			if (universidad === null)
 			{
-				res.status(400).send({"error": "Esa universidad no existe"})
+				res.status(400).send({error: "Esa universidad no existe"})
 			}
 			else
 			{

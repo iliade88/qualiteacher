@@ -31,7 +31,7 @@ exports.detalleAsignatura = function (req, res) {
 
 			if (asignatura === null)
 			{
-				res.status(400).send({"error": "Esa asignatura no existe"})
+				res.status(400).send({error: "Esa asignatura no existe"})
 			}
 			else
 			{
