@@ -8,6 +8,7 @@ var UsuariosSchema = new Schema({
 	nick: String,
 	email: String,
 	contrasenya: String,
+	token: String,
 	universidad: { type: String, ref: 'Universidades', required: true },
 	votos: [{
 		profesor: { type: String, ref: 'Profesores' },

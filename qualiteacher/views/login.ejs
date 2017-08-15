@@ -1,0 +1,39 @@
+<%include modular/header%>
+<section ng-controller="loginController" class="section container-fluid">
+    <form name="formLogin" ng-submit="login()" class="form-horizontal text-center">
+        <legend>Login</legend>
+        <div id="error-div"></div>
+        <div class="form-group">
+            <label for="nickname" class="col-lg-3 control-label">Nombre de usuario</label>
+            <div class="col-lg-6">
+                <input
+                        type="text"
+                        id="nickname"
+                        name="nickname"
+                        ng-model="username"
+                        class="form-control"
+                        placeholder="Introduce tu nombre de usuario..."
+                        required/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="contrasenya" class="col-lg-3 control-label">Contraseña</label>
+            <div class="col-lg-6">
+                <input
+                        type="password"
+                        id="contrasenya"
+                        name="contrasenya"
+                        ng-model="contrasenya"
+                        class="form-control"
+                        placeholder="Tu contraseña..."
+                        required />
+            </div>
+        </div>
+        <div class="form-group text-center">
+            <button
+                    type="submit"
+                    class="btn btn-success">Acceder</button>
+        </div>
+    </form>
+</section>
+<% include modular/footer %>

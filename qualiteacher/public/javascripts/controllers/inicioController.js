@@ -1,4 +1,4 @@
-var QualiteacherApp = angular.module("Qualiteacher", ['ngMessages', 'ui.bootstrap']);
+var QualiteacherApp = angular.module("Qualiteacher", ['ngMessages', 'ui.bootstrap', 'ngStorage']);
 
 
 function formateaResultadosParaTypeahead(resultados) {

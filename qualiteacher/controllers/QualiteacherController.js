@@ -3,19 +3,18 @@ var Universidades = mongoose.model('Universidades');
 var Carreras = mongoose.model('Carreras');
 var Asignaturas = mongoose.model('Asignaturas');
 var Profesores = mongoose.model('Profesores');
-var Tops = mongoose.model('Tops');
+
+var TopsController = require('./TopsController');
 
 /* Muestra la vista de inicio */
 exports.home = function(req, res) {
-	Tops
-	.find()
-	.sort('-fecha')
-	.limit(1)
-	.exec(function (err, top)
-	{
-		if (err) console.log(err);
-		res.render('index', { title: 'Qualiteacher', top: top });
-	});
+	TopsController
+		.getTops()
+		.exec(function (err, top)
+		{
+			if (err) console.log(err);
+			res.render('index', { title: 'Qualiteacher', top: top });
+		});
 }
 
 /* Busca la cadena introducida en el buscador de la página de inicio*/
@@ -77,6 +76,11 @@ exports.buscar = function(req, res) {
 					});
 			});
 	});
+}
+
+/* Muestra la vista de registro */
+exports.login = function(req, res) {
+	res.render('login', {title : 'Qualiteacher | Login'});
 }
 
 /* Muestra la vista de registro */

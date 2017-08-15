@@ -11,6 +11,9 @@ router.get('/', QualiteacherController.home);
 router.get('/buscar/:cadena', QualiteacherController.buscar);
 
 /* GET - Página registro. */
+router.get('/login', QualiteacherController.login);
+
+/* GET - Página registro. */
 router.get('/registro', QualiteacherController.registro);
 
 /* GET - Página registro Correcto. */

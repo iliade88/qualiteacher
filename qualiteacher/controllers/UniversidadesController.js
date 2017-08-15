@@ -33,14 +33,14 @@ exports.buscarUniversidad = function(req, res) {
 /**
 * Recibido un alumno lo añadimos al vector de alumnos de la universidad
 **/
-exports.anyadirAlumno = function(req, nuevo_alumno, next) {
+exports.anyadirAlumno = function(req, id_nuevo_alumno, next) {
 	
 	Universidades.findOne({_id : req.body.universidad}, function(err, universidad){
 
 		if(err) { console.log(err); return next(err);}
 		
 		console.log("\r\nVamos a añadir alumno a: "+universidad)
-		universidad.alumnos.push(nuevo_alumno._id);
+		universidad.alumnos.push(id_nuevo_alumno);
 		
 		console.log("\r\nAñadido alumno a: "+universidad)
 		universidad.save(function(err, universidad){

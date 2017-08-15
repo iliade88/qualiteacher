@@ -1,13 +1,19 @@
 var express = require('express');
-var UsuariosRouter = express.Router();
+var router = express.Router();
 
 var UsuariosController = require('../controllers/UsuariosController.js');
 
 /* GET users listing */
 /* TODO - comentar para que no nos roben los usuarios antes de entregar */
-UsuariosRouter.get('/', UsuariosController.findUsers);
+router.get('/', UsuariosController.findUsers);
+
+/* POST registro usuario */
+router.post('/', UsuariosController.anyadirUsuario);
 
 /* POST nuevo usuario */
-UsuariosRouter.post('/', UsuariosController.anyadirUsuario);
+router.post('/registro', UsuariosController.anyadirUsuario);
 
-module.exports = UsuariosRouter;
+/* POST nuevo usuario */
+router.post('/login', UsuariosController.login);
+
+module.exports = router;
