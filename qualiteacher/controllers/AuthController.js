@@ -2,11 +2,11 @@ var config = require('../config');
 var jwt = require('jwt-simple');
 var moment = require('moment');
 
-exports.crearToken = function(usuario) {
+exports.crearToken = function(usuario, dias) {
 	var payload = {
 		sub: usuario._id,
 		iat: moment().unix(),
-		exp: moment().add(14, "days").unix(),
+		exp: moment().add(dias, "days").unix(),
 	};
 	return jwt.encode(payload, config.TOKEN_SECRET);
 };

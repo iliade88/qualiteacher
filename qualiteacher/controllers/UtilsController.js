@@ -77,15 +77,20 @@ exports.addNumNotasPP = function(num_notas_pp, num_votos, num_notas_pp_add, num_
 	num_votos += num_votos_add
 };
 
-exports.mandarEmailActicacion = function(email, nick, token_activacion)
+function createTransportQualiteacher()
 {
-	var transporter = nodemailer.createTransport({
+	return nodemailer.createTransport({
 		service: 'gmail',
 		auth: {
 			user: 'qualiteacher17@gmail.com',
 			pass: 'JttNgtQ9'
 		}
 	});
+}
+
+exports.mandarEmailActicacion = function(email, nick, token_activacion)
+{
+	var transporter = createTransportQualiteacher();
 
 	var url_activacion = "http://qualiteacher.heroku.com/usuarios/activar/"+token_activacion
 	//var url_activacion = "http://localhost:3000/usuarios/activar/"+token_activacion
@@ -97,6 +102,32 @@ exports.mandarEmailActicacion = function(email, nick, token_activacion)
 				'<hr>' +
 			'<p>Para poder votar a tus profesores, antes debes activar tu cuenta. Para ello, pincha en el siguiente enlace <a href="'+url_activacion+'">'+url_activacion+'</a></p>' +
 			'<p>Un saludo, el equipo de Qualiteacher</p>'
+	};
+
+	transporter.sendMail(mailOptions, function(error, info){
+		if (error) {
+			console.log(error);
+		} else {
+			console.log('Email sent: ' + info.response);
+		}
+	});
+}
+
+exports.mandarEmailRecuperarContrasenya = function(email, token)
+{
+	var transporter = createTransportQualiteacher();
+
+	//var url_restablecer_contrasenya = "http://qualiteacher.heroku.com/usuarios/recuperar/"+token
+	var url_restablecer_contrasenya = "http://localhost:3000/usuarios/recuperar/"+token
+	var mailOptions = {
+		from: 'qualiteacher17@gmail.com',
+		to: email,
+		subject: 'Recuperación de contraseña',
+		html: '<h1>Qualiteacher - Ayuda de recuperación de contraseña</h1>' +
+		'<hr>' +
+		'<p>Por motivos de seguridad no podemos enviarte tu contraseña. Sin embargo, puedes establecer una nueva pinchando en el siguiente enlace<br>' +
+		'<a href="'+url_restablecer_contrasenya+'">'+url_restablecer_contrasenya+'</a></p>' +
+		'<p>Un saludo, el equipo de Qualiteacher</p>'
 	};
 
 	transporter.sendMail(mailOptions, function(error, info){

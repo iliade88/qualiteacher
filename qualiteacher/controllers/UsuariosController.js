@@ -39,7 +39,7 @@ exports.anyadirUsuario = function(req, res, next) {
 					universidad : req.body.universidad
 				});
 
-				usuario['token_activacion'] = AuthController.crearToken(usuario);
+				usuario['token_activacion'] = AuthController.crearToken(usuario, 1);
 
 				console.log("\r\nCreado:" + usuario)
 
@@ -90,7 +90,7 @@ exports.login = function (req, res, next)
 				console.log("200")
 				console.log("\r\nLogin correcto:" + usuario)
 
-				usuario['token'] = AuthController.crearToken(usuario);
+				usuario['token'] = AuthController.crearToken(usuario, 10);
 
 				usuario.save(function (err, usuario) {
 					var usuario_local_storage = {
@@ -145,5 +145,134 @@ exports.activarUsuario = function(req, res, next)
 			}
 		}
 	})
+};
+
+exports.vistaRecuperarContrasenya = function(req, res, next)
+{
+	res.render('recuperarContrasenyaForm', {title: 'Qualiteacher | Recuperar contraseña'});
+}
+
+exports.vistaContrasenyaCambiada = function(req, res, next)
+{
+	res.render('recuperarContrasenyaCompletado', {title: 'Qualiteacher | Recuperar contraseña'});
+}
+
+exports.vistaCambiarContrasenya = function(req, res)
+{
+	var token = req.params.token
+
+	var id_usuario = ""
+	console.log(token)
+	try {
+		var payload = jwt.decode(token, config.TOKEN_SECRET);
+		id_usuario = payload.sub;
+	}
+	catch(err)
+	{
+		res.render('recuperarContrasenyaError', {title : 'Qualiteacher | Error recuperación'})
+		return;
+	}
+
+	Usuarios.findOne({'_id': id_usuario}, function(err, usuario)
+	{
+		if (err) { console.log(err); return next(err); }
+		//Si el nick no existe en la db
+		if (usuario === null)
+		{
+			res.redirect(301, '/');
+		}
+		else
+		{
+			if (usuario.token_rec_contrasenya.localeCompare(token) == 0)
+			{
+				res.render('recuperarContrasenyaNueva', {title : 'Qualiteacher | Recuperar contraseña', token: token})
+			}
+			else
+			{
+				res.render('recuperarContrasenyaError', {title : 'Qualiteacher | Error recuperación'})
+			}
+		}
+	})
+}
+
+exports.cambiarContrasenya = function (req, res, next)
+{
+	var token = req.body.token;
+	var nueva_contrasenya = req.body.contrasenya;
+	var id_usuario = "";
+
+	try {
+		var payload = jwt.decode(token, config.TOKEN_SECRET);
+		id_usuario = payload.sub;
+	}
+	catch(err)
+	{
+		res.status(400).send({error: 'El token ha expirado.'});
+		return;
+	}
+
+	Usuarios.findOne({'_id': id_usuario}, function(err, usuario)
+	{
+		if (err) { console.log(err); return next(err); }
+		//Si el id no existe en la db
+		if (usuario === null)
+		{
+			res.redirect(301, '/');
+		}
+		else
+		{
+			if (usuario.token_rec_contrasenya.localeCompare(token) == 0)
+			{
+				bcrypt.hash(nueva_contrasenya, 8, function(err, hash) {
+
+					if (err) { console.log(err); return next(err); }
+
+					usuario.contrasenya = hash;
+					usuario.token_rec_contrasenya = "-";
+					usuario.save(function (err){
+
+						if (err) { console.log(err); return next(err); }
+
+						res.status(200).send({mensaje: 'Contraseña cambiada correctamente.'})
+					});
+				});
+			}
+			else
+			{
+				res.status(400).send({error: 'El token no es válido.'})
+			}
+		}
+	})
+
+}
+
+exports.enviarEmailRecuperarContrasenya = function(req, res, next)
+{
+	var email = req.body.email
+	console.log("Recuperar"+email);
+
+	Usuarios.findOne({'email': email}, function (err, usuario)
+	{
+		if (err) { console.log(err); return next(err); }
+		//Si el nick no existe en la db
+		if (usuario === null)
+		{
+			res.status(400).send({error: "No existe ningún usuario con esa dirección de correo."})
+		}
+		else
+		{
+			var token_recuperar_contrasenya = AuthController.crearToken(usuario, 1);
+			UtilsController.mandarEmailRecuperarContrasenya(email, token_recuperar_contrasenya);
+
+			usuario["token_rec_contrasenya"] = token_recuperar_contrasenya;
+			usuario.save(function(err)
+			{
+				if (err) { console.log(err); return next(err); }
+
+				res.status(200).send({mensaje: "Email enviado. Comprueba tu bandeja de entrada y la bandeja de spam."})
+			});
+		}
+	})
+
 
 }

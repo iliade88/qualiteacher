@@ -1,0 +1,25 @@
+<%include modular/header%>
+<section class="section container-fluid" ng-controller="recuperarContrasenyaController">
+    <form name="formLogin" class="form-horizontal text-center" ng-submit="submitForm()">
+        <legend>Recuperar contraseña</legend>
+        <div class="form-group">
+            <label for="email" class="col-xs-12 col-sm-12 col-md-2 col-lg-2 control-label">Email universitario</label>
+            <div class="col-xs-12 col-sm-12 col-md-10 col-lg-6">
+                <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        class="form-control"
+                        ng-model="email"
+                        placeholder="Ej. chf10@alu.ua.es"
+                        required/>
+            </div>
+        </div>
+        <div class="form-group text-center">
+            <button
+                    type="submit"
+                    class="btn btn-success">Acceder</button>
+        </div>
+    </form>
+</section>
+<% include modular/footer %>
