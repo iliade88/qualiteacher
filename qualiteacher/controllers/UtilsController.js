@@ -87,8 +87,8 @@ exports.mandarEmailActicacion = function(email, nick, token_activacion)
 		}
 	});
 
-	//var url_activacion = "http://qualiteacher.heroku.com/activar/"+token_activacion
-	var url_activacion = "http://localhost:3000/activar/"+token_activacion
+	var url_activacion = "http://qualiteacher.heroku.com/usuarios/activar/"+token_activacion
+	//var url_activacion = "http://localhost:3000/usuarios/activar/"+token_activacion
 	var mailOptions = {
 		from: 'qualiteacher17@gmail.com',
 		to: email,
