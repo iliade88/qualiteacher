@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var Usuarios = mongoose.model('Usuarios');
 var config = require('../config');
 var jwt = require('jwt-simple');
+var bcrypt = require('bcrypt')
 
 var UniversidadesController = require('./UniversidadesController')
 var AuthController = require('./AuthController')
@@ -29,31 +30,33 @@ exports.anyadirUsuario = function(req, res, next) {
 		//Si el nick no existe en la db
 		if (usuarios === null)
 		{
-			var usuario = new Usuarios({
-				_id: mongoose.Types.ObjectId() + '',
-				nick : req.body.nickname,
-				email : req.body.email,
-				contrasenya : req.body.contrasenya,
-				universidad : req.body.universidad
+			bcrypt.hash(req.body.contrasenya, 8, function(err, hash) {
+				var usuario = new Usuarios({
+					_id: mongoose.Types.ObjectId() + '',
+					nick : req.body.nickname,
+					email : req.body.email,
+					contrasenya : hash,
+					universidad : req.body.universidad
+				});
+
+				usuario['token_activacion'] = AuthController.crearToken(usuario);
+
+				console.log("\r\nCreado:" + usuario)
+
+				usuario.save(function(err, usuario){
+
+					if(err) { console.log(err); return next(err);}
+
+					//Si no hay error se ha guardado y lo añadimos a la universidad como alumno
+					UniversidadesController.anyadirAlumno(req, usuario._id, next);
+
+					//Para no enviar la contraseña en la respuesta
+					delete usuario.contrasenya;
+					res.status(200).send({usuario: usuario});
+
+					UtilsController.mandarEmailActicacion(usuario.email, usuario.nick, usuario.token_activacion);
+				})
 			});
-
-			usuario['token_activacion'] = AuthController.crearToken(usuario);
-
-			console.log("\r\nCreado:" + usuario)
-
-			usuario.save(function(err, usuario){
-
-				if(err) { console.log(err); return next(err);}
-
-				//Si no hay error se ha guardado y lo añadimos a la universidad como alumno
-				UniversidadesController.anyadirAlumno(req, usuario._id, next);
-
-				//Para no enviar la contraseña en la respuesta
-				delete usuario.contrasenya;
-				res.status(200).send({usuario: usuario});
-
-				UtilsController.mandarEmailActicacion(usuario.email, usuario.nick, usuario.token_activacion);
-			})
 		}
 		else
 		{
@@ -77,11 +80,12 @@ exports.login = function (req, res, next)
 		}
 		else
 		{
+
 			if (usuario.activado == 0)
 			{
 				res.status(401).send({error: "Debes activar tu cuenta para poder loguear"});
 			}
-			else if (usuario.contrasenya.localeCompare(req.body.contrasenya) === 0)
+			else if (bcrypt.compareSync(req.body.contrasenya, usuario.contrasenya))
 			{
 				console.log("200")
 				console.log("\r\nLogin correcto:" + usuario)
