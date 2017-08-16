@@ -1,0 +1,2 @@
+mongodump --db qualiteacher --gzip
+mongorestore -h ds145183.mlab.com:45183 -d qualiteacher -u <user> -p <password> dump/qualiteacher

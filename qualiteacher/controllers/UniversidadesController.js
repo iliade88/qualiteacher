@@ -40,6 +40,10 @@ exports.anyadirAlumno = function(req, id_nuevo_alumno, next) {
 		if(err) { console.log(err); return next(err);}
 		
 		console.log("\r\nVamos a añadir alumno a: "+universidad)
+		if (!!universidad.alumnos)
+		{
+			universidad["alumnos"] = [];
+		}
 		universidad.alumnos.push(id_nuevo_alumno);
 		
 		console.log("\r\nAñadido alumno a: "+universidad)

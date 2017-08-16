@@ -13,7 +13,9 @@ var UsuariosSchema = new Schema({
 	votos: [{
 		profesor: { type: String, ref: 'Profesores' },
 		asignatura: { type: String, ref: 'Asignaturas' }
-	}]
+	}],
+	token_activacion: String,
+	activado: {type: Number, default: 0, required: true}
 });
 
 mongoose.model('Usuarios', UsuariosSchema);

@@ -28,9 +28,9 @@ QualiteacherApp.controller('loginController', function($scope, $http, $location,
 					function (err)
 					{
 						console.log(err);
-						var error_html = "<div class='alert alert-danger alert-dismissable fade in col-lg-3'>"
+						var error_html = "<div class='alert alert-danger alert-dismissable fade in col-lg-offset-3 col-lg-6'>"
 											+ "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"
-											+ "<strong>¡Error!</strong> Nick o contraseña incorrectos"
+											+ "<strong>¡Error!</strong> " + err.data.error
 										+ "</div>"
 						$('#error-div').html(error_html);
 					}

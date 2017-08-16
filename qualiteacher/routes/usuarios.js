@@ -16,4 +16,7 @@ router.post('/registro', UsuariosController.anyadirUsuario);
 /* POST nuevo usuario */
 router.post('/login', UsuariosController.login);
 
+/* GET - Activar usuario */
+router.get('/activar/:token', UsuariosController.activarUsuario)
+
 module.exports = router;

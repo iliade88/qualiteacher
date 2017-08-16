@@ -1,8 +1,11 @@
 var mongoose = require('mongoose');
 var Usuarios = mongoose.model('Usuarios');
+var config = require('../config');
+var jwt = require('jwt-simple');
 
 var UniversidadesController = require('./UniversidadesController')
 var AuthController = require('./AuthController')
+var UtilsController = require('./UtilsController')
 
 exports.findUsers = function(req, res, next) {
 	Usuarios
@@ -34,7 +37,7 @@ exports.anyadirUsuario = function(req, res, next) {
 				universidad : req.body.universidad
 			});
 
-			usuario['token'] = AuthController.crearToken(usuario);
+			usuario['token_activacion'] = AuthController.crearToken(usuario);
 
 			console.log("\r\nCreado:" + usuario)
 
@@ -48,6 +51,8 @@ exports.anyadirUsuario = function(req, res, next) {
 				//Para no enviar la contraseña en la respuesta
 				delete usuario.contrasenya;
 				res.status(200).send({usuario: usuario});
+
+				UtilsController.mandarEmailActicacion(usuario.email, usuario.nick, usuario.token_activacion);
 			})
 		}
 		else
@@ -72,7 +77,11 @@ exports.login = function (req, res, next)
 		}
 		else
 		{
-			if (usuario.contrasenya.localeCompare(req.body.contrasenya) === 0)
+			if (usuario.activado == 0)
+			{
+				res.status(401).send({error: "Debes activar tu cuenta para poder loguear"});
+			}
+			else if (usuario.contrasenya.localeCompare(req.body.contrasenya) === 0)
 			{
 				console.log("200")
 				console.log("\r\nLogin correcto:" + usuario)
@@ -96,3 +105,41 @@ exports.login = function (req, res, next)
 		}
 	})
 };
+
+exports.activarUsuario = function(req, res, next)
+{
+	console.log("Activar");
+
+	var token_activacion = req.params.token;
+
+	var payload = jwt.decode(token_activacion, config.TOKEN_SECRET);
+	var id_usuario = payload.sub;
+
+	Usuarios.findOne({'_id': id_usuario}, function(err, usuario)
+	{
+		if (err) { console.log(err); return next(err); }
+		//Si el nick no existe en la db
+		if (usuario === null)
+		{
+			res.redirect(301, '/');
+		}
+		else
+		{
+			if (usuario.token_activacion.localeCompare(token_activacion) == 0)
+			{
+				usuario.activado = 1;
+				usuario.save(function(err)
+				{
+					if (err) { console.log(err); return next(err); }
+
+					res.render('activacionCompletada', {title : 'Qualiteacher | Activación completada'})
+				});
+			}
+			else
+			{
+				res.render('activacionError', {title : 'Qualiteacher | Error Activación'})
+			}
+		}
+	})
+
+}

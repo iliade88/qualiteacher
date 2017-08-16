@@ -1,3 +1,5 @@
+var nodemailer = require('nodemailer');
+
 exports.generaMatrizRecuentoNotasPorPregunta = function()
 {
 	var recuento_notas_por_pregunta = [10];
@@ -74,3 +76,34 @@ exports.addNumNotasPP = function(num_notas_pp, num_votos, num_notas_pp_add, num_
 	}
 	num_votos += num_votos_add
 };
+
+exports.mandarEmailActicacion = function(email, nick, token_activacion)
+{
+	var transporter = nodemailer.createTransport({
+		service: 'gmail',
+		auth: {
+			user: 'qualiteacher17@gmail.com',
+			pass: 'JttNgtQ9'
+		}
+	});
+
+	//var url_activacion = "http://qualiteacher.heroku.com/activar/"+token_activacion
+	var url_activacion = "http://localhost:3000/activar/"+token_activacion
+	var mailOptions = {
+		from: 'qualiteacher17@gmail.com',
+		to: email,
+		subject: 'Confirmación de registro',
+		html: '<h1>¡Gracias por registrarte!</h1>' +
+				'<hr>' +
+			'<p>Para poder votar a tus profesores, antes debes activar tu cuenta. Para ello, pincha en el siguiente enlace <a href="'+url_activacion+'">'+url_activacion+'</a></p>' +
+			'<p>Un saludo, el equipo de Qualiteacher</p>'
+	};
+
+	transporter.sendMail(mailOptions, function(error, info){
+		if (error) {
+			console.log(error);
+		} else {
+			console.log('Email sent: ' + info.response);
+		}
+	});
+}
