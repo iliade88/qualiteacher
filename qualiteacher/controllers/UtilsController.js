@@ -117,8 +117,8 @@ exports.mandarEmailRecuperarContrasenya = function(email, token)
 {
 	var transporter = createTransportQualiteacher();
 
-	//var url_restablecer_contrasenya = "http://qualiteacher.heroku.com/usuarios/recuperar/"+token
-	var url_restablecer_contrasenya = "http://localhost:3000/usuarios/recuperar/"+token
+	var url_restablecer_contrasenya = "http://qualiteacher.heroku.com/usuarios/recuperar/"+token
+	//var url_restablecer_contrasenya = "http://localhost:3000/usuarios/recuperar/"+token
 	var mailOptions = {
 		from: 'qualiteacher17@gmail.com',
 		to: email,
