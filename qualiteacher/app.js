@@ -6,7 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/qualiteacher');
+
+mongoose.connect('mongodb://qualiteacher:qualiteacher@ds145183.mlab.com:45183/qualiteacher');
 require('./models/Universidades');
 require('./models/Usuarios');
 require('./models/Profesores');
