@@ -4,7 +4,6 @@ var Schema = mongoose.Schema;
 var ProfesoresSchema = new Schema({
 	_id : String,
 	nombre: String,
-	nick: String,
 	nota: Number,
 	num_notas_pp: [[Number]],
 	num_votos: Number,
