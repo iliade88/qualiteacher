@@ -11,6 +11,10 @@ exports.findAll = function(req, res) {
 		.exec(function(err, carreras) {
 			if(err) res.send(500, err.message);
 
+			if (carreras === null)
+			{
+				res.status(404).send({error: "La carrera no existe"})
+			}
 			res.status(200).jsonp(carreras);
 		});
 };
@@ -18,7 +22,7 @@ exports.findAll = function(req, res) {
 /**
  * Recupera los datos de la carrera por id y los muestra en la vista de detalle
  */
-exports.detalleCarrera = function (req, res) {
+exports.detalleCarrera = function (req, res, next) {
 	Carreras.findOne({'_id': req.params.carrera})
 		.populate('universidad')
 		.populate('asignaturas')
@@ -28,7 +32,9 @@ exports.detalleCarrera = function (req, res) {
 
 			if (carrera === null)
 			{
-				res.status(400).send({error: "Esa asignatura no existe"})
+				var err = new Error("Esa carrera no existe");
+				err.status = 404;
+				next(err);
 			}
 			else
 			{
@@ -53,7 +59,7 @@ exports.datosCarrera = function (req, res) {
 
 			if (carrera === null)
 			{
-				res.status(400).send({error: "Esa asignatura no existe"})
+				res.status(404).send({error: "Esa carrera no existe"})
 			}
 			else
 			{

@@ -49,11 +49,11 @@ describe('Suite Asignaturas', function () {
 	});
 
 	after(function (done) {
-		Universidades.remove({id: universidad._id}, function (err) {
+		Universidades.remove({_id: universidad._id}, function (err) {
 
-			Carreras.remove({id: carrera._id}, function (err) {
+			Carreras.remove({_id: carrera._id}, function (err) {
 
-				Asignaturas.remove({id: asignatura._id}, function (err) {
+				Asignaturas.remove({_id: asignatura._id}, function (err) {
 
 					if (err) done(err);
 					done();
