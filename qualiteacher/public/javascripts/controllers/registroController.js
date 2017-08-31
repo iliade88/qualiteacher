@@ -35,7 +35,7 @@ QualiteacherApp.controller('registroController', function($scope, $http, $locati
 		.then(
 			function (response)
 			{
-				window.location.href="http://localhost:3000/registro-completado"
+				window.location.href="/registro-completado"
 			},
 			function (response) {
 				alert("El usuario ya existe")
