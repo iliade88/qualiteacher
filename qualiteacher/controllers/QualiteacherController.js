@@ -12,7 +12,7 @@ exports.home = function(req, res) {
 		.getTops()
 		.exec(function (err, top)
 		{
-			if (err) console.log(err);
+			if (err) res.send(500, err.message);
 			res.render('index', { title: 'Qualiteacher', top: top });
 		});
 }
@@ -22,13 +22,12 @@ exports.buscar = function(req, res) {
 
 	var nombre = req.params.cadena;
 	var query = {'nombre': new RegExp(nombre, "i")};
-	console.log(query)
 
 	Universidades.find(query)
 	.select('_id nombre')
 	.limit(5)
 	.exec(function (err, universidades) {
-		if (err) console.log(err);
+		if (err) res.send(500, err.message);
 
 		Carreras.find(query)
 			.select('_id nombre universidad')
@@ -38,7 +37,7 @@ exports.buscar = function(req, res) {
 			})
 			.limit(5)
 			.exec(function (err, carreras) {
-				if (err) console.log(err);
+				if (err) res.send(500, err.message);
 
 				Asignaturas.find(query)
 					.select('_id nombre universidad carrera')
@@ -52,7 +51,7 @@ exports.buscar = function(req, res) {
 					})
 					.limit(5)
 					.exec(function (err, asignaturas) {
-						if (err) console.log(err);
+						if (err) res.send(500, err.message);
 
 						Profesores.find(query)
 							.select('_id nombre universidad nota')
@@ -62,7 +61,7 @@ exports.buscar = function(req, res) {
 							})
 							.limit(5)
 							.exec(function (err, profesores) {
-								if (err) console.log(err);
+								if (err) res.send(500, err.message);
 
 								var resultados = {
 									universidades: universidades,

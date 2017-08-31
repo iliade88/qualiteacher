@@ -24,7 +24,6 @@ QualiteacherApp.controller('registroController', function($scope, $http, $locati
 
 	$scope.submitForm = function (datos) {
 		
-		console.log(JSON.stringify(datos))
 		$http
 		.post("/usuarios",
 			{
@@ -37,7 +36,6 @@ QualiteacherApp.controller('registroController', function($scope, $http, $locati
 			function (response)
 			{
 				window.location.href="http://localhost:3000/registro-completado"
-				console.log(response)
 			},
 			function (response) {
 				alert("El usuario ya existe")
@@ -51,8 +49,6 @@ QualiteacherApp.controller('registroController', function($scope, $http, $locati
 			test: function(value)
 			{
 				regexp = eval("/^(.{3,}"+$scope.formData.universidad.dominio_email_alumnos+")$/")
-				/*TODO - Eliminar esto*/
-				console.log(JSON.stringify($scope.formData.universidad.dominio_email_alumnos)+"- "+value + "("+regexp.test(value)+")")
 				return regexp.test(value);
 			}
 		};

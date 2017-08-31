@@ -24,7 +24,7 @@ exports.detalleCarrera = function (req, res) {
 		.populate('asignaturas')
 		.exec(function(err, carrera){
 
-			if (err) console.log(err);
+			if (err) res.send(500, err.message);
 
 			if (carrera === null)
 			{
@@ -49,7 +49,7 @@ exports.datosCarrera = function (req, res) {
 				populate: { path: 'votos'}}})
 		.exec(function(err, carrera){
 
-			if (err) console.log(err);
+			if (err) res.send(500, err.message);
 
 			if (carrera === null)
 			{
@@ -57,7 +57,6 @@ exports.datosCarrera = function (req, res) {
 			}
 			else
 			{
-				console.log(carrera)
 				res.status(200).jsonp(carrera);
 			}
 		});

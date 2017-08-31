@@ -9,8 +9,7 @@ exports.findAll = function(req, res) {
     Universidades.find(function(err, universidad) {
     	if(err) res.send(500, err.message);
 
-    	console.log('GET /Universidades')
-        res.status(200).jsonp(universidad);
+    	res.status(200).jsonp(universidad);
     });
 };
 
@@ -25,7 +24,6 @@ exports.buscarUniversidad = function(req, res) {
 		.exec(function(err, universidad) {
 		if(err) res.send(500, err.message);
 
-		console.log('BuscarUniversidades')
 		res.status(200).jsonp(universidad);
 	});
 };
@@ -37,23 +35,19 @@ exports.anyadirAlumno = function(req, id_nuevo_alumno, next) {
 	
 	Universidades.findOne({_id : req.body.universidad}, function(err, universidad){
 
-		if(err) { console.log(err); return next(err);}
+		if(err) return next(err);
 		
-		console.log("\r\nVamos a añadir alumno a: "+universidad)
-		if (!!universidad.alumnos)
+		if (!universidad.hasOwnProperty("alumnos"))
 		{
 			universidad["alumnos"] = [];
 		}
 		universidad.alumnos.push(id_nuevo_alumno);
 		
-		console.log("\r\nAñadido alumno a: "+universidad)
 		universidad.save(function(err, universidad){
-			if(err) { console.log(err); return next(err);}
+			if(err) return next(err);
 
 			return true;
 		});
-		console.log("\r\nGuardado")
-
 	})
 };
 
@@ -72,7 +66,7 @@ exports.detalleUniversidad = function (req, res) {
 		.populate('profesores')
 		.exec(function(err, universidad){
 
-			if (err) console.log(err);
+			if (err) res.send(500, err.message);
 
 			if (universidad === null)
 			{
@@ -83,7 +77,6 @@ exports.detalleUniversidad = function (req, res) {
 				universidad.carreras = obtenerTopN(universidad.carreras, 5);
 				universidad.profesores = obtenerTopN(universidad.profesores, 5);
 
-				console.log(universidad)
 				res.render('universidad', {title: ('Qualiteacher | '+universidad.nombre), universidad: universidad})
 			}
 		});

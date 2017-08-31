@@ -13,7 +13,6 @@ exports.findAll = function(req, res) {
 	Profesores.find(function(err, profesor) {
 		if(err) res.send(500, err.message);
 
-		console.log('GET /Profesores')
 		res.status(200).jsonp(profesor);
 	});
 };
@@ -29,7 +28,7 @@ exports.findByName = function (req, res) {
 	Profesores.find(query)
 	.select('_id nombre')
 	.exec(function (err, profesores) {
-		if (err) console.log(err);
+		if (err) res.send(500, err.message);
 
 		if (profesores === null)
 			res.status(400).send({error: "No existen profesores con ese nombre"})
@@ -44,8 +43,7 @@ exports.findById = function (req,res) {
 		.findOne({'_id': req.params.id})
 		.exec(function (err, profesor) {
 
-			if (err) { console.log(err); res.status(400).send({error: err.message}); }
-
+			if (err) res.status(400).send({error: err.message});
 			res.status(200).send(profesor);
 		});
 };
@@ -114,7 +112,7 @@ exports.detalleProfesor = function(req, res) {
 		select: 'nombre codigo'})
 	.exec(function(err, profesor){
 
-		if (err) console.log(err);
+		if (err) res.send(500, err.message);
 
 		if (profesor === null)
 		{
@@ -131,12 +129,12 @@ exports.detalleProfesor = function(req, res) {
  * Mostramos la vista de calificar
  */
 exports.vistaCalificar = function (req, res) {
-	console.log("Entrada:\r\n" +JSON.stringify(req.params, null, 4))
+
 	Profesores.findOne({'_id': req.params.profesor})
 		.populate({path: 'notas_asignaturas_prof.asignatura'})
 		.exec(function(err, profesor){
 
-		if (err) console.log(err);
+		if (err) res.send(500, err.message);
 
 		if (profesor === null)
 		{
@@ -201,9 +199,7 @@ function profesorYaVotadoParaAsignatura(votos, id_profesor, id_asignatura)
 exports.calificarProfesor = function (req, res, next) {
 	Profesores.findOne({'_id': req.params.profesor}, function(err, profesor){
 
-		console.log("Entrada:\r\n" +JSON.stringify(req.body, null, 4))
-
-		if (err) console.log(err);
+		if (err) res.send(500, err.message);
 
 		if (profesor === null)
 		{
@@ -215,7 +211,7 @@ exports.calificarProfesor = function (req, res, next) {
 
 			Usuarios.findOne({'nick': usuario}, function (err, usuario) //Buscamos al votante...
 			{
-				if(err) { console.log(err); return next(err);}
+				if(err) return next(err);
 
 				var voto = {
 					profesor: req.params.profesor,
@@ -231,8 +227,6 @@ exports.calificarProfesor = function (req, res, next) {
 				{
 					usuario.votos.push(voto);
 
-					console.log("PROFESOR PRE-VOTO")
-					console.log(profesor)
 					var calificacion = [req.body.pr1, req.body.pr2, req.body.pr3, req.body.pr4, req.body.pr5, req.body.pr6, req.body.pr7, req.body.pr8, req.body.pr9, req.body.pr10]
 					//Recalculamos notas del profesor
 					calculaNotas(profesor, req.params.asignatura, calificacion);
@@ -240,17 +234,13 @@ exports.calificarProfesor = function (req, res, next) {
 					profesor
 						.save(function (err) //Actualizamos el profesor
 						{
-							if(err) { console.log(err); return next(err);}
-
-							console.log("Profesor actualizado.")
+							if(err) return next(err);
 						})
 						.then(function()
 						{
 							usuario.save(function (err) //Guardamos el voto en el usuario
 							{
-								if (err) { console.log(err); return next(err); }
-
-								console.log("Usuario actualizado.");
+								if (err) return next(err);
 							});
 						})
 						.then(function() ////Actualizamos la asignatura

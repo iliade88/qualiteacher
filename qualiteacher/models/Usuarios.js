@@ -15,7 +15,7 @@ var UsuariosSchema = new Schema({
 		asignatura: { type: String, ref: 'Asignaturas' }
 	}],
 	token_activacion: String,
-	token_rec_contrasenya: {type: String, default: "", required: true},
+	token_rec_contrasenya: {type: String, default: "-", required: true},
 	activado: {type: Number, default: 0, required: true}
 });
 

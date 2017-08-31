@@ -12,7 +12,6 @@ QualiteacherApp.controller('recuperarContrasenyaController', function($scope, $h
 
 	$scope.submitForm = function () {
 
-		console.log($scope.email)
 		$http
 			.post("/usuarios/email-recuperar-contrasenya",
 			{
@@ -30,8 +29,6 @@ QualiteacherApp.controller('recuperarContrasenyaController', function($scope, $h
 
 	$scope.submitFormNuevaContrasenya = function(datos)
 	{
-		console.log(datos);
-		console.log($scope.token);
 		$http
 			.post("/usuarios/nueva-contrasenya",
 				{
@@ -41,7 +38,7 @@ QualiteacherApp.controller('recuperarContrasenyaController', function($scope, $h
 			.then(
 				function (response)
 				{
-					window.location.replace('/')
+					window.location.replace('/usuarios/contrasenya-cambiada')
 				},
 				function (response) {
 					alert(response.data.error)

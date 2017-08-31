@@ -43,7 +43,6 @@ exports.ensureAuthenticated = function(req, res, next) {
 	}
 	catch(err)
 	{
-		console.log(err);
 		return res.status(401).send({error: 'Ocurrió un error en el servidor, por favor, inténtalo de nuevo más tarde.'});
 	}
 

@@ -12,7 +12,6 @@ exports.findAll = function(req, res) {
 		.exec(function(err, profesor) {
 		if(err) res.send(500, err.message);
 
-		console.log('GET /Asignaturas')
 		res.status(200).jsonp(profesor);
 	});
 };
@@ -27,7 +26,7 @@ exports.detalleAsignatura = function (req, res) {
 		.populate('profesores')
 		.exec(function(err, asignatura){
 
-			if (err) console.log(err);
+			if (err) res.send(500, err.message);
 
 			if (asignatura === null)
 			{
@@ -35,7 +34,6 @@ exports.detalleAsignatura = function (req, res) {
 			}
 			else
 			{
-				console.log(asignatura)
 				res.render('asignatura', {title: ('Qualiteacher | '+asignatura.nombre), asignatura: asignatura})
 			}
 		});
@@ -56,11 +54,8 @@ exports.actualizarNotasAsignatura = function (id_asignatura, calificacion)
 			asignatura
 				.save(function (err, next) {
 					if (err) {
-						console.log(err);
 						return next(err);
 					}
-
-					console.log("Asignatura actualizada")
 				});
 		});
 };

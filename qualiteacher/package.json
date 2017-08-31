@@ -26,6 +26,8 @@
   },
   "devDependencies": {
     "faker": "^4.1.0",
-    "mocha": "^3.4.2"
+    "mocha": "^3.4.2",
+    "sinon": "^3.2.1",
+    "supertest": "^3.0.0"
   }
 }

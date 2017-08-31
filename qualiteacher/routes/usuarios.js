@@ -25,7 +25,7 @@ router.get('/recuperar', UsuariosController.vistaRecuperarContrasenya)
 /* GET - Vista nueva contraseña */
 router.get('/recuperar/:token', UsuariosController.vistaCambiarContrasenya);
 
-/* GET - Vista nueva contraseña */
+/* GET - Vista contrasenña cambiada */
 router.get('/contrasenya-cambiada', UsuariosController.vistaContrasenyaCambiada);
 
 /* POST - Cambiar contraseña */

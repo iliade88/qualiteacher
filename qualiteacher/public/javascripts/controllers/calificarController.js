@@ -25,9 +25,6 @@ QualiteacherApp.controller('calificarController', function($scope, $http, $local
 		$scope.formData.pr8 = -1
 		$scope.formData.pr9 = -1
 		$scope.formData.pr10 = -1
-
-		console.log($scope.profesor)
-		console.log($scope.asignaturas)
 	};
 
 	$scope.transformaSinOpinion = function (nota) {
@@ -38,8 +35,6 @@ QualiteacherApp.controller('calificarController', function($scope, $http, $local
 	};
 
 	$scope.submitForm = function (datos) {
-
-		console.log(JSON.stringify(datos));
 
 		var url = "/profesores/" + datos.profesor + "/" + datos.asignatura._id + "/calificar";
 
@@ -85,7 +80,6 @@ QualiteacherApp.controller('calificarController', function($scope, $http, $local
 				.then(
 					function (response) {
 						alert("Calificación registrada");
-						console.log(response)
 					},
 					function (response) {
 
@@ -94,8 +88,6 @@ QualiteacherApp.controller('calificarController', function($scope, $http, $local
 							alert(response.data.error);
 						}
 						else alert("Ocurrió un error, inténtalo de nuevo más tarde")
-
-						console.log(response)
 					});
 		}
 		else {

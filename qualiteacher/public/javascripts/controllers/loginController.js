@@ -20,14 +20,12 @@ QualiteacherApp.controller('loginController', function($scope, $http, $location,
 				.then(
 					function (response)
 					{
-						console.log(response);
 						$localStorage.usuarioQualiteacher = response.data.usuario;
 						$http.defaults.headers.common.Authorization = 'Bearer ' + response.data.usuario.token;
 						window.location.replace('/')
 					},
 					function (err)
 					{
-						console.log(err);
 						var error_html = "<div class='alert alert-danger alert-dismissable fade in col-lg-offset-3 col-lg-6'>"
 											+ "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"
 											+ "<strong>¡Error!</strong> " + err.data.error

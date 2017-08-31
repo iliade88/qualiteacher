@@ -137,7 +137,6 @@ QualiteacherApp.controller('inicioController', function ($scope, $http) {
 	$scope.top = {}
 	$scope.init = function (top) {
 		$scope.top = JSON.parse(top)[0]
-		console.log($scope.top)
 
 		$scope.top.datasetUniversidades = transformaADatasetParaGrafica($scope.top.universidades);
 		$scope.top.datasetCarreras = transformaADatasetParaGraficaTopConNombreUniversidad($scope.top.carreras);
@@ -235,20 +234,16 @@ QualiteacherApp.controller('inicioController', function ($scope, $http) {
 	});
 
 	$scope.buscar = function (valor) {
-		console.log("Buscamos: " + valor);
-
 		var texto_urlencoded = encodeURI(valor)
 		return $http
 			.get("/buscar/" + texto_urlencoded)
 			.then(
 				function (response) {
-					console.log("respuesta");
-					console.log(response);
 					$scope.resultados_busqueda = response.data;
 					return formateaResultadosParaTypeahead(response.data);
 				},
-				function (response) {
-					console.log("No se han encontrado resultados -> " + response)
+				function (error) {
+					console.log(error)
 				});
 	}
 });
