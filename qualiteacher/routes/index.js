@@ -9,7 +9,7 @@ router.get('/', QualiteacherController.home);
 /* GET - Resultados Buscador */
 router.get('/buscar/:cadena', QualiteacherController.buscar);
 
-/* GET - Página registro. */
+/* GET - Página login. */
 router.get('/login', QualiteacherController.login);
 
 /* GET - Página registro. */

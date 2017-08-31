@@ -69,7 +69,7 @@ exports.buscar = function(req, res) {
 									asignaturas: asignaturas,
 									profesores: profesores
 								}
-								res.send(resultados);
+								res.status(200).send(resultados);
 							});
 
 					});

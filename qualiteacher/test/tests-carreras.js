@@ -61,9 +61,9 @@ describe('Suite Carreras', function () {
 			.expect(function (response) {
 				var respuesta = JSON.parse(response.text)
 				assert(respuesta .hasOwnProperty("_id"));
-				assert.equal(respuesta ._id, carrera._id)
-				assert.equal(respuesta .nombre, carrera.nombre)
-				assert.equal(respuesta .codigo, carrera.codigo)
+				assert.equal(respuesta._id, carrera._id)
+				assert.equal(respuesta.nombre, carrera.nombre)
+				assert.equal(respuesta.codigo, carrera.codigo)
 			})
 			.end(done);
 	})
