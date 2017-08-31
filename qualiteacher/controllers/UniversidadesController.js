@@ -3,32 +3,6 @@ var Universidades  = mongoose.model('Universidades');
 var CarrerasController = require('../controllers/CarrerasController')
 
 /**
-* Devolver todas las universidades
-*/
-exports.findAll = function(req, res) {  
-    Universidades.find(function(err, universidad) {
-    	if(err) res.send(500, err.message);
-
-    	res.status(200).jsonp(universidad);
-    });
-};
-
-/**
- * Buscar universidad por nombre
- */
-exports.buscarUniversidad = function(req, res) {
-
-	var query = {'nombre': new RegExp(req.params.cadena, "i")};
-	Universidades.find(query)
-		.select('_id nombre')
-		.exec(function(err, universidad) {
-		if(err) res.send(500, err.message);
-
-		res.status(200).jsonp(universidad);
-	});
-};
-
-/**
 * Recibido un alumno lo añadimos al vector de alumnos de la universidad
 **/
 exports.anyadirAlumno = function(req, id_nuevo_alumno, next) {
@@ -60,7 +34,7 @@ function obtenerTopN(objs, n)
 /**
  * Recuperar datos de la universidad y mostrar vista detalle
  */
-exports.detalleUniversidad = function (req, res) {
+exports.detalleUniversidad = function (req, res, next) {
 	Universidades.findOne({'_id': req.params.universidad})
 		.populate('carreras')
 		.populate('profesores')
@@ -70,7 +44,9 @@ exports.detalleUniversidad = function (req, res) {
 
 			if (universidad === null)
 			{
-				res.status(400).send({error: "Esa universidad no existe"})
+				var err = new Error("Esa universidad no existe");
+				err.status = 404;
+				next(err);
 			}
 			else
 			{
