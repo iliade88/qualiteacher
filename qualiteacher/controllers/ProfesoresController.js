@@ -5,60 +5,6 @@ var Usuarios = mongoose.model('Usuarios');
 var AsignaturasController = require('./AsignaturasController');
 var UtilsController = require('./UtilsController');
 
-/**
- * Devolver todos los profesores
- */
-exports.findAll = function(req, res) {
-
-	Profesores.find(function(err, profesor) {
-		if(err) res.send(500, err.message);
-
-		res.status(200).jsonp(profesor);
-	});
-};
-
-/**
- * Busca profesores por nombre
- */
-exports.findByName = function (req, res) {
-
-	var nombre = decodeURI(req.params.nombre);
-	var query = {'nombre': new RegExp(nombre, "i")};
-
-	Profesores.find(query)
-	.select('_id nombre')
-	.exec(function (err, profesores) {
-		if (err) res.send(500, err.message);
-
-		if (profesores === null)
-			res.status(400).send({error: "No existen profesores con ese nombre"})
-		else
-			res.send(profesores);
-	});
-};
-
-exports.findById = function (req,res) {
-
-	Profesores
-		.findOne({'_id': req.params.id})
-		.exec(function (err, profesor) {
-
-			if (err) res.status(400).send({error: err.message});
-			res.status(200).send(profesor);
-		});
-};
-
-exports.findByIds = function(arry_ids)
-{
-	Profesores.find()
-		.where('_id')
-		.in(array_ids)
-		.exec(function (err, profesores)
-		{
-			return profesores;
-		})
-};
-
 function printRecuento(asignaturas)
 {
 	for (var i = 0; i < asignaturas.length; i++)
@@ -105,7 +51,7 @@ exports.generaAsignaturasProfesorConNota = function(profesor)
 /**
  * Busca los datos del profesor pasado por id y renderiza la vista de profesor con dichos datos
  */
-exports.detalleProfesor = function(req, res) {
+exports.detalleProfesor = function(req, res, next) {
 	Profesores.findOne({'_id': req.params.profesor})
 	.populate({
 		path: 'notas_asignaturas_prof.asignatura',
@@ -116,7 +62,9 @@ exports.detalleProfesor = function(req, res) {
 
 		if (profesor === null)
 		{
-			res.status(400).send({"error": "Ese profesor no existe"})
+			var err = new Error("Ese profesor no existe")
+			err.status = 404;
+			next(err)
 		}
 		else
 		{
@@ -128,7 +76,7 @@ exports.detalleProfesor = function(req, res) {
 /*
  * Mostramos la vista de calificar
  */
-exports.vistaCalificar = function (req, res) {
+exports.vistaCalificar = function (req, res, next) {
 
 	Profesores.findOne({'_id': req.params.profesor})
 		.populate({path: 'notas_asignaturas_prof.asignatura'})
@@ -138,7 +86,9 @@ exports.vistaCalificar = function (req, res) {
 
 		if (profesor === null)
 		{
-			res.status(400).send({error: "Ese profesor no existe"})
+			var err = new Error("Ese profesor no existe")
+			err.status = 404;
+			next(err)
 		}
 		else
 		{
@@ -252,7 +202,6 @@ exports.calificarProfesor = function (req, res, next) {
 							res.status(200).send();
 						})
 				}
-
 			})
 		}
 	});
