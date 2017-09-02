@@ -160,14 +160,19 @@ QualiteacherApp.controller('inicioController', function ($scope, $http) {
 					display: false
 				},
 				scales: {
+					gridLines: {
+						color: "white"
+					},
 					xAxes: [
 						{
 							ticks: {
+								fontColor: "white",
 								beginAtZero: true,
 								max: 10
 							}}
 					],
 					yAxes: [{
+						fontColor: "white",
 						stacked: true
 					}]
 				},
