@@ -278,9 +278,10 @@ function generaProfesor(universidad)
 	var randomName = faker.name.firstName() + " " + faker.name.lastName() + " " + faker.name.lastName();
 
 	return {
-		_id: mongoose.Types.ObjectId(),
+		_id: mongoose.Types.ObjectId()+"",
 		nombre: randomName,
 		nota: 0,
+		avatar: faker.image.avatar(),
 		num_notas_pp: generaMatrizRecuentoNotasPorPregunta(),
 		num_votos: 0,
 		notas_asignaturas_prof: new Array(),
@@ -291,7 +292,7 @@ function generaProfesor(universidad)
 function generaAsignatura(universidad, carrera)
 {
 	return {
-		_id: mongoose.Types.ObjectId(),
+		_id: mongoose.Types.ObjectId()+"",
 		nombre: faker.company.bs(),
 		codigo: "C"+faker.random.number(1000),
 		descripcion: faker.lorem.sentences(),
@@ -310,7 +311,7 @@ function generaCarrera(universidad)
 	var codigo = "C"+faker.random.number(1000);
 
 	return {
-		_id: mongoose.Types.ObjectId(),
+		_id: mongoose.Types.ObjectId()+"",
 		nombre: nombre,
 		codigo: codigo,
 		nota: 0,

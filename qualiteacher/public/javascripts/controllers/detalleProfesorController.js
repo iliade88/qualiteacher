@@ -5,6 +5,24 @@ function getLabels()
 	return ["Pregunta 1", "Pregunta 2", "Pregunta 3", "Pregunta 4", "Pregunta 5", "Pregunta 6", "Pregunta 7", "Pregunta 8", "Pregunta 9", "Pregunta 10"]
 }
 
+function getTextosPuntoFuerteYDebil(posicion)
+{
+	var textos = [
+		"El/la profesor/a proporciona información adecuada sobre la actividad docente al comienzo del curso",
+		"El/la profesor/a tiene la capacidad de enseñar",
+		"El/la profesor/a es accesible en sus tutorías, ya sea personal o virtualmente",
+		"El/la profesor/a despierta el interés por la materia que imparte",
+		"El/la profesor/a muestra un conocimiento y formación adecuados de la materia",
+		"El/la profesor/a mantiene un buen clima de comunicación con los estudiantes",
+		"Los materiales y recursos docentes recomendados y utilizados por el/la profesor/a me han facilitado el aprendizaje",
+		"El desarrollo de la actividad docente del/de la profesor/a se adecua a los planes y objetivos establecidos",
+		"El/La profesor/a facilitada el aprendizaje, gracias a su ayuda se logra mejorar los conocimientos, habilidades, o modo de afrontar determinados temas",
+		"En general, sus alumnos están satisfechos con la labor de este/a profesor/a"
+	]
+
+	return textos[posicion]
+}
+
 function creaLeyenda()
 {
 	return "<table id='leyenda_nota'>" +
@@ -45,7 +63,7 @@ function ObtenNotasDeNumNotasPP(num_notas_pp, num_votos) {
 		{
 			suma_pregunta += (num_notas_pp[i][j] * j);
 		}
-		notas_pp[i] = (suma_pregunta / num_votos);
+		notas_pp[i] = Math.round((suma_pregunta / num_votos) * 100) / 100;
 	}
 
 	return notas_pp
@@ -66,9 +84,27 @@ QualiteacherApp.controller('detalleProfesorController', function($scope) {
 	$scope.init = function (profesor) {
 
 		$scope.profesor = JSON.parse(profesor);
+		$scope.profesor["punto_fuerte"] = "asd"
+		$scope.profesor["punto_debil"] = "fds"
+		$scope.notas_profesor_pp = ObtenNotasDeNumNotasPP($scope.profesor.num_notas_pp, $scope.profesor.num_votos)
+		$scope.obtenPuntoFuerteYDebil($scope.notas_profesor_pp)
+
 		$scope.nota_asignatura_seleccionada = 0;
 		$scope.profesor_sin_votos = ($scope.profesor.num_votos === 0);
 	};
+
+	$scope.obtenPuntoFuerteYDebil = function(notas_profesor_pp)
+	{
+		var max_nota = Math.max.apply(null, notas_profesor_pp)
+		var min_nota = Math.min.apply(null, notas_profesor_pp)
+
+		var indice_max_nota = notas_profesor_pp.indexOf(max_nota)
+		var indice_min_nota = notas_profesor_pp.indexOf(min_nota)
+
+		$scope.profesor.punto_fuerte = getTextosPuntoFuerteYDebil(indice_max_nota)
+		$scope.profesor.punto_debil = getTextosPuntoFuerteYDebil(indice_min_nota);
+	}
+
 
 	$(document).ready(function () {
 		$(".list-group-item").first().trigger("click");
@@ -77,8 +113,6 @@ QualiteacherApp.controller('detalleProfesorController', function($scope) {
 		var contexto_nota_prof = canvas_nota_prof.getContext('2d');
 		var labels = getLabels();
 		var color_grafica_nota_final = getColorRadarSegunNota($scope.profesor.nota)
-
-		var notas_profesor_pp = ObtenNotasDeNumNotasPP($scope.profesor.num_notas_pp, $scope.profesor.num_votos)
 
 		if ($scope.profesor_sin_votos) {
 
@@ -96,7 +130,7 @@ QualiteacherApp.controller('detalleProfesorController', function($scope) {
 					labels: labels,
 					datasets: [{
 						label: "Calificación global",
-						data: notas_profesor_pp,
+						data: $scope.notas_profesor_pp,
 						fill: true,
 						backgroundColor: color_grafica_nota_final
 					}]
@@ -149,6 +183,7 @@ QualiteacherApp.controller('detalleProfesorController', function($scope) {
 			var color_grafica_nota_asignatura = getColorRadarSegunNota($scope.profesor.notas_asignaturas_prof[indice].nota_asignatura)
 
 			var nota_asignatura_pp = ObtenNotasDeNumNotasPP($scope.profesor.notas_asignaturas_prof[indice].num_notas_pp, $scope.profesor.num_votos);
+
 			$scope.grafica = new Chart(contexto_canvas, {
 				type: 'radar',
 				data: {

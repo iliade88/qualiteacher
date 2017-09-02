@@ -12,6 +12,7 @@ var ProfesoresSchema = new Schema({
 	_id : String,
 	nombre: String,
 	nota: Number,
+	avatar: String,
 	num_notas_pp: [[Number]],
 	num_votos: Number,
 	notas_asignaturas_prof: [NotaAsignaturaSchema],

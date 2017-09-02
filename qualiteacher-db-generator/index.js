@@ -5,7 +5,8 @@ var fs = require('fs');
 var observe = require('observe')
 const {spawn} = require('child_process');
 
-mongoose.connect('mongodb://localhost/qualiteacher');
+//mongoose.connect('mongodb://localhost/qualiteacher');
+mongoose.connect('mongodb://qualiteacher:qualiteacher@ds145183.mlab.com:45183/qualiteacher');
 require('./models/Universidades');
 require('./models/Profesores');
 require('./models/Asignaturas');
