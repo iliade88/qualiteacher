@@ -1,5 +1,6 @@
 var QualiteacherApp = angular.module("Qualiteacher", ['ngMessages', 'ui.bootstrap', 'ngStorage']);
 
+Chart.defaults.global.defaultFontColor = '#000000';
 
 function formateaResultadosParaTypeahead(resultados) {
 	var resultados_formateados = [];

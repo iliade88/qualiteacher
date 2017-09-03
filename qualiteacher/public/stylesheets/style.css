@@ -92,6 +92,10 @@ body {
 	color:white!important;
 }
 
+.container {
+	margin-top: 20px;
+}
+
 /**
  * Sections
  */
