@@ -38,6 +38,8 @@ QualiteacherApp.controller('detalleUniversidadController', function ($scope)
 	$scope.universidad = {};
 	$scope.top_carreras = {};
 	$scope.top_profesores = {};
+	var dataset_carreras = []
+	var dataset_profesores = []
 
 	$scope.init = function (universidad)
 	{
@@ -46,8 +48,8 @@ QualiteacherApp.controller('detalleUniversidadController', function ($scope)
 
 	$(document).ready(function ()
 	{
-		var dataset_carreras = transformaADatasetParaGrafica($scope.universidad.carreras);
-		var dataset_profesores = transformaADatasetParaGrafica($scope.universidad.profesores);
+		dataset_carreras = transformaADatasetParaGrafica($scope.universidad.carreras);
+		dataset_profesores = transformaADatasetParaGrafica($scope.universidad.profesores);
 
 		//Chart Carreras - $("#ranking-carreras")
 		var canvas_carreras = document.getElementById('ranking-carreras');
@@ -73,7 +75,7 @@ QualiteacherApp.controller('detalleUniversidadController', function ($scope)
 						stacked: true
 					}]
 				},
-				onClick: function(event, active_elements) { window.location.replace('/carreras/'+$scope.top_carreras[active_elements[0]._index]._id);}
+				onClick: function(event, active_elements) { window.location.assign('/carreras/'+$scope.universidad.carreras[active_elements[0]._index]._id);}
 			}
 		});
 
@@ -101,7 +103,7 @@ QualiteacherApp.controller('detalleUniversidadController', function ($scope)
 						stacked: true
 					}]
 				},
-				onClick: function(event, active_elements) { window.location.replace('/profesores/'+$scope.top_profesores[active_elements[0]._index]._id);}
+				onClick: function(event, active_elements) { window.location.assign('/profesores/'+$scope.universidad.profesores[active_elements[0]._index]._id);}
 			}
 		});
 	})
