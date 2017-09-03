@@ -122,9 +122,11 @@ body {
 	background-image: url("../images/inicio_background_cover.png");
 	background-size: cover;
 	background-position-y: -180px;
-	height: 60vh;
-	font-size: 2.5em;
-	color:white;
+	height: 50vh;
+	min-height: 350px;
+	font-size: 2.1em;
+	color: #ffffff;
+	text-shadow: -1px 0 5px black, 0 1px 5px black, 1px 0 5px black, 0 -1px 5px black;
 	margin: 0;
 	padding: 0;
 	padding-top: 3em;
@@ -133,9 +135,18 @@ body {
 #campo-buscar {
 	margin-top: 2em;
 	box-sizing: border-box;
-    border: none;
+	border: none;
     border-bottom: 2px solid black;
     margin-bottom: 3em;
+}
+
+.col-centered{
+	margin: 0 auto;
+	float: none;
+}
+
+.item_resultado_buscador {
+	text-shadow: none;
 }
 
 /**

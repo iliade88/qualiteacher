@@ -58,7 +58,7 @@ function objetosResultadosParaTypeahead(resultados) {
 }
 
 function templateSegunTipo(item) {
-	var template = '<div>'
+	var template = '<div class="item_resultado_buscador">'
 		+ '<img style="display: inline-block" src="' + item.ico + '" title="' + item.tipo + '"/> '
 		+ '<p style="display: inline-block; padding-left: 5px;" >' + item.nombre;
 

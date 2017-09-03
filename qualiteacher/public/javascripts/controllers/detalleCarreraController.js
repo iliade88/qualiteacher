@@ -18,13 +18,13 @@ QualiteacherApp.controller('detalleCarreraController', function ($scope)
 		$scope.carrera = JSON.parse(asignatura);
 		$scope.datos_grafica.nota = $scope.carrera.nota;
 		$scope.datos_grafica.txt_num_votos = "La carrera se ha votado "+$scope.carrera.num_votos+" veces";
+		$scope.carrera.asignaturas = $scope.carrera.asignaturas.sort(function(a,b) { return a.codigo.localeCompare(b.codigo)})
 
 		$scope.asignatura_seleccionada = $scope.carrera.asignaturas[0];
 		$scope.asignatura_seleccionada.con_resultados = false;
 
 		$scope.max_pag = Math.round($scope.carrera.asignaturas.length / 10)
 		$scope.asignaturas_pager = $scope.carrera.asignaturas.slice(0, 10);
-		console.log($scope.carrera.asignaturas.length)
 
 		var canvas_nota_asignatura = document.getElementById('resultados-asignatura');
 		var contexto_canvas = canvas_nota_asignatura.getContext('2d');

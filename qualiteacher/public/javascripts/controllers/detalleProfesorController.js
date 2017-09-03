@@ -84,8 +84,8 @@ QualiteacherApp.controller('detalleProfesorController', function($scope) {
 	$scope.init = function (profesor) {
 
 		$scope.profesor = JSON.parse(profesor);
-		$scope.profesor["punto_fuerte"] = "asd"
-		$scope.profesor["punto_debil"] = "fds"
+		$scope.profesor["punto_fuerte"] = ""
+		$scope.profesor["punto_debil"] = ""
 		$scope.notas_profesor_pp = ObtenNotasDeNumNotasPP($scope.profesor.num_notas_pp, $scope.profesor.num_votos)
 		$scope.obtenPuntoFuerteYDebil($scope.notas_profesor_pp)
 
@@ -182,7 +182,7 @@ QualiteacherApp.controller('detalleProfesorController', function($scope) {
 			var labels = getLabels();
 			var color_grafica_nota_asignatura = getColorRadarSegunNota($scope.profesor.notas_asignaturas_prof[indice].nota_asignatura)
 
-			var nota_asignatura_pp = ObtenNotasDeNumNotasPP($scope.profesor.notas_asignaturas_prof[indice].num_notas_pp, $scope.profesor.num_votos);
+			var nota_asignatura_pp = ObtenNotasDeNumNotasPP($scope.profesor.notas_asignaturas_prof[indice].num_notas_pp, $scope.profesor.notas_asignaturas_prof[indice].num_votos);
 
 			$scope.grafica = new Chart(contexto_canvas, {
 				type: 'radar',
