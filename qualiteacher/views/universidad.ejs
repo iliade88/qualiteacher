@@ -1,8 +1,8 @@
 <%include modular/header%>
 
 <div class="container-fluid" ng-controller="detalleUniversidadController" ng-init="init('<%= JSON.stringify(universidad) %>')">
-    <div class="container-fluid text-center carrera-header" ng-style="{'background-image':'url('+universidad.img+')'}">
-        <h2 class="vcenter">{{universidad.nombre}}</h2>
+    <div class="container-fluid text-center carrera-header">
+        <h1>{{universidad.nombre}}</h1>
     </div>
     <div class="divider-black"></div>
     <section class="section container-fluid">

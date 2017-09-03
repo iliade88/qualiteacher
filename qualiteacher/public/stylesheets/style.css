@@ -59,6 +59,7 @@ body {
 **/
 
 .navbar {
+	border: 0!important;
 	margin-bottom: 0!important;
 	border-bottom: 3px solid black;
 }
@@ -176,7 +177,5 @@ body {
 .carrera-header
 {
     color: #ffffff;
-    min-height: 250px;
-    background-repeat: no-repeat;
-    background-size: cover;
+	background-color: #000000
 }
