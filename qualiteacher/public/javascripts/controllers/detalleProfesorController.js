@@ -189,7 +189,7 @@ QualiteacherApp.controller('detalleProfesorController', function($scope) {
 				data: {
 					labels: labels,
 					datasets: [{
-						label: "Calificación de " + $scope.profesor.notas_asignaturas_prof[indice].codigo,
+						label: "Calificación",
 						data: nota_asignatura_pp,
 						fill: true,
 						backgroundColor: color_grafica_nota_asignatura
