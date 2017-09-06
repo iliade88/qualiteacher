@@ -3,6 +3,17 @@ var Universidades  = mongoose.model('Universidades');
 var CarrerasController = require('../controllers/CarrerasController')
 
 /**
+ * Devolver todas las universidades
+ */
+exports.findAll = function(req, res) {
+	Universidades.find(function(err, universidad) {
+		if(err) res.send(500, err.message);
+
+		res.status(200).jsonp(universidad);
+	});
+};
+
+/**
 * Recibido un alumno lo añadimos al vector de alumnos de la universidad
 **/
 exports.anyadirAlumno = function(req, id_nuevo_alumno, next) {

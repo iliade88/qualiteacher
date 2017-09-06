@@ -91,19 +91,6 @@ describe('Suite Profesores', function () {
 		asignatura_dos["profesores"] =  [profesor_test._id]
 		test_user["token"] = AuthController.crearToken(test_user._id, 1);
 
-		console.log("uni")
-		console.log(universidad)
-		console.log("carrera")
-		console.log(carrera)
-		console.log("asig")
-		console.log(asignatura)
-		console.log("asig2")
-		console.log(asignatura_dos)
-		console.log("prof")
-		console.log(profesor_test)
-		console.log("user")
-		console.log(test_user)
-
 		universidad.save(function (err) {
 			if (err) done(err);
 
