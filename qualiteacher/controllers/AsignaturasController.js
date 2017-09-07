@@ -41,9 +41,11 @@ exports.actualizarNotasAsignatura = function (id_asignatura, calificacion)
 
 			asignatura
 				.save(function (err, next) {
-					if (err) {
-						return next(err);
-					}
+					if (err) return next(err);
+
+					Asignaturas.findByIdAndUpdate(asignatura._id, {$set: {'num_notas_pp': asignatura.num_notas_pp}}, function(err, doc) {
+						console.log(doc);
+					});
 				});
 		});
 };

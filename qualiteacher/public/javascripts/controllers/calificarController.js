@@ -56,6 +56,7 @@ QualiteacherApp.controller('calificarController', function($scope, $http, $local
 			alert("Debes acceder con tu cuenta para poder votar.");
 		}
 		else if ($scope.profesor.universidad.localeCompare(universidadUsuario.universidad) === 0) {
+			console.log(datos)
 			$http
 				.post(url,
 					{

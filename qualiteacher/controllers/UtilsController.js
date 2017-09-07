@@ -38,6 +38,8 @@ exports.sumaVotoANumNotasPP = function(obj, calificacion)
 		var nota_pregunta = calificacion[i];
 		obj.num_notas_pp[i][nota_pregunta]++;
 	}
+	console.log("DENTRO")
+	console.log(obj.num_notas_pp)
 	return obj.num_votos++;
 }
 
